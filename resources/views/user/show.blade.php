@@ -2,11 +2,6 @@
 
 @section('title', $user->name)
 
-@section('file_links')
-    <script type="text/javascript" src="/js/user-show.js"></script>
-    <link rel="stylesheet" href="/css/user-show.css">
-@stop
-
 @section('content')
     <div class="row">
         <div class="col-md-12">

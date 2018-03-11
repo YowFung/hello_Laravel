@@ -27,7 +27,7 @@
 
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1">昵称</span>
-                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Name" aria-describedby="basic-addon1">
+                    <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Name" aria-describedby="basic-addon1" autofocus>
                 </div>
                 <br/>
 
@@ -49,10 +49,10 @@
                 </div>
                 <br/><br/>
 
-                @include('shared._errors', ['show_all' => false])
+                @include('shared._errors', ['show_all' => false, 'title' => '注册失败'])
 
                 <br/>
-                <p>已有账号？现在去<a href="/login">登录</a>！</p>
+                <p>已有账号？现在去<a href="{{ route('users.login') }}">登录</a>！</p>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">立即注册</button>
 
             </div>

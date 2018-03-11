@@ -8396,3 +8396,67 @@ footer {
   margin-right: 16px;
 }
 
+.btn-logout {
+  margin-top: 8px;
+  background-color: #f8f8f8;
+  color: #888;
+}
+
+.btn-logout:hover {
+  background-color: #e8e8e8;
+}
+
+.photo-img {
+  position: absolute;
+  top: 64px;
+  left: 72px;
+  width: 144px;
+  height: 144px;
+  border: 2px solid #FFF;
+  -webkit-box-shadow: 0px 0px 5px 0px;
+          box-shadow: 0px 0px 5px 0px;
+}
+
+.gravatar {
+  width: 100%;
+}
+
+.title-username {
+  position: absolute;
+  top: 124px;
+  left: 248px;
+  font-size: 28px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-bottom: 4px solid #66aaff;
+  min-width: 172px;
+  text-shadow: #666 1px 1px 8px;
+}
+
+.title-info {
+  position: absolute;
+  top: 182px;
+  left: 248px;
+  padding: 2px;
+}
+
+.title-info .title-info-count {
+  color: #666;
+  margin-left: 4px;
+  font-weight: normal;
+  font-size: 13px;
+}
+
+.title-info .title-info-link {
+  text-decoration: none;
+  margin-right: 12px;
+}
+
+.panel-body {
+  min-height: 420px;
+}
+
+.panel-title {
+  font-size: 14px;
+}
+

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -26,16 +27,6 @@ class UsersController extends Controller
     public function show(User $user)
     {
         return view('user.show', compact('user'));
-    }
-
-    /**
-     * 用户登录的页面
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function login()
-    {
-        return view('user.login');
     }
 
     /**
@@ -68,7 +59,7 @@ class UsersController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        session()->flash('user', $user);
+        Auth::login($user);
 
         return redirect()->route('users.show', [$user]);
     }

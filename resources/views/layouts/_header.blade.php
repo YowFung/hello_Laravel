@@ -1,4 +1,3 @@
-<!-- 导航栏开始 -->
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
@@ -12,22 +11,32 @@
                 <img src="/favicon.ico" alt="LOGO" class="favicon">简易微博
             </a>
         </div>
+
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                @if(session()->has('user'))
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ session()->get('user')['name'] }} <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ route('users.show', session()->get('user')['id']) }}">个人中心</a></li>
-                            <li><a href="{{ route('users.exit') }}">退出登录</a></li>
-                        </ul>
+                @if (Auth::check())
+                    <li role="presentation">
+                        <a href="{{ route('users.show', Auth::user()->id) }}">
+                            {{ Auth::user()->name }}
+                            <span class="badge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <form action="{{ route('users.logout') }}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button class="btn btn-block btn-logout" type="submit" name="button" title="退出登录">
+                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                            </button>
+                        </form>
                     </li>
                 @else
                     <li><a href="{{ route('users.login') }}">登录</a></li>
+
                     <li><a href="{{ route('users.create') }}">注册</a></li>
                 @endif
             </ul>
         </div><!--/.nav-collapse -->
+
     </div><!--/.container-fluid -->
 </nav>
-<!-- 导航栏结束 -->
