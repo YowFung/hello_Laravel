@@ -14,5 +14,6 @@
 Route::get('/', function () {
     return view('home');
 });
-
-Route::resource('user', 'UsersController');
+Route::get('/users/login', 'UsersController@login')->name('users.login');
+Route::post('/users/exit', 'UsersController@exit')->name('users.exit');
+Route::resource('users', 'UsersController');

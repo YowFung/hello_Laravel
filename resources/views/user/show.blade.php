@@ -1,59 +1,20 @@
 @extends('layouts._master')
 
-@section('style')
-    .photo-img {
-        background: url('{{ URL::asset('img/photo/256/001.jpg') }}') no-repeat;
-        position: absolute;
-        top: 28px;
-        left: 28px;
-        border-radius: 50%;
-        width: 200px;
-        height: 200px;
-        border: 3px solid #FFF;
-    }
-    .title-username {
-        position: absolute;
-        top: 124px;
-        left: 248px;
-        font-size: 28px;
-        font-weight: bold;
-        padding: 4px 8px;
-        border-bottom: 4px solid #66aaff;
-        min-width: 172px;
-        text-shadow: #666 1px 1px 8px ;
-    }
-    .title-info {
-        position: absolute;
-        top: 182px;
-        left: 248px;
-        padding: 2px;
-    }
-    .title-info .title-info-count {
-        color: #666;
-        margin-left: 4px;
-        font-weight: normal;
-        font-size: 13px;
-    }
-    .title-info .title-info-link {
-        text-decoration: none;
-        margin-right: 12px;
-    }
-    .panel-body {
-        min-height: 420px;
-    }
-    .panel-title {
-        font-size: 14px;
-    }
-@stop
+@section('title', $user->name)
 
-@section('title', '用户中心')
+@section('file_links')
+    <script type="text/javascript" src="/js/user-show.js"></script>
+    <link rel="stylesheet" href="/css/user-show.css">
+@stop
 
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <img src="{{ URL::asset('img/bg/user-info-bg.jpg') }}" alt="bg" style="height: 256px; width: 100%;">
-            <div class="photo-img"></div>
-            <div class="title-username">YowFung</div>
+            <img src="/img/bg/user-info-bg.jpg" alt="bg" style="height: 256px; width: 100%;">
+            <section class="photo-img">
+                @include('shared._user_photo', ['user' => $user, 'size' => 144])
+            </section>
+            <div class="title-username">{{ $user->name }}</div>
             <div class="title-info">
                 <a href="" class="title-info-link">
                     <span title="我关注的">
@@ -228,51 +189,4 @@
             </div>
         </div>
     </div>
-@stop
-
-@section('javascript')
-    //“基本信息界面中”点击“修改信息”按钮
-    $('#change_info').click(function() {
-        $('.foundation-data').css('display', 'none');
-        $('.foundation-edit').css('display', 'block');
-        $('#save_info').css('display', 'inline');
-        $('#cancel_change').css('display', 'inline');
-        $('#change_info').css('display', 'none');
-    });
-
-    //基本信息界面中点击“保存”按钮
-    $('#save_info').click(function() {
-        $('.foundation-data').css('display', 'block');
-        $('.foundation-edit').css('display', 'none');
-        $('#save_info').css('display', 'none');
-        $('#cancel_change').css('display', 'none');
-        $('#change_info').css('display', 'inline');
-    });
-
-    //基本信息界面中点击“取消”按钮
-    $('#cancel_change').click(function() {
-        $('.foundation-data').css('display', 'block');
-        $('.foundation-edit').css('display', 'none');
-        $('#save_info').css('display', 'none');
-        $('#cancel_change').css('display', 'none');
-        $('#change_info').css('display', 'inline');
-    });
-
-    //显示标签
-    function showLabel() {
-
-    }
-
-    //显示编辑框
-    function showEdit() {
-
-        //显示组件
-        $('.foundation-info-edit').css('display', 'inline');
-        $('#save_info').css('display', 'inline');
-        $('#cancel_change').css('display', 'inline');
-
-        //隐藏组件
-        $('.foundation-info-label').css('display', 'none');
-        $('#change_info').css('display', 'none');
-    }
 @stop

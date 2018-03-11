@@ -15,6 +15,8 @@ class CreateAttentionsTable extends Migration
     {
         Schema::create('attentions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('from_id');
+            $table->integer('to_id');
             $table->timestamps();
         });
     }
