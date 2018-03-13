@@ -8,43 +8,21 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
-    /**
-     * 显示所有用户列表的页面
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function index()
     {
-        return view('user.manage');
+        return view('users.index');
     }
 
-    /**
-     * 显示用户个人信息的页面
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function show(User $user)
     {
-        return view('user.show', compact('user'));
+        return view('users.show', compact('user'));
     }
 
-    /**
-     * 注册新用户的页面
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
     public function create()
     {
-        return view('user.create');
+        return view('users.create');
     }
 
-    /**
-     * 注册新用户
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -64,32 +42,57 @@ class UsersController extends Controller
         return redirect()->route('users.show', [$user]);
     }
 
-    /**
-     * 编辑用户个人资料的页面
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit()
+    public function edit(User $user)
     {
-        return view('user.edit');
+        return view('users.edit', compact('user'));
     }
 
-    /**
-     * 更新用户
-     *
-     */
-    public function update()
+    public function update(User $user, Request $request)
     {
-        return;
+        $this->validate($request, [
+            'name' => 'required|min:3|max:50',
+            'gender' => 'in:male,female',
+            'associations' => 'nullable|max:200',
+            'college' => 'nullable|max:200',
+            'address' => 'nullable|max:200',
+        ]);
+
+        if ($request->name != $user->name) {
+            $this->validate($request, ['name' => 'unique:users']);
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'associations' => $request->associations,
+            'college' => $request->college,
+            'address' => $request->address,
+        ]);
+
+        session()->flash('success', '修改成功！');
+
+        return redirect()->route('users.show', $user->id);
     }
 
-    /**
-     * 删除用户
-     *
-     */
     public function destroy()
     {
         return;
+    }
+
+    /**
+     * 修改用户登录密码的页面
+     */
+    public function password()
+    {
+
+    }
+
+    /**
+     * 保存修改密码
+     */
+    public function storePassword()
+    {
+
     }
 
 }

@@ -38,7 +38,7 @@
                 </div>
                 <br/>
 
-                @include('shared._errors', ['show_all' => false, 'title' => '登录失败'])
+                @include('shared._msgs', ['show_all' => false, 'title' => '登录失败', 'msg_type' => 'danger'])
 
                 <br/>
                 <p>没有账号？赶紧去<a href="{{ route('users.create') }}">注册</a>！</p>

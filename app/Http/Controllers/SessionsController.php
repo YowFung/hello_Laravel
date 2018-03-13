@@ -12,7 +12,7 @@ class SessionsController extends Controller
      */
     public function create()
     {
-        return view('user.login');
+        return view('users.login');
     }
 
     /**
@@ -31,7 +31,7 @@ class SessionsController extends Controller
         if (Auth::attempt($credentials, $request->has('remember'))) {
             return redirect()->route('users.show', [Auth::user()]);
         } else {
-            session()->flash('message', '邮箱和密码不匹配');
+            session()->flash('danger', '邮箱和密码不匹配');
             return redirect()->back();
         }
     }

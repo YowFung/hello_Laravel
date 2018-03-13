@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Attention;
+use App\Models\Message;
 
 class User extends Authenticatable
 {
@@ -15,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'gender', 'associations', 'college', 'address'
     ];
 
     /**
@@ -28,7 +30,37 @@ class User extends Authenticatable
     ];
 
     /**
-     * 获取用户头像
+     * 获取当前用户的粉丝总数
+     *
+     * @return int
+     */
+    public function getFansCount()
+    {
+        return count(Attention::all()->where('to_id', $this->attributes['id']));
+    }
+
+    /**
+     * 获取当前用户的关注总数
+     *
+     * @return int
+     */
+    public function getAttentionsCount()
+    {
+        return count(Attention::all()->where('from_id', $this->attributes['id']));
+    }
+
+    /**
+     * 获取当前用户的新消息总数
+     *
+     * @return int
+     */
+    public function getNewMessagesCount()
+    {
+        return count(Attention::all()->where('to_id', $this->attributes['id'])->where('read', 'False'));
+    }
+
+    /**
+     * 获取当前用户的Gravatar头像
      *
      * @param string $size
      * @return string

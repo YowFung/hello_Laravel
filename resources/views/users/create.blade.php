@@ -49,7 +49,7 @@
                 </div>
                 <br/><br/>
 
-                @include('shared._errors', ['show_all' => false, 'title' => '注册失败'])
+                @include('shared._msgs', ['show_all' => false, 'title' => '注册失败', 'msg_type' => 'danger'])
 
                 <br/>
                 <p>已有账号？现在去<a href="{{ route('users.login') }}">登录</a>！</p>

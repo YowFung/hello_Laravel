@@ -109,3 +109,17 @@ footer {
 .panel-title {
   font-size: 14px;
 }
+
+.control-edit {
+  display: inline;
+  width: calc(100% - 64px);
+  margin-left: 16px;
+}
+
+.user-panel {
+  padding: 40px;
+}
+
+.user-show-btn {
+  text-align: center;
+}

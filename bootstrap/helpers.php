@@ -9,7 +9,7 @@ function get_db_config()
             'connection' => 'pgsql',
             'host' => $url["host"],
             'database'  => substr($url["path"], 1),
-            'username'  => $url["user"],
+            'username'  => $url["users"],
             'password'  => $url["pass"],
         ];
     } else {
