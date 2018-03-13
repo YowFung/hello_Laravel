@@ -24,14 +24,14 @@
             <br/>
 
             <div class="form-label-group">
-                <label for="inputEmail">昵称</label>
-                <input type="text" id="inputEmail" name="name" value="{{ $user->name }}" class="form-control control-edit" placeholder="Name" autofocus>
+                <label for="inputName">昵称</label>
+                <input type="text" id="inputName" name="name" value="{{ $user->name }}" class="form-control control-edit" placeholder="Name" autofocus>
             </div>
             <br/>
 
             <div class="form-label-group">
-                <label for="inputEmail">性别</label>
-                <select class="form-control control-edit" name="gender">
+                <label for="inputGender">性别</label>
+                <select class="form-control control-edit" name="gender" id="inputGender">
                     <option value="male" @if ($user->gender == 'male') selected @endif>帅哥</option>
                     <option value="female" @if ($user->gender == 'female') selected @endif>美女</option>
                 </select>
@@ -39,20 +39,20 @@
             <br/>
 
             <div class="form-label-group">
-                <label for="inputEmail">社团</label>
-                <input type="text" id="inputEmail" name="associations" value="{{ $user->associations }}" class="form-control control-edit" placeholder="Associations">
+                <label for="inputAssociations">社团</label>
+                <input type="text" id="inputAssociations" name="associations" value="{{ $user->associations }}" class="form-control control-edit" placeholder="Associations">
             </div>
             <br/>
 
             <div class="form-label-group">
-                <label for="inputEmail">院系</label>
-                <input type="text" id="inputEmail" name="college" value="{{ $user->college }}" class="form-control control-edit" placeholder="College">
+                <label for="inputCollege">院系</label>
+                <input type="text" id="inputCollege" name="college" value="{{ $user->college }}" class="form-control control-edit" placeholder="College">
             </div>
             <br/>
 
             <div class="form-label-group">
-                <label for="inputEmail">籍贯</label>
-                <input type="text" id="inputEmail" name="address" value="{{ $user->address }}" class="form-control control-edit" placeholder="Address">
+                <label for="inputAddress">籍贯</label>
+                <input type="text" id="inputAddress" name="address" value="{{ $user->address }}" class="form-control control-edit" placeholder="Address">
             </div>
             <br/>
 

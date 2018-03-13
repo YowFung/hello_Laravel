@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <form method="POST" action="{{ route('users.login') }}">
+            <form method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
 
                 <div class="text-center mb-4">

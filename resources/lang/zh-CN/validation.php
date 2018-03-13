@@ -123,6 +123,8 @@ return [
         'last_name' => '姓',
         'password' => '密码',
         'password_confirmation' => '确认密码',
+        'password_old' => '原先密码',
+        'password_new' => '新的密码',
         'city' => '城市',
         'country' => '国家',
         'address' => '地址',

@@ -22,7 +22,7 @@
                         </a>
                     </li>
                     <li>
-                        <form action="{{ route('users.logout') }}" method="POST">
+                        <form action="{{ route('logout') }}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <button class="btn btn-block btn-logout" type="submit" name="button" title="退出登录">
@@ -31,7 +31,7 @@
                         </form>
                     </li>
                 @else
-                    <li><a href="{{ route('users.login') }}">登录</a></li>
+                    <li><a href="{{ route('login') }}">登录</a></li>
 
                     <li><a href="{{ route('users.create') }}">注册</a></li>
                 @endif

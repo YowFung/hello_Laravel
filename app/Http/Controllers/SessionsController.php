@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     /**
      * 显示登录页面
      */
@@ -29,7 +36,7 @@ class SessionsController extends Controller
         ]);
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            return redirect()->route('users.show', [Auth::user()]);
+            return redirect()->intended(route('users.show', [Auth::user()]));
         } else {
             session()->flash('danger', '邮箱和密码不匹配');
             return redirect()->back();
@@ -44,6 +51,6 @@ class SessionsController extends Controller
     public function destroy()
     {
         Auth::logout();
-        return redirect('/');
+        return redirect('/login');
     }
 }
