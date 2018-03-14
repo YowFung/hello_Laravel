@@ -52,7 +52,7 @@
                 @include('shared._msgs', ['show_all' => false, 'title' => '注册失败', 'msg_type' => 'danger'])
 
                 <br/>
-                <p>已有账号？现在去<a href="{{ route('users.login') }}">登录</a>！</p>
+                <p>已有账号？现在去<a href="{{ route('login') }}">登录</a>！</p>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">立即注册</button>
 
             </div>
