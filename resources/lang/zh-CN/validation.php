@@ -125,6 +125,7 @@ return [
         'password_confirmation' => '确认密码',
         'password_old' => '原先密码',
         'password_new' => '新的密码',
+        'notes_content' => '微博动态内容',
         'city' => '城市',
         'country' => '国家',
         'address' => '地址',

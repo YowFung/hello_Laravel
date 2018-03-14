@@ -11,7 +11,7 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store']
+            'except' => ['show', 'create', 'store', 'notes']
         ]);
 
         $this->middleware('guest', [
@@ -20,24 +20,35 @@ class UsersController extends Controller
     }
 
 
-    public function index()
-    {
-        return view('users.index');
-    }
-
-
+    /**
+     * 用户资料页面
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(User $user)
     {
         return view('users.show', compact('user'));
     }
 
 
+    /**
+     * 用户注册页面
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('users.create');
     }
 
 
+    /**
+     * 用户注册
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -58,6 +69,12 @@ class UsersController extends Controller
     }
 
 
+    /**
+     * 用户信息编辑页面
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(User $user)
     {
         $this->authorize('update', $user);
@@ -65,8 +82,17 @@ class UsersController extends Controller
     }
 
 
+    /**
+     * 用户信息更新
+     *
+     * @param User $user
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(User $user, Request $request)
     {
+        $this->authorize('update', $user);
+
         if (array_key_exists('password_new', $request->all())) {
             $this->validate($request, [
                 'password_old' => 'required',
@@ -97,7 +123,6 @@ class UsersController extends Controller
             ];
         }
 
-        $this->authorize('update', $user);
         $user->update($data);
         session()->flash('success', '修改成功！');
 
@@ -105,21 +130,62 @@ class UsersController extends Controller
     }
 
 
-    public function destroy()
-    {
-        return;
-    }
-
-
     /**
-     * 修改用户登录密码的页面
+     * 用户密码修改页面
      *
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function password(User $user)
+    public function safety(User $user)
     {
         $this->authorize('update', $user);
         return view('users.safety', compact('user'));
+    }
+
+
+    /**
+     * 用户微博动态列表页面
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function notes(User $user)
+    {
+        $notes = $user->notes()
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+        return view('users.notes', compact('user', 'notes'));
+    }
+
+
+    /**
+     * 用户关注列表页面
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function attentions(User $user)
+    {
+        $this->authorize('update', $user);
+
+        return view('users.attentions', compact('user'));
+    }
+
+
+    /**
+     * 用户消息列表页面
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function messages(User $user)
+    {
+        $this->authorize('update', $user);
+
+        $messages = $user->messages()
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('users.messages', compact('user', 'messages'));
     }
 }

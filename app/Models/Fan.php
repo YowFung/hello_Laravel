@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
-class Note extends Model
+class Fan extends Model
 {
-    protected $fillable = ['content'];
+    use Notifiable;
+
+    protected $fillable = [
+        'from_id', 'to_id', 'read'
+    ];
 
     public function user()
     {

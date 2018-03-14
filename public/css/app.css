@@ -8452,8 +8452,12 @@ footer {
   margin-right: 12px;
 }
 
-.panel-body {
+.panel-content {
   min-height: 420px;
+}
+
+.panel-fans {
+  min-height: 232px;
 }
 
 .panel-title {
@@ -8462,7 +8466,7 @@ footer {
 
 .control-edit {
   display: inline;
-  width: calc(100% - 64px);
+  width: calc(100% - 80px);
   margin-left: 16px;
 }
 
@@ -8472,5 +8476,24 @@ footer {
 
 .user-show-btn {
   text-align: center;
+}
+
+.btn-notes-published {
+  float: right;
+}
+
+.input-notes-content {
+  resize: none;
+}
+
+.label-notes {
+  display: inline-block;
+  margin-top: 4px;
+  color: #888;
+}
+
+.label-note-show {
+  background-color: #aaa;
+  font-weight: normal;
 }
 

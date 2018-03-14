@@ -1,13 +1,13 @@
 @extends('layouts._user')
 
-@section('panel_title', '基本资料')
+@section('panel_title', '个人资料')
 
 @section('active_show', 'active')
 
 @section('panel_content')
     <div class="col-md-3"></div>
     <div class="col-md-6">
-        <br/><br/>
+        <br/>
 
         <table class="table">
             <thead>
@@ -45,6 +45,8 @@
         @if(Auth::check() && Auth::user()->id == $user->id)
             <div class="user-show-btn">
                 <a class="btn btn-md btn-default" href="{{ route('users.edit', $user->id) }}">修改资料</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-md btn-default" href="{{ route('users.safety', $user->id) }}">修改密码</a>
             </div>
         @endif
 

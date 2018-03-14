@@ -3,20 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Note;
+use Illuminate\Support\Facades\Auth;
 
 class NotesController extends Controller
 {
-    /**
-     * 日志列表的页面
-     *
-     * @param User $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function show(User $user)
+    public function __construct()
     {
-        $notes = Note::all()->where('published_id', $user->id);
-        return view('notes.list', compact('user', 'notes'));
+        $this->middleware('auth');
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'notes_content' => 'required|min:5|max:140'
+        ]);
+
+        Auth::user()->notes()->create([
+            'content' => $request->notes_content,
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function destroy(Note $note)
+    {
+        $this->authorize('destroy', $note);
+        $note->delete();
+
+        session()->flash('success', '该条微博已被成功删除！');
+
+        return redirect()->back();
     }
 }

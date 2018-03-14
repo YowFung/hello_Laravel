@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration
             $table->integer('from_id');
             $table->integer('to_id');
             $table->boolean('read')->default(false);
+            $table->string('type', 20)->default('system');
             $table->text('passage', 5000);
             $table->timestamps();
         });

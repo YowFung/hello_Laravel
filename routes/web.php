@@ -19,13 +19,14 @@ Route::get('/login', 'SessionsController@create')->name('login');
 Route::post('/login', 'SessionsController@store')->name('login');
 Route::delete('/logout', 'SessionsController@destroy')->name('logout');
 
-Route::get('/users/{user}/safety', 'UsersController@password')->name('users.password');
+Route::get('/users/{user}/safety', 'UsersController@safety')->name('users.safety');
+Route::get('/users/{user}/notes', 'UsersController@notes')->name('users.notes');
+Route::get('/users/{user}/attentions', 'UsersController@attentions')->name('users.attentions');
+Route::get('/users/{user}/messages', 'UsersController@messages')->name('users.messages');
+
 Route::resource('users', 'UsersController');
 
-Route::get('/notes/show/{users}', 'NotesController@show')->name('notes.show');
+Route::resource('notes', 'NotesController', ['only' => ['store', 'destroy']]);
 
-Route::get('/fans/from/{users}', 'FansController@fromList')->name('fans.from');
 Route::get('/fans/to/{users}', 'FansController@toList')->name('fans.to');
-
-Route::get('/messages/show/{users}', 'MessagesController@show')->name('messages.show');
-
+Route::post('/fans/focus/{user}', 'FansController@focusOn')->name('fans.focus');

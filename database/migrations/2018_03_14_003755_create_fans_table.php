@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttentionsTable extends Migration
+class CreateFansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateAttentionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('attentions', function (Blueprint $table) {
+        Schema::create('fans', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('from_id');
             $table->integer('to_id');
+            $table->boolean('read')->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateAttentionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attentions');
+        Schema::dropIfExists('fans');
     }
 }

@@ -1,18 +1,14 @@
-@if(!Auth::check() || Auth::user()->id != $user->id)
-    <script>
-        window.location.href = '{{ route('home') }}'
-    </script>
-@endif
-
 @extends('layouts._user')
 
-@section('panel_title', '修改资料')
+@section('panel_title', '个人资料')
 
 @section('active_show', 'active')
 
 @section('panel_content')
     <div class="col-md-3"></div>
     <div class="col-md-6">
+        <br>
+
         <form method="POST" action="{{ route('users.update', $user->id) }}">
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
@@ -59,7 +55,8 @@
             @include('shared._msgs', ['show_all' => false, 'title' => '修改失败', 'msg_type' => 'danger'])
 
             <div class="user-show-btn">
-                <button type="submit" class="btn btn-md btn-primary">保存</button>
+                <button type="submit" class="btn btn-md btn-primary">保存修改</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
                 <a class="btn btn-md btn-default" href="{{ route('users.show', $user) }}">取消</a>
             </div>
         </form>

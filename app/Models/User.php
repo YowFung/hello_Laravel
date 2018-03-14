@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\Attention;
-use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -36,7 +35,7 @@ class User extends Authenticatable
      */
     public function getFansCount()
     {
-        return count(Attention::all()->where('to_id', $this->attributes['id']));
+        return count(Fan::all()->where('to_id', $this->attributes['id']));
     }
 
     /**
@@ -46,17 +45,40 @@ class User extends Authenticatable
      */
     public function getAttentionsCount()
     {
-        return count(Attention::all()->where('from_id', $this->attributes['id']));
+        return count(Fan::all()->where('from_id', $this->attributes['id']));
     }
 
     /**
-     * 获取当前用户的新消息总数
+ * 获取当前用户的新消息总数
+ *
+ * @return int
+ */
+    public function getNewMessagesCount()
+    {
+        return count(Message::all()->where('to_id', $this->attributes['id'])->where('read', 'False'));
+    }
+
+    /**
+     * 获取当前用户的新粉丝总数
      *
      * @return int
      */
-    public function getNewMessagesCount()
+    public function getNewFansCount()
     {
-        return count(Attention::all()->where('to_id', $this->attributes['id'])->where('read', 'False'));
+        return count(Fan::all()->where('to_id', $this->attributes['id'])->where('read', 'False'));
+    }
+
+    /**
+     * 是否已关注某人
+     *
+     * @return bool
+     */
+    public function isFocusOn()
+    {
+        if (Auth::check() && Fan::all()->where('from_id', Auth::user()->id)->where('to_id', $this->attributes['id']))
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -69,5 +91,25 @@ class User extends Authenticatable
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));
         return "http://www.gravatar.com/avatar/$hash?s=$size";
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
+    public function fans()
+    {
+        return $this->hasMany(Fan::class);
+    }
+
+    public function attentions()
+    {
+        return $this->hasMany(Fan::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 }
