@@ -7,31 +7,12 @@
 @section('panel_content')
     <h5 class="message-item-key">
         <span class="label label-default label-note-show">消息类型：</span>&nbsp;
-        @switch ($message->type)
-            @case ('system')
-                系统通知
-            @break
-            @case ('letter')
-                留言
-            @break
-            @case ('replay_letter')
-                留言回复
-            @break
-            @case ('comment')
-                评论
-            @break
-            @case ('replay_comment')
-                评论回复
-        @endswitch
+        {{ $message->category() }}
     </h5>
 
     <h5 class="message-item-key">
         <span class="label label-default label-note-show">消息状态：</span>&nbsp;
-        @if ($message->read)
-            已读
-        @else
-            未读
-        @endif
+        @if ($message->read) 已读 @else 未读 @endif
     </h5>
 
     <h5 class="message-item-key">
@@ -43,7 +24,7 @@
     <div class="panel panel-default message-passage-panel">
         <div class="panel-body">
             <p class="message-passage">
-                {{ $message->passage }}
+                {!! $message->content() !!}
             </p>
         </div>
     </div>

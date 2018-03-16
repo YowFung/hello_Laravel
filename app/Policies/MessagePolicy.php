@@ -31,6 +31,6 @@ class MessagePolicy
      */
     public function show(User $currentUser, Message $message)
     {
-        return $currentUser->id === $message->to_id;
+        return $currentUser->id === $message->user_id;
     }
 }

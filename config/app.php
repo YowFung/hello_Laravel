@@ -236,8 +236,8 @@ return [
     |
     */
 
-    'sign_begin' => env('SIGN_BEGIN', '|]*p--b*[|'),
-    'sign_end' => env('SIGN_END', '|]*p--e*[|'),
-    'sign_separate' => env('SIGN_SEPARATE', '|]*[|'),
+    'sign_begin' => env('SIGN_BEGIN', '#p-_b#'),
+    'sign_end' => env('SIGN_END', '#p-_e#'),
+    'sign_separate' => env('SIGN_SEPARATE', '#-s_#'),
 
 ];

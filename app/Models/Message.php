@@ -60,20 +60,24 @@ class Message extends Model
     {
         $text = $this->attributes['content'];
         $content = "";
-        $parameters = explode(config('app.sign_separate'), $this->attributes['parameters']);                                         //参数链接
-        $times = substr_count($content, '|+)p--b(+|');
+        $parameters = explode(config('app.sign_separate'), $this->attributes['parameters']);                       //参数链接
+        $times = mb_substr_count($text, config('app.sign_begin'));
+        $sign_begin_len = mb_strlen(config('app.sign_begin'));
+        $sign_end_len = mb_strlen(config('app.sign_end'));
 
         for ($i = 0; $i < $times; $i++) {
-            $position_begin = strpos($text, config('app.sign_begin'));                                                 //参数开始位置
-            $position_end = strpos($text, config('app.sign_end'));                                                     //参数结束位置
+            $p_begin = mb_strpos($text, config('app.sign_begin'));                                                 //参数开始位置
+            $p_end = mb_strpos($text, config('app.sign_end'));                                                     //参数结束位置
 
-            $value = substr($text, $position_begin+10, $position_end - $position_begin - 10);              //参数内容
+            $value = mb_substr($text, $p_begin + $sign_begin_len, $p_end - $p_begin - $sign_begin_len);                 //参数内容
             $str_replace = '<a href="' . $parameters[$i] . '">' . $value . '</a>';                                      //替换后的参数内容
 
-            $content .= substr($text, 0, $position_begin) . $str_replace;
+            $content .= mb_substr($text, 0, $p_begin) . $str_replace;
 
-            $text = substr($text, $position_end+10);
+            $text = mb_substr($text, $p_end + $sign_end_len);
         }
+
+        $content .= $text;
 
         return $content;
     }
