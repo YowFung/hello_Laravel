@@ -10,11 +10,7 @@ class Fan extends Model
     use Notifiable;
 
     protected $fillable = [
-        'from_id', 'to_id', 'read'
+        'master_id', 'follow_id', 'created_at'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

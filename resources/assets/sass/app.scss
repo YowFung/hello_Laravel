@@ -34,13 +34,7 @@ section.user_info {
     margin-top: 15px;
   }
 }
-//
-//.gravatar {
-//  float: left;
-//  margin-right: 10px;
-//  max-width: 50px;
-//  border-radius: 50%;
-//}
+
 
 footer {
   text-align: center;
@@ -62,50 +56,51 @@ footer {
   }
 }
 
-.photo-img {
-  position: absolute;
-  top: 64px;
-  left: 72px;
-  width: 144px;
-  height: 144px;
-  border: 2px solid #FFF;
-  box-shadow: 0px 0px 5px 0px;
-}
-
 .gravatar {
   width: 100%;
 }
 
-.title-username {
-  position: absolute;
-  top: 124px;
-  left: 248px;
-  font-size: 28px;
-  font-weight: bold;
-  padding: 4px 8px;
-  border-bottom: 4px solid #66aaff;
-  min-width: 172px;
-  text-shadow: #666 1px 1px 8px ;
-}
-.title-info {
-  position: absolute;
-  top: 182px;
-  left: 248px;
-  padding: 2px;
-}
-.title-info .title-info-count {
-  color: #666;
-  margin-left: 4px;
-  font-weight: normal;
-  font-size: 13px;
-}
-.title-info .title-info-link {
-  text-decoration: none;
-  margin-right: 12px;
+
+.user-show-bg {
+  background: url("/img/bg/user-info-bg.jpg") no-repeat;
+  background-size: calc(100% - 30px) 256px;
+  background-position: 15px 15px;
+
+  .photo-img {
+    width: 144px;
+    height: 144px;
+    border: 2px solid #FFF;
+    box-shadow: 0px 0px 5px 0px;
+    margin: 56px 40px;
+  }
+
+  .title-name {
+    font-size: 28px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-bottom: 4px solid #66aaff;
+    min-width: 172px;
+    text-shadow: #666 1px 1px 8px ;
+    display: inline-block;
+    margin-top: 120px;
+  }
+
+  .title-attach {
+    padding: 2px;
+
+    .title-count {
+      color: #666;
+      margin-left: 4px;
+      font-weight: normal;
+      font-size: 13px;
+    }
+
+  }
 }
 
+
 .panel-content {
-  min-height: 420px;
+  min-height: 336px;
 }
 
 .panel-fans {
@@ -147,4 +142,32 @@ footer {
 .label-note-show {
   background-color: #aaa;
   font-weight: normal;
+}
+
+.fans-list {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.tips {
+  margin-top: 16px;
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+}
+
+.fans-panel-body {
+  padding: 16px;
+
+  .row {
+    padding: 0 8px;
+
+    a {
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.page-split {
+  text-align: center;
 }

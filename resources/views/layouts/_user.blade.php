@@ -3,48 +3,52 @@
 @section('title', $user->name)
 
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <img src="/img/bg/user-info-bg.jpg" alt="bg" style="height: 256px; width: 100%;">
+    <div class="row user-show-bg">
+
+        <div class="col-md-2">
             <section class="photo-img">
                 @include('shared._user_photo', ['users' => $user, 'size' => 144])
             </section>
-            <div class="title-username">{{ $user->name }}</div>
-            <div class="title-info">
+        </div>
+
+        <div class="col-md-3">
+            <div class="title-name">{{ $user->name }}</div>
+            <div class="title-attach">
                 @if (Auth::check() && Auth::user()->id == $user->id)
 
-                    <a href="#" class="title-info-link">
-                        <span title="我的粉丝">
-                            <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red"></span>
-                            <b class="title-info-count">({{ $user->getFansCount() }})</b>
-                        </span>
-                    </a>
-                    <a href="#" class="title-info-link">
-                        <span title="我关注的">
-                            <span class="glyphicon glyphicon-star" aria-hidden="true" style="color: orange"></span>
-                            <b class="title-info-count">({{ $user->getAttentionsCount() }})</b>
-                        </span>
-                    </a>
-
-                @elseif ($user->isFocusOn())
-
-                    <a href="#" class="btn btn-sm btn-primary active" type="submit">
+                    <span title="我的粉丝" class="label label-info">
                         <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red"></span>
-                        <b class="title-info-count"></b>取消关注({{ $user->getFansCount() }})
-                    </a>
+                        <b class="title-count">{{ count($user->fans) }}</b>
+                    </span>
+                    &nbsp;&nbsp;
+                    <span title="我关注的" class="label label-info">
+                        <span class="glyphicon glyphicon-star" aria-hidden="true" style="color: orange"></span>
+                        <b class="title-count">{{ count($user->followers) }}</b>
+                    </span>
 
                 @else
 
-                    <a href="#" class="btn btn-sm btn-info" type="submit">
-                        <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red"></span>
-                        <b class="title-info-count"></b>关注({{ $user->getFansCount() }})
-                    </a>
+                    <form method="POST" action="{{ route('users.attach', $user->id) }}">
+                        {{ csrf_field() }}
+
+                        @if ($user->isAttached())
+                            <button class="btn btn-xs btn-danger" type="submit"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{ count($user->fans) }}&nbsp;&nbsp;已关注</button>
+                        @else
+                            <button class="btn btn-xs btn-info" type="submit"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{ count($user->fans) }}&nbsp;&nbsp;关注TA</button>
+                        @endif
+
+                    </form>
 
                 @endif
             </div>
         </div>
+
+        <div class="col-md-7"></div>
+
     </div>
-    <div class="row"><hr/></div>
+
+    <hr/>
+
     <div class="row">
         <div class="col-md-3">
             <div class="list-group">
@@ -56,20 +60,43 @@
                 </a>
 
                 @if(Auth::check() && Auth::user()->id == $user->id)
-                    <a href="{{ route('users.attentions', $user->id) }}" class="list-group-item  @yield('active_attentions', '')">
+                    <a href="{{ route('users.followers', $user->id) }}" class="list-group-item  @yield('active_followers', '')">
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;&nbsp;我关注的
                     </a>
                     <a href="{{ route('users.messages', $user->id) }}" class="list-group-item  @yield('active_messages', '')">
-                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;消息中心@if ($user->getNewMessagesCount() ) <span class="badge">{{ $user->getNewMessagesCount }}</span>@endif </a>
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;消息中心@if (count($user->messages('unread')) ) <span class="badge">{{ count($user->messages('unread')) }}</span>@endif </a>
                 @endif
             </div>
 
             <div class="panel panel-default panel-fans">
                 <div class="panel-heading">
-                    <span class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red"></span>&nbsp;&nbsp;所有粉丝
+                    <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&nbsp;
+                    @if (Auth::check() && Auth::user()->id == $user->id)
+                        我的粉丝
+                    @else
+                        TA的粉丝
+                    @endif
                 </div>
-                <div class="panel-body">
-                    Panel content
+                <div class="panel-body fans-panel-body">
+                    @if (!count($user->fans))
+                        @if (Auth::check() && Auth::user()->id == $user->id)
+                            <p class="tips">暂时还没有人关注你哦~</p>
+                        @else
+                            <p class="tips">TA暂时还没有粉丝呢~</p>
+                        @endif
+                    @else
+                        @for($i = 0; $i < count($user->fans); $i += 4)
+                            <div class="row">
+                                @for($j = $i; $j < $i+4 && $j < count($user->fans); $j++)
+                                    <div class="col-md-3 fans-list" title="{{ $user->fans[$j]->name }}">
+                                        <a href="{{ route('users.show', $user->fans[$j]->id) }}" class="thumbnail">
+                                            <img alt="{{ $user->fans[$j]->name }}" src="{{ $user->fans[$j]->gravatar('64') }}">
+                                        </a>
+                                    </div>
+                                @endfor
+                            </div>
+                        @endfor
+                    @endif
                 </div>
             </div>
         </div>
@@ -78,7 +105,7 @@
 
             <div class="panel panel-default panel-content">
                 <div class="panel-heading">
-                    <h3 class="panel-title">个人中心&nbsp;&gt;&nbsp;@yield('panel_title', '')</h3>
+                    <h3 class="panel-title">@yield('panel_title', '')</h3>
                 </div>
                 <div class="panel-body user-panel">
 

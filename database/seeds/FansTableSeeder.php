@@ -12,7 +12,24 @@ class FansTableSeeder extends Seeder
      */
     public function run()
     {
-        $fans = factory(Fan::class)->times(300)->make();
-        Fan::insert($fans->toArray());
+        $faker = app(Faker\Generator::class);
+
+        for ($master_id = 1; $master_id < 50; $master_id++) {
+            $times = rand(0, 7);
+            $except_ids = [$master_id];
+            for ($i = 1; $i <= $times; $i++) {
+                do {
+                    $follow_id = rand(1, 50);
+                } while (in_array($follow_id, $except_ids));
+
+                $datetime = $faker->date . ' ' . $faker->time;
+
+                Fan::insert([
+                    'master_id' => $master_id,
+                    'follow_id' => $follow_id,
+                    'created_at' => $datetime,
+                ]);
+            }
+        }
     }
 }

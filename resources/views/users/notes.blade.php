@@ -5,8 +5,8 @@
 @section('active_notes', 'active')
 
 @section('panel_content')
-    <div class="col-md-12">
-        @if (Auth::user()->id == $user->id)
+    <div class="row">
+        @if (Auth::check() && Auth::user()->id == $user->id)
             <form method="POST" action="{{ route('notes.store') }}">
                 {{ csrf_field() }}
 
@@ -23,8 +23,21 @@
             @include('shared._msgs', ['show_all' => false, 'title' => '提示', 'msg_type' => 'success'])
         @endif
 
-        <div class="note-lists">
-            <h3><span class="label label-info">已发表的微博（{{ count($user->notes) }}）</span></h3><br>
+        <div class="note-lists" id="lists">
+
+            @if (Auth::check() && Auth::user()->id == $user->id)
+                @if ($notes->total())
+                    <h3><span class="label label-info" style="padding: 8px">我发表过的微博（{{ $notes->total() }}）</span></h3><br>
+                @else
+                    <p class="tips">你还没发表过任何微博动态哦~</p>
+                @endif
+            @else
+                @if ($notes->total())
+                    <h3><span class="label label-info" style="padding: 8px">TA发表过的微博（{{ $notes->total() }}）</span></h3><br>
+                @else
+                    <p class="tips">TA还没发表过任何微博动态哦~</p>
+                @endif
+            @endif
 
             @foreach( $notes as $note)
                 <div class="media">
@@ -49,16 +62,8 @@
             @endforeach
 
             <br><br>
-            <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                </ul>
+            <nav aria-label="..." class="page-split">
+                {{ $notes->fragment('lists')->render() }}
             </nav>
 
         </div>

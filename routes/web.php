@@ -21,10 +21,12 @@ Route::delete('/logout', 'SessionsController@destroy')->name('logout');
 
 Route::get('/users/{user}/safety', 'UsersController@safety')->name('users.safety');
 Route::get('/users/{user}/notes', 'UsersController@notes')->name('users.notes');
-Route::get('/users/{user}/attentions', 'UsersController@attentions')->name('users.attentions');
+Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.followers');
+Route::post('/users/{user}/attach', 'UsersController@attachOrDetach')->name('users.attach');
 Route::get('/users/{user}/messages', 'UsersController@messages')->name('users.messages');
+Route::get('/users/{user}/photo/{hash}?s={size}', 'UsersController@photo')->name('users.photo');
 
-Route::resource('users', 'UsersController');
+Route::resource('users', 'UsersController', ['except' => ['index']]);
 
 Route::resource('notes', 'NotesController', ['only' => ['store', 'destroy']]);
 

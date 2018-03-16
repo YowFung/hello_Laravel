@@ -15,10 +15,9 @@ class CreateFansTable extends Migration
     {
         Schema::create('fans', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('from_id');
-            $table->integer('to_id');
-            $table->boolean('read')->default(false);
-            $table->timestamps();
+            $table->integer('master_id')->index();
+            $table->integer('follow_id')->index();
+            $table->timestamp('created_at')->default(\Carbon\Carbon::now());
         });
     }
 

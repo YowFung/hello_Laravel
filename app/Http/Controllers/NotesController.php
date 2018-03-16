@@ -13,6 +13,12 @@ class NotesController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * 发表微博动态
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -23,9 +29,15 @@ class NotesController extends Controller
             'content' => $request->notes_content,
         ]);
 
-        return redirect()->back();
+        return redirect(route('users.notes', Auth::user()->id));
     }
 
+    /**
+     * 删除微博记录
+     *
+     * @param Note $note
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Note $note)
     {
         $this->authorize('destroy', $note);

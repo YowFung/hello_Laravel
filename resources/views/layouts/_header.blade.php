@@ -18,14 +18,15 @@
                     <li role="presentation">
                         <a href="{{ route('users.show', Auth::user()->id) }}">
                             {{ Auth::user()->name }}
-                            <span class="badge">3</span>
+                            @if (count($user->messages('unread')) ) <span class="badge">{{ count(Auth::user()->messages('unread')) }}</span> @endif
                         </a>
                     </li>
-                    <li>
-                        <form action="{{ route('logout') }}" method="POST">
+                    <li role="presentation">
+                        <form action="{{ route('logout') }}" method="POST" style="display: inline-block">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button class="btn btn-block btn-logout" type="submit" name="button" title="退出登录">
+                            <button class="btn btn-block btn-logout" type="submit" name="button">
+                                退出
                                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                             </button>
                         </form>

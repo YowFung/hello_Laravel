@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -78,6 +79,7 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update', $user);
+
         return view('users.edit', compact('user'));
     }
 
@@ -98,6 +100,14 @@ class UsersController extends Controller
                 'password_old' => 'required',
                 'password_new' => 'required|confirmed|min:6|max:16',
             ]);
+
+            if (!Hash::check($request->password_old, $user->password)) {
+                session()->flash('danger', '原密码不正确。');
+                return redirect()->back();
+            } elseif ($request->password_old == $request->password_new) {
+                session()->flash('danger', '新密码不能跟原密码一样。');
+                return redirect()->back();
+            }
 
             $data = ['password' => bcrypt($request->password_new)];
         }
@@ -139,7 +149,24 @@ class UsersController extends Controller
     public function safety(User $user)
     {
         $this->authorize('update', $user);
+
         return view('users.safety', compact('user'));
+    }
+
+
+    /**
+     * 获取用户头像链接
+     *
+     * @param User $user
+     * @param $hash
+     * @param int $size
+     * @return string
+     */
+    public function photo(User $user, $hash, $size = 64)
+    {
+
+        $url = '';
+        return $url;
     }
 
 
@@ -154,6 +181,9 @@ class UsersController extends Controller
         $notes = $user->notes()
             ->orderBy('created_at', 'desc')
             ->paginate(5);
+
+        $notes->url(route('users.notes', $user->id));
+
         return view('users.notes', compact('user', 'notes'));
     }
 
@@ -164,11 +194,17 @@ class UsersController extends Controller
      * @param User $user
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function attentions(User $user)
+    public function followers(User $user)
     {
         $this->authorize('update', $user);
 
-        return view('users.attentions', compact('user'));
+        $followers = Auth::user()->followers()
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        $followers->url(route('users.followers', Auth::user()->id));
+
+        return view('users.followers', compact('followers', 'user'));
     }
 
 
@@ -187,5 +223,26 @@ class UsersController extends Controller
             ->paginate(10);
 
         return view('users.messages', compact('user', 'messages'));
+    }
+
+
+    /**
+     * 关注/取消关注该用户
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function attachOrDetach(User $user)
+    {
+        if (!Auth::check())
+            return view('login');
+
+        if ($user->isAttached()) {
+            Auth::user()->followers()->detach([$user->id]);
+        } else {
+            Auth::user()->followers()->sync([$user->id], false);
+        }
+
+        return redirect()->back();
     }
 }

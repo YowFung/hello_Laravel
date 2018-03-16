@@ -15,7 +15,7 @@
 
             <div class="form-label-group">
                 <label for="inputOldPassword">原先密码</label>
-                <input type="password" id="inputOldPassword" name="password_old" class="form-control control-edit" placeholder="Old Password 暂未做授权处理" autofocus>
+                <input type="password" id="inputOldPassword" name="password_old" class="form-control control-edit" placeholder="Old Password" autofocus>
             </div>
             <br/>
 

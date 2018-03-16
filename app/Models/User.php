@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
@@ -28,61 +29,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /**
-     * 获取当前用户的粉丝总数
-     *
-     * @return int
-     */
-    public function getFansCount()
-    {
-        return count(Fan::all()->where('to_id', $this->attributes['id']));
-    }
 
     /**
-     * 获取当前用户的关注总数
-     *
-     * @return int
-     */
-    public function getAttentionsCount()
-    {
-        return count(Fan::all()->where('from_id', $this->attributes['id']));
-    }
-
-    /**
- * 获取当前用户的新消息总数
- *
- * @return int
- */
-    public function getNewMessagesCount()
-    {
-        return count(Message::all()->where('to_id', $this->attributes['id'])->where('read', 'False'));
-    }
-
-    /**
-     * 获取当前用户的新粉丝总数
-     *
-     * @return int
-     */
-    public function getNewFansCount()
-    {
-        return count(Fan::all()->where('to_id', $this->attributes['id'])->where('read', 'False'));
-    }
-
-    /**
-     * 是否已关注某人
-     *
-     * @return bool
-     */
-    public function isFocusOn()
-    {
-        if (Auth::check() && Fan::all()->where('from_id', Auth::user()->id)->where('to_id', $this->attributes['id']))
-            return true;
-        else
-            return false;
-    }
-
-    /**
-     * 获取当前用户的Gravatar头像
+     * 获取用户的Gravatar头像
      *
      * @param string $size
      * @return string
@@ -93,23 +42,75 @@ class User extends Authenticatable
         return "http://www.gravatar.com/avatar/$hash?s=$size";
     }
 
+
+    /**
+     * 获取该用户最新发布的微博动态
+     *
+     * @return mixed
+     */
+    public function newNote()
+    {
+        $note = $this->notes()->orderByDesc('created_at')->first()['content'];
+        return $note;
+    }
+
+
+    /**
+     * 微博动态列表
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function notes()
     {
         return $this->hasMany(Note::class);
     }
 
+
+    /**
+     * 消息列表
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages($filtrate  = 'all')
+    {
+        switch ($filtrate) {
+            case 'all'    : return $this->hasMany(Message::class)->orderByDesc('updated_at');
+            case 'read'   : return $this->hasMany(Message::class)->where('read', true);
+            case 'unread' : return $this->hasMany(Message::class)->where('read', false);
+        }
+
+    }
+
+
+    /**
+     * 建立用户-粉丝关系
+     *
+//     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function fans()
     {
-        return $this->hasMany(Fan::class);
+        return  $this->belongsToMany(User::class, 'fans', 'master_id', 'follow_id');
     }
 
-    public function attentions()
+
+    /**
+     * 建立用户-关注人关系
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function followers()
     {
-        return $this->hasMany(Fan::class);
+        return $this->belongsToMany(User::Class, 'fans', 'follow_id', 'master_id');
     }
 
-    public function messages()
+
+    /**
+     * 是否已关注该用户
+     *
+     * @return bool
+     */
+    public function isAttached()
     {
-        return $this->hasMany(Message::class);
+        return (Auth::check() && Auth::user()->followers->contains($this->attributes['id']));
     }
 }
