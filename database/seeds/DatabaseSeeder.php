@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(FansTableSeeder::class);
         $this->call(NotesTableSeeder::class);
+        $this->call(MessagesTableSeeder::class);
 
         Model::reguard();
     }

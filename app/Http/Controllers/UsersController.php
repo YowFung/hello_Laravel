@@ -212,17 +212,24 @@ class UsersController extends Controller
      * 用户消息列表页面
      *
      * @param User $user
+     * @param string $nav_type
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function messages(User $user)
+    public function messages(User $user, $nav_type = 'new')
     {
         $this->authorize('update', $user);
 
-        $messages = $user->messages()
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $messages = $user->messages();
 
-        return view('users.messages', compact('user', 'messages'));
+        if ($nav_type != 'all' && $nav_type != 'new')
+            $messages = $messages->where('type', $nav_type);
+        elseif ($nav_type == 'new')
+            $messages = $messages->where('read', false);
+
+        $messages = $messages->paginate(5);
+        $messages->url(route('users.messages', [$user->id, $nav_type]));
+
+        return view('users.messages', compact('user', 'messages', 'nav_type'));
     }
 
 

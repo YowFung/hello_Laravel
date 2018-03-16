@@ -18,7 +18,7 @@
                     <li role="presentation">
                         <a href="{{ route('users.show', Auth::user()->id) }}">
                             {{ Auth::user()->name }}
-                            @if (count($user->messages('unread')) ) <span class="badge">{{ count(Auth::user()->messages('unread')) }}</span> @endif
+                            @if (Auth::user()->newMessagesCount())  <span class="badge">{{ Auth::user()->newMessagesCount() }}</span> @endif
                         </a>
                     </li>
                     <li role="presentation">

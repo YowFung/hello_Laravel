@@ -27,13 +27,13 @@
 
             @if (Auth::check() && Auth::user()->id == $user->id)
                 @if ($notes->total())
-                    <h3><span class="label label-info" style="padding: 8px">我发表过的微博（{{ $notes->total() }}）</span></h3><br>
+                    <h3><span class="label label-info" style="padding: 8px">我发表过的微博动态（{{ $notes->total() }}）</span></h3><br>
                 @else
                     <p class="tips">你还没发表过任何微博动态哦~</p>
                 @endif
             @else
                 @if ($notes->total())
-                    <h3><span class="label label-info" style="padding: 8px">TA发表过的微博（{{ $notes->total() }}）</span></h3><br>
+                    <h3><span class="label label-info" style="padding: 8px">TA发表过的微博动态（{{ $notes->total() }}）</span></h3><br>
                 @else
                     <p class="tips">TA还没发表过任何微博动态哦~</p>
                 @endif

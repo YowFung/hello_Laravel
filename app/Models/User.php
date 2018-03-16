@@ -71,21 +71,27 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function messages($filtrate  = 'all')
+    public function messages()
     {
-        switch ($filtrate) {
-            case 'all'    : return $this->hasMany(Message::class)->orderByDesc('updated_at');
-            case 'read'   : return $this->hasMany(Message::class)->where('read', true);
-            case 'unread' : return $this->hasMany(Message::class)->where('read', false);
-        }
+        return $this->hasMany(Message::class, 'to_id')->orderByDesc('created_at');
+    }
 
+
+    /**
+     * 获取该用户的新消息数量
+     *
+     * @return int
+     */
+    public function newMessagesCount()
+    {
+        return count($this->messages->where('read',false));
     }
 
 
     /**
      * 建立用户-粉丝关系
      *
-//     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function fans()
     {

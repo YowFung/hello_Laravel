@@ -15,12 +15,12 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('from_id');
-            $table->integer('to_id');
+            $table->integer('from_id')->index();
+            $table->integer('to_id')->index();
             $table->boolean('read')->default(false);
             $table->string('type', 20)->default('system');
             $table->text('passage', 5000);
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\Carbon\Carbon::now());
         });
     }
 

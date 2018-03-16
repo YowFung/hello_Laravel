@@ -63,8 +63,8 @@
                     <a href="{{ route('users.followers', $user->id) }}" class="list-group-item  @yield('active_followers', '')">
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;&nbsp;我关注的
                     </a>
-                    <a href="{{ route('users.messages', $user->id) }}" class="list-group-item  @yield('active_messages', '')">
-                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;消息中心@if (count($user->messages('unread')) ) <span class="badge">{{ count($user->messages('unread')) }}</span>@endif </a>
+                    <a href="{{ route('users.messages', [$user->id, 'new']) }}" class="list-group-item  @yield('active_messages', '')">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;消息中心@if (Auth::user()->newMessagesCount() ) <span class="badge">{{ Auth::user()->newMessagesCount() }}</span>@endif </a>
                 @endif
             </div>
 
