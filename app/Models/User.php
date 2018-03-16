@@ -44,6 +44,17 @@ class User extends Authenticatable
 
 
     /**
+     * 建立用户-微博动态关系
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
+
+    /**
      * 获取该用户最新发布的微博动态
      *
      * @return mixed
@@ -56,24 +67,13 @@ class User extends Authenticatable
 
 
     /**
-     * 微博动态列表
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function notes()
-    {
-        return $this->hasMany(Note::class);
-    }
-
-
-    /**
-     * 消息列表
+     * 建立用户-消息关系
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function messages()
     {
-        return $this->hasMany(Message::class, 'to_id')->orderByDesc('created_at');
+        return $this->hasMany(Message::class)->orderByDesc('created_at');
     }
 
 
@@ -95,7 +95,7 @@ class User extends Authenticatable
      */
     public function fans()
     {
-        return  $this->belongsToMany(User::class, 'fans', 'master_id', 'follow_id');
+        return $this->belongsToMany(User::class, 'fans', 'master_id', 'follow_id');
     }
 
 

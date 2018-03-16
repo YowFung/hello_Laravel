@@ -3,9 +3,11 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Message;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
-class UserPolicy
+class MessagePolicy
 {
     use HandlesAuthorization;
 
@@ -19,15 +21,16 @@ class UserPolicy
         //
     }
 
+
     /**
-     * 用户资料更新权限
+     * 消息查看权限
      *
      * @param User $currentUser
-     * @param User $user
+     * @param Message $message
      * @return bool
      */
-    public function update(User $currentUser, User $user)
+    public function show(User $currentUser, Message $message)
     {
-        return $currentUser->id === $user->id;
+        return $currentUser->id === $message->to_id;
     }
 }

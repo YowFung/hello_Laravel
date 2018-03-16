@@ -13,16 +13,23 @@
             </script>
         @endif
 
+        @include('shared._msgs', ['show_all' => false, 'title' => '提示', 'msg_type' => 'success'])
+
         @if ($followers->total())
 
             @foreach ($followers as $follower)
                 <div class="media">
                     <div class="media-left">
-                        <div class="media-object thumbnail" style="width: 120px">
+                        <div class="media-object thumbnail" style="width: 64px; margin-bottom: 6px">
                             <a href="{{ route('users.show', $follower->id) }}">
-                                <img alt="{{ $follower->name }}" src="{{ $follower->gravatar(132) }}">
+                                <img alt="{{ $follower->name }}" src="{{ $follower->gravatar(104) }}">
                             </a>
                         </div>
+                        <form action="{{ route('users.attach', $follower->id) }}" method="POST" style="display: inline-block">
+                            {{ csrf_field() }}
+
+                            <button type="submit" class="btn btn-xs btn-danger" style="margin-left: 2px">取消关注</button>
+                        </form>
                     </div>
                     <div class="media-body">
                         <a href="{{ route('users.show', $follower->id) }}"><h4>{{ $follower->name }}</h4></a>
@@ -34,11 +41,6 @@
                                     {{ $follower->newNote() }}
                                 </p>
                             @endif
-                        <form action="{{ route('users.attach', $follower->id) }}" method="POST" style="display: inline-block">
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-sm btn-danger">取消关注</button>
-                        </form>
-                        <a href="{{ route('users.show', $follower->id) }}" class="btn btn-sm btn-success">查看更多</a>
                     </div>
                 </div>
                 <br>
@@ -50,7 +52,7 @@
             </nav>
 
         @else
-
+            <p class="tips">你未关注过任何人~</p>
         @endif
     </div>
 

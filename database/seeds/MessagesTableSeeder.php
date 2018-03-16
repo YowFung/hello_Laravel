@@ -12,7 +12,9 @@ class MessagesTableSeeder extends Seeder
      */
     public function run()
     {
-        $messages = factory(Message::class)->times(20)->make();
-        Message::insert($messages->toArray());
+        $messages = factory(Message::class)->times(10)->make();
+        $messages = $messages->makeVisible(['content', 'parameters'])->toarray();
+
+        Message::insert($messages);
     }
 }

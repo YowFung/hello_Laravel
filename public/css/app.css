@@ -8524,3 +8524,39 @@ footer {
   margin-top: 8px;
 }
 
+.message-item form {
+  display: none;
+  height: 20px;
+}
+
+.message-item form button {
+  padding: 0px 5px;
+  margin-top: 1px;
+}
+
+.message-item:hover form {
+  display: inline-block;
+}
+
+.message-item-key {
+  line-height: 18px;
+}
+
+.message-passage {
+  text-indent: 2em;
+}
+
+.message-nav {
+  display: inline-block;
+  float: right;
+}
+
+.message-nav ul {
+  display: inline-block;
+  margin: 0px;
+}
+
+.message-passage-panel {
+  min-height: 120px;
+}
+
