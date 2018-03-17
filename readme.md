@@ -56,7 +56,9 @@ yowfung/microBlog 是一个简洁的微博应用网站，使用 Laravel 5.5 后�
     
 ## CopyRight
 
-    本项目由 yowfung 开发并提供更新，项目开源
-    联系邮箱：[yowfung@outlook.com](mailto:yowfung@outlook.com)
-    个人博客：[www.yowfung.cn](http://www.yowfung.cn/)
+本项目由 yowfung 开发并提供更新，项目开源
+
+联系邮箱：[yowfung@outlook.com](mailto:yowfung@outlook.com)
+
+个人博客：[www.yowfung.cn](http://www.yowfung.cn/)
     
