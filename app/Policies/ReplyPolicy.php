@@ -3,22 +3,23 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Reply;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class ReplyPolicy
 {
     use HandlesAuthorization;
 
 
     /**
-     * 用户资料更新权限
+     * 留言回复删除权限
      *
      * @param User $currentUser
-     * @param User $user
+     * @param Reply $reply
      * @return bool
      */
-    public function showAndUpdate(User $currentUser, User $user)
+    public function destroy(User $currentUser, Reply $reply)
     {
-        return $currentUser->id === $user->id;
+        return $currentUser->id === $reply->from_id;
     }
 }

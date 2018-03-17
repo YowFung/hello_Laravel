@@ -64,13 +64,17 @@
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;&nbsp;我关注的
                     </a>
                     <a href="{{ route('messages.index', [$user->id, 'new']) }}" class="list-group-item  @yield('active_messages', '')">
-                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;&nbsp;
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;
                         消息中心
                         @if (Auth::user()->newMessagesCount() )
                             <span class="badge">{{ Auth::user()->newMessagesCount() }}</span>
                         @endif
                     </a>
                 @endif
+
+                <a href="{{ route('letters.index', $user->id) }}" class="list-group-item  @yield('active_letters', '')">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;留言板
+                </a>
             </div>
 
             <div class="panel panel-default panel-fans">

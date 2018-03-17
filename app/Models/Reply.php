@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class Comment extends Model
+class Reply extends Model
 {
     protected $fillable = [
-        'note_id', 'from_id', 'involved_id', 'content', 'created_at'
+        'from_id', 'letter_id', 'involved_id', 'content'
     ];
 
 
     /**
-     * 建立评论-发布者用户关系
+     * 建立留言回复者用户-留言回复关系
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -24,7 +24,7 @@ class Comment extends Model
 
 
     /**
-     * 该评论是否有操作权限
+     * 该留言回复是否有操作权限
      *
      * @return bool
      */

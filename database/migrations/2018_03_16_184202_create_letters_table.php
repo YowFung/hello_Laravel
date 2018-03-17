@@ -15,7 +15,11 @@ class CreateLettersTable extends Migration
     {
         Schema::create('letters', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->integer('from_id');
+            $table->integer('user_id')->index();
+            $table->integer('involved_id')->default(0);
+            $table->text('content');
+            $table->timestamp('created_at')->default(\Carbon\Carbon::now());
         });
     }
 

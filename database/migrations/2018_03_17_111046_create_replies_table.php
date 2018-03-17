@@ -15,12 +15,11 @@ class CreateRepliesTable extends Migration
     {
         Schema::create('replies', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('message_id')->index();
-            $table->integer('from_id')->index();
-            $table->integer('to_id')->default(0);
-            $table->boolean('read')->default(false);
-            $table->text('content', '200');
-            $table->timestamps();
+            $table->integer('letter_id')->index();
+            $table->integer('from_id');
+            $table->integer('involved_id')->default(0);
+            $table->text('content');
+            $table->timestamp('created_at')->default(\Carbon\Carbon::now());
         });
     }
 

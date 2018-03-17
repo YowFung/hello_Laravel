@@ -22,7 +22,7 @@ class NotesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'notes_content' => 'required|min:5|max:140'
+            'notes_content' => 'required|min:3|max:200'
         ]);
 
         Auth::user()->notes()->create([

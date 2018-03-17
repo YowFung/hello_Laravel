@@ -28,6 +28,6 @@ Route::get('/users/{user}/photo/{hash}?s={size}', 'UsersController@photo')->name
 Route::resource('users', 'UsersController', ['except' => ['index']]);
 Route::resource('messages', 'MessagesController', ['only' => ['show', 'update', 'destroy']]);
 Route::resource('notes', 'NotesController', ['only' => ['store', 'destroy']]);
-Route::resource('letters', 'LettersController', ['only' => ['show']]);
+Route::resource('letters', 'LettersController', ['only' => ['show', 'index']]);
 
 Route::get('/messages/{user}/{nav_type}', 'MessagesController@index')->name('messages.index');

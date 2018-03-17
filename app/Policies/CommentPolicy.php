@@ -3,22 +3,23 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class CommentPolicy
 {
     use HandlesAuthorization;
 
 
     /**
-     * 用户资料更新权限
+     * 评论删除权限
      *
      * @param User $currentUser
-     * @param User $user
+     * @param Comment $comment
      * @return bool
      */
-    public function showAndUpdate(User $currentUser, User $user)
+    public function destroy(User $currentUser, Comment $comment)
     {
-        return $currentUser->id === $user->id;
+        return $currentUser->id === $comment->user_id;
     }
 }

@@ -26,7 +26,7 @@ class MessagesController extends Controller
      */
     public function index(User $user, $nav_type = 'new')
     {
-        $this->authorize('update', $user);
+        $this->authorize('index', $user);
 
         $messages = $user->messages();
 
@@ -52,7 +52,7 @@ class MessagesController extends Controller
      */
     public function show(Message $message)
     {
-        $this->authorize('show', $message);
+        $this->authorize('operation', $message);
 
         $read = $message->read;
         $message->update(['read' => true]);
@@ -71,7 +71,7 @@ class MessagesController extends Controller
      */
     public function update(Message $message)
     {
-        $this->authorize('show', $message);
+        $this->authorize('operation', $message);
 
         $message->update(['read' => true]);
         return redirect()->back();
@@ -86,7 +86,7 @@ class MessagesController extends Controller
      */
     public function destroy(Message $message)
     {
-        $this->authorize('show', $message);
+        $this->authorize('operation', $message);
         $message->delete();
 
         session()->flash('success', '已成功删除该条消息！');
