@@ -1,58 +1,56 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+## 项目概述
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+- 项目名称： 简易微博
+- 项目代号： yowfung/microBlog
+- 开发人员： [yowfung](https://github.com/YowFung/)
+- 开发框架： Laravel 5.5/BootStrap v3
+- 当前版本： 1.1.0
 
-## About Laravel
+yowfung/microBlog 是一个简洁的微博应用网站，使用 Laravel 5.5 后端框架及 BootStrap v3 前端框架编写而成。该项目为本人(yowfung)学习 Laravel 开发框架的一个实战项目。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## 应用功能
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 用户认证——注册、登录、退出；
+- 个人中心——个人资料、修改资料、修改密码、微博动态列表、关注人列表、粉丝列表、消息中心、留言板等；
+- 首页动态——关注人的最新微博动态、最新推荐动态、搜索用户等；
+- 表单验证——Request
+- 访问权限——Middleware
+- 授权策略——Policy
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+## 测试上线
 
-## Learning Laravel
+- 测试环境： Ubuntu 16.04/Nginx 1.11/MySQL 5.7
+- 数据库迁移和填充：
+```shell
+    php artisan migrate --seed
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+## 项目约定
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- 数据长度：
+    - 用户昵称： min:3|max:50
+    - 邮箱地址： min:1|max:255
+    - 登录密码： min:6|max:16
+    - 用户资料-社团：nullable|max:200
+    - 用户资料-院系：nullable|max:200
+    - 用户资料-籍贯：nullable|max:200
+    - 微博动态内容：min:3|max:200
+    - 动态评论内容：min:1|max:140
+    - 留言内容： min:3|max:1000
+    - 留言回复： min:1|max:140
+    - 消息内容： min:10|max:500
+    
+- 数据唯一：
+    - 用户昵称： unique: users
+    - 邮箱地址: unique: users
+    
+- 数据限制：
+    - 用户性别： in: male, female
+    - 消息类别： in: system, attach, letter, letter_reply, comment, comment_reply
+    
+- 路由设计：
+    遵循RESTFul规范
+    
+- 代码风格：
+    遵循PSR规范
+    

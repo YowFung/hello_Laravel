@@ -12,14 +12,14 @@ class LetterPolicy
 
 
     /**
-     * 留言删除权限
+     * 留言授权策略
      *
-     * @param User $currentUser
+     * @param User $user
      * @param Letter $letter
      * @return bool
      */
-    public function destroy(User $currentUser, Letter $letter)
+    public function letter(User $user, Letter $letter)
     {
-        return $currentUser->id === $letter->user_id || $currentUser->id === $letter->from_id;
+        return $user->id === $letter->user_id || $user->id === $letter->from_id;
     }
 }

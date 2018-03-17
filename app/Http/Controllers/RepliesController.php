@@ -50,7 +50,7 @@ class RepliesController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        $this->authorize('destroy', $reply);
+        $this->authorize('reply', $reply);
         $reply->delete();
 
         return redirect()->back();

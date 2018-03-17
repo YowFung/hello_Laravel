@@ -26,7 +26,7 @@ class SessionsController extends Controller
      * 创建新会话（登录）
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {

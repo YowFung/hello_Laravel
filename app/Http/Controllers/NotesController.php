@@ -40,7 +40,7 @@ class NotesController extends Controller
      */
     public function destroy(Note $note)
     {
-        $this->authorize('destroy', $note);
+        $this->authorize('note', $note);
         $note->delete();
 
         session()->flash('success', '该条微博已被成功删除！');

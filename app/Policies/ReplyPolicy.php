@@ -12,14 +12,14 @@ class ReplyPolicy
 
 
     /**
-     * 留言回复删除权限
+     * 留言回复授权策略
      *
-     * @param User $currentUser
+     * @param User $user
      * @param Reply $reply
      * @return bool
      */
-    public function destroy(User $currentUser, Reply $reply)
+    public function reply(User $user, Reply $reply)
     {
-        return $currentUser->id === $reply->from_id;
+        return $user->id === $reply->from_id;
     }
 }

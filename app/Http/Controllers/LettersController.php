@@ -62,10 +62,11 @@ class LettersController extends Controller
     }
 
 
-    public function destory(Letter $letter)
+    public function destroy(Letter $letter)
     {
-        $this->authorize('destroy', $letter);
+        $this->authorize('letter', $letter);
+        $letter->delete();
 
-
+        return redirect()->back();
     }
 }

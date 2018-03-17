@@ -26,7 +26,7 @@ class MessagesController extends Controller
      */
     public function index(User $user, $nav_type = 'new')
     {
-        $this->authorize('index', $user);
+        $this->authorize('user', $user);
 
         $messages = $user->messages();
 
@@ -52,7 +52,7 @@ class MessagesController extends Controller
      */
     public function show(Message $message)
     {
-        $this->authorize('operation', $message);
+        $this->authorize('message', $message);
 
         $read = $message->read;
         $message->update(['read' => true]);
@@ -71,7 +71,7 @@ class MessagesController extends Controller
      */
     public function update(Message $message)
     {
-        $this->authorize('operation', $message);
+        $this->authorize('message', $message);
 
         $message->update(['read' => true]);
         return redirect()->back();
@@ -86,7 +86,7 @@ class MessagesController extends Controller
      */
     public function destroy(Message $message)
     {
-        $this->authorize('operation', $message);
+        $this->authorize('message', $message);
         $message->delete();
 
         session()->flash('success', '已成功删除该条消息！');
@@ -112,7 +112,7 @@ class MessagesController extends Controller
         if (count($parameters) != $sign_begin_count || count($parameters) != $sign_end_count)
             return false;
 
-        if (!in_array($type, ['system', 'letter', 'letter_replay', 'attach', 'comment', 'comment_replay']))
+        if (!in_array($type, ['system', 'letter', 'letter_reply', 'attach', 'comment', 'comment_reply']))
             return false;
 
         $parameters = implode(config('app.sign_separate'), $parameters);

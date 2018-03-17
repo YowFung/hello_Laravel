@@ -12,14 +12,14 @@ class CommentPolicy
 
 
     /**
-     * 评论删除权限
+     * 评论授权策略
      *
-     * @param User $currentUser
+     * @param User $user
      * @param Comment $comment
      * @return bool
      */
-    public function destroy(User $currentUser, Comment $comment)
+    public function comment(User $user, Comment $comment)
     {
-        return $currentUser->id === $comment->user_id;
+        return $user->id === $comment->user_id;
     }
 }

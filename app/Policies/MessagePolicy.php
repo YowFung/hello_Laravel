@@ -13,27 +13,14 @@ class MessagePolicy
 
 
     /**
-     * 消息的查看/更新/删除权限
+     * 消息授权策略
      *
-     * @param User $currentUser
+     * @param User $user
      * @param Message $message
      * @return bool
      */
-    public function operation(User $currentUser, Message $message)
+    public function message(User $user, Message $message)
     {
-        return $currentUser->id === $message->user_id;
-    }
-
-
-    /**
-     * 消息列表显示权限
-     *
-     * @param User $currentUser
-     * @param User $user
-     * @return bool
-     */
-    public function index(User $currentUser, User $user)
-    {
-        return $currentUser->id === $user->id;
+        return $user->id === $message->user_id;
     }
 }

@@ -82,7 +82,7 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('showAndUpdate', $user);
+        $this->authorize('user', $user);
 
         return view('users.edit', compact('user'));
     }
@@ -97,7 +97,7 @@ class UsersController extends Controller
      */
     public function update(User $user, Request $request)
     {
-        $this->authorize('showAndUpdate', $user);
+        $this->authorize('user', $user);
 
         if (array_key_exists('password_new', $request->all())) {
             $this->validate($request, [
@@ -155,7 +155,7 @@ class UsersController extends Controller
      */
     public function safety(User $user)
     {
-        $this->authorize('showAndUpdate', $user);
+        $this->authorize('user', $user);
 
         return view('users.safety', compact('user'));
     }
@@ -187,7 +187,7 @@ class UsersController extends Controller
      */
     public function followers(User $user)
     {
-        $this->authorize('showAndUpdate', $user);
+        $this->authorize('user', $user);
 
         $followers = Auth::user()->followers()
             ->orderBy('created_at', 'desc')

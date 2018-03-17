@@ -12,7 +12,8 @@ class RepliesTableSeeder extends Seeder
      */
     public function run()
     {
-        $comments = factory(Reply::class)->times(10)->make();
-        Reply::insert($comments->toArray());
+        $replies = factory(Reply::class)->times(10)->make();
+
+        Reply::insert($replies->toArray());
     }
 }

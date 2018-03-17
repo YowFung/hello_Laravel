@@ -11,13 +11,13 @@ class UserPolicy
 
 
     /**
-     * 用户资料更新权限
+     * 用户授权策略
      *
      * @param User $currentUser
      * @param User $user
      * @return bool
      */
-    public function showAndUpdate(User $currentUser, User $user)
+    public function user(User $currentUser, User $user)
     {
         return $currentUser->id === $user->id;
     }

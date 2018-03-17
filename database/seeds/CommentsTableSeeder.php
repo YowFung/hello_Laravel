@@ -13,6 +13,7 @@ class CommentsTableSeeder extends Seeder
     public function run()
     {
         $comments = factory(Comment::class)->times(20)->make();
+
         Comment::insert($comments->toArray());
     }
 }

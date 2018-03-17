@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 use App\Models\User;
 
 $factory->define(App\Models\Message::class, function (Faker $faker) {
-    $created_at = $faker->date . $faker->time;
+    $created_at = \Carbon\Carbon::today()->toDateString() . $faker->time;
     $user_id = 1;
     $type = rand(1, 5);
     $read = rand(0, 1);
@@ -24,7 +24,7 @@ $factory->define(App\Models\Message::class, function (Faker $faker) {
             $parameters = route('users.show', $from_id) . config('app.sign_separate') . route('letters.show', rand(1, 10));
             break;
         case 3:
-            $type = 'replay_letter';
+            $type = 'letter_reply';
             $from_id = rand(2, 20);
             $content = '用户「' . config('app.sign_begin') . User::find($from_id)->name . config('app.sign_end') .
                 '」已经阅读你的留言，并给你回了一段话，' . config('app.sign_begin') . '点击查看' . config('app.sign_end') . '。';
@@ -38,7 +38,7 @@ $factory->define(App\Models\Message::class, function (Faker $faker) {
             $parameters = route('users.show', $from_id) . config('app.sign_separate') . route('letters.show', rand(1, 10));
             break;
         case 5:
-            $type = 'replay_comment';
+            $type = 'comment_reply';
             $from_id = rand(2, 20);
             $content = '用户「' . config('app.sign_begin') . User::find($from_id)->name . config('app.sign_end') .
                 '」看到了你给他写的评论，并给你回了一段话，' . config('app.sign_begin') . '点击查看' . config('app.sign_end') . '。';
