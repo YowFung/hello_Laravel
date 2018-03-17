@@ -8,6 +8,7 @@
 
 yowfung/microBlog 是一个简洁的微博应用网站，使用 Laravel 5.5 后端框架及 BootStrap v3 前端框架编写而成。该项目为本人(yowfung)学习 Laravel 开发框架的一个实战项目。
 
+
 ## 应用功能
 
 - 用户认证——注册、登录、退出；
@@ -17,13 +18,70 @@ yowfung/microBlog 是一个简洁的微博应用网站，使用 Laravel 5.5 后�
 - 访问权限——Middleware
 - 授权策略——Policy
 
+
 ## 测试上线
 
-- 测试环境： Ubuntu 16.04/Nginx 1.11/MySQL 5.7
-- 数据库迁移和填充：
+- 运行环境要求： 
+    - Ubuntu 16.04 LTS +
+    - Nginx 1.10 +
+    - MySQL 5.7 +
+    - PHP 7.1 +
+
+- 克隆源代码：
+```shell
+    git clone git@github.com:YowFung/microBlog.git
+```
+
+- Composer 安装：
+```shell
+    composer install
+```
+
+- 配置项目环境：
+
+    > 将 `.env.example` 修改成 `.env` ：
+```shell
+    cp .env.example .env
+```
+
+    > 根据实际情况配置 `.env` 文件，例如：
+```txt
+    APP_URL=http://microBlog.yowfung.cn
+    APP_NAME=microBlog
+    ...
+    DB_HOST=localhost
+    DB_DATABASE=microBlog
+    DB_USERNAME=test
+    DB_PASSWORD=test
+    ...
+```
+
+- 生成数据表，并填充测试数据：
 ```shell
     php artisan migrate --seed
 ```
+
+- 修改 Nginx 域名解析配置文件（前提是你有自己的域名并已进行 DNS 域名解析）：
+```apacheconfig
+server {
+    listen          80;
+    root            <websites_root>/public;
+    index           index.php;
+    server_name     microBlog.<domain_name>;
+    
+    # orther config ...
+}
+```
+    > 其中 `<websites_root>` 是你的网站跟目录，`<domain_name>` 是你的域名地址。
+
+- 项目预览：
+    - 首页地址：[http://microBlog.yowfung.cn/](http://microBlog.yowfung.cn)
+    - 测试用户：
+    
+        > 登录邮箱： yowfung@outlook.com
+        > 
+        > 登录密码： 123456
+
 
 ## 项目约定
 
@@ -53,6 +111,7 @@ yowfung/microBlog 是一个简洁的微博应用网站，使用 Laravel 5.5 后�
     
 - 代码风格：
     遵循PSR规范
+    
     
 ## CopyRight
 
