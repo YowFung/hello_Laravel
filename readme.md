@@ -53,7 +53,7 @@
 
 - 配置项目环境：
 
-    将 `.env.example` 修改成 `.env` ：
+​	将 `.env.example` 修改成 `.env` ：
 ```shell
     cp .env.example .env
 ```
@@ -63,6 +63,7 @@
 ```php
     APP_URL=http://microBlog.yowfung.cn
     APP_NAME=microBlog
+    APP_KEY=xxxxxxxx...
     ...
       
     DB_HOST=localhost
@@ -70,6 +71,16 @@
     DB_USERNAME=test
     DB_PASSWORD=test
     ...
+```
+
+- 设置文件访问权限：
+```shell
+    sudo chmod -R 777 ./storage/
+```
+
+- 设置 APP key：
+```shell
+    php artisan key:generate
 ```
 
 - 生成数据表，并填充测试数据：
@@ -89,6 +100,10 @@ server {
 }
 ```
 ​	 其中 `<websites_root>` 是你的网站跟目录，`<domain_name>` 是你的域名地址。
+
+- 正式上线
+
+    测试了没有问题之后，在正式上线前，记得将 `.env` 配置文件里 `APP_DEBUG` 设置成 `false` 。
 
 
 - 项目预览：
