@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">
-                <img src="/favicon.ico" alt="LOGO" class="favicon">简易微博
+                <img src="/img/sign/logo.png" alt="LOGO" class="favicon">简易微博
             </a>
         </div>
 
@@ -41,3 +41,5 @@
 
     </div><!--/.container-fluid -->
 </nav>
+
+<br>

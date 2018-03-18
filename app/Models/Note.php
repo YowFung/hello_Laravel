@@ -30,4 +30,15 @@ class Note extends Model
     {
         return $this->hasMany(Comment::class)->orderByDesc('created_at');
     }
+
+
+    /**
+     * 获取该动态的评论条数
+     *
+     * @return int
+     */
+    public function commentsCount()
+    {
+        return count($this->comments);
+    }
 }

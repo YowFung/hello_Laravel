@@ -53,7 +53,7 @@
 
 - 配置项目环境：
 
-​	将 `.env.example` 修改成 `.env` ：
+  ​将 `.env.example` 修改成 `.env` ：
 ```shell
     cp .env.example .env
 ```
@@ -147,6 +147,14 @@ server {
     遵循PSR规范
 
     ​
+## 设计规则
+
+- 首页推荐规则：
+
+  从最近两年发表的所有动态中按评论数由多到少排序取出的前80条数据。
+
+  ​
+
 ## CopyRight
 
 ​	本项目由 yowfung 开发并提供更新，项目开源

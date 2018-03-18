@@ -5,6 +5,13 @@
 @section('active_notes', 'active')
 
 @section('panel_content')
+
+    @if ($notes->currentPage() <= 0 || $notes->currentPage() > $notes->lastPage())
+        <script>
+            window.location.href = '{{ $notes->url(1) }}';
+        </script>
+    @endif
+
     <div class="row">
         @if (Auth::check() && Auth::user()->id == $user->id)
             <form method="POST" action="{{ route('notes.store') }}">

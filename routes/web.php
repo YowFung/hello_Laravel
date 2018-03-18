@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/{category?}', 'HomeController@index')->name('home');
+Route::get('/search/{keyword}', 'SearchController@index')->name('search.index');
 
 Route::get('/login', 'SessionsController@create')->name('login');
 Route::post('/login', 'SessionsController@store')->name('login');
@@ -26,8 +25,8 @@ Route::post('/users/{user}/attach', 'UsersController@attachOrDetach')->name('use
 Route::get('/users/{user}/photo/{hash}?s={size}', 'UsersController@photo')->name('users.photo');
 
 Route::resource('users', 'UsersController', ['except' => ['index']]);
-Route::resource('messages', 'MessagesController', ['only' => ['show', 'update', 'destroy']]);
-Route::resource('notes', 'NotesController', ['only' => ['store', 'destroy']]);
+Route::resource('notes', 'NotesController', ['only' => ['store', 'destroy', 'show']]);
 Route::resource('letters', 'LettersController', ['only' => ['show', 'index']]);
+Route::resource('messages', 'MessagesController', ['only' => ['show', 'update', 'destroy']]);
 
 Route::get('/messages/{user}/{nav_type}', 'MessagesController@index')->name('messages.index');

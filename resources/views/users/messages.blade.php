@@ -5,6 +5,12 @@
 @section('active_messages', 'active')
 
 @section('panel_content')
+    @if ($messages->currentPage() <= 0 || $messages->currentPage() > $messages->lastPage())
+        <script>
+            window.location.href = '{{ $messages->url(1) }}';
+        </script>
+    @endif
+
     <ul class="nav nav-tabs" role="tablist" id="lists">
         <li role="presentation" @if ($nav_type == 'new') class="active" @endif>
             <a href="{{ route('messages.index', [Auth::user()->id, 'new']) }}">新消息</a>
