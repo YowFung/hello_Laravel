@@ -18,7 +18,7 @@
                 <br>
 
                 <div class="input-group">
-                    <input name="keyword" type="text" class="form-control" placeholder="昵称/邮箱">
+                    <input name="keyword" @if (isset($keyword)) value="{{ $keyword }}" @endif type="text" class="form-control" placeholder="昵称/邮箱">
                     <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">搜索用户</button>
                 </span>
@@ -39,17 +39,25 @@
                     @elseif (!count($data['followers']))
                         <p class="tips">你还没有关注过任何人哦~</p>
                     @else
-                        @for($i = 0; $i < count($data['followers']); $i += 6)
-                            <div class="row">
-                                @for($j = $i; $j < $i+6 && $j < count($data['followers']); $j++)
+                        @for($i = 0; $i < count($data['followers']) && $i <= 40; $i += 6)
+                            {{--<div class="row">--}}
+                                @for($j = $i; $j < $i+6 && $j < count($data['followers']) && $j <= 40; $j++)
                                     <div class="col-md-2 fans-list" title="{{ $data['followers'][$j]->name }}">
                                         <a href="{{ route('users.show', $data['followers'][$j]->id) }}" class="thumbnail">
                                             <img alt="{{ $data['followers'][$j]->name }}" src="{{ $data['followers'][$j]->gravatar('64') }}">
                                         </a>
                                     </div>
                                 @endfor
-                            </div>
+
+                            {{--</div>--}}
                         @endfor
+                        @if ($data['follower_count'] > 40)
+                            <div class="col-md-2 fans-list" title="查看更多">
+                                <a href="{{ route('users.followers', Auth::user()->id) }}" class="thumbnail">
+                                    <img alt="show" src="/img/sign/show_all.jpg">
+                                </a>
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>

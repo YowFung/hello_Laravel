@@ -36,7 +36,7 @@ class SessionsController extends Controller
         ]);
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
-            return redirect(route('users.show', [Auth::user()]));
+            return redirect(route('home'));
         } else {
             session()->flash('danger', '邮箱或密码不正确。');
             return redirect()->back();

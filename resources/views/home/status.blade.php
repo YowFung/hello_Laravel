@@ -32,10 +32,10 @@
                         <a href="{{ route('home', 'newest') }}">最新</a>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-right">
-                    <a href="@if (Auth::check()) {{  route('users.notes', Auth::user()->id) }} @else {{ route('login') }} @endif" class="btn btn-primary">
+                <form class="navbar-form navbar-right" @if (Auth::check()) action="{{ route('users.notes', Auth::user()->id) }}" method="GET" @endif>
+                    <button @if (Auth::check()) type="submit" @else type="button" data-toggle="popover" data-content="登录后才可以发微博，快去登录吧！" data-placement="left" data-container="body" @endif class="btn btn-primary">
                         <span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;发微博
-                    </a>
+                    </button>
                 </form>
             </div>
         </div>

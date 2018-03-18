@@ -17,7 +17,7 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $this->validate($request, [
-            'keyword' => 'required|max:255',
+            'keyword' => 'required|max:80',
         ]);
 
         $keyword = $request->keyword;
@@ -29,9 +29,9 @@ class SearchController extends Controller
         $users = User::where('name', 'like', '%' . $keyword . '%')
             ->orWhere('email', 'like', '%' . $keyword . '%')
             ->where('id', '!=', $currentUser)
-            ->paginate(5);
+            ->paginate(12);
 
-        $users->url(route('search.index', $keyword));
+        $users->url(route('search.index'));
 
         return view('home.search', compact('users', 'keyword', 'data'));
     }

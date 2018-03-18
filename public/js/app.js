@@ -1007,6 +1007,10 @@ $(".back-to-top").click(function () {
     $('body, html').animate({ scrollTop: 0 }, 500);
 });
 
+$(function () {
+    $('[data-toggle="popover"]').popover();
+});
+
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {

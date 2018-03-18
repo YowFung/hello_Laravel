@@ -33,11 +33,13 @@ class HomeController extends Controller
         $notes = $this->paginate($notes, $request, 10);
         $notes->url(route('home'));
         $followers = $this->followers();
+        $follower_count = count($followers);
 
         $data = [
             'category' => $category,
             'notes' => $notes,
             'followers' => $followers,
+            'follower_count' => $follower_count,
         ];
 
         return view('home.status', compact('data'));

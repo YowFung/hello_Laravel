@@ -8401,6 +8401,7 @@ footer {
   margin-top: 8px;
   background-color: transparent;
   color: #888;
+  outline: none;
 }
 
 .btn-logout:hover {
@@ -8635,5 +8636,23 @@ footer {
   display: inline-block;
   text-align: center;
   width: calc(100% - 96px);
+}
+
+.search-show-name {
+  height: 40px;
+  line-height: 20px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.search-show-name strong {
+  font-size: 13px;
+  display: block;
+  overflow-x: hidden;
+}
+
+.search-show-name span {
+  overflow-x: hidden;
+  display: block;
 }
 

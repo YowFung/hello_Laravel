@@ -51,6 +51,7 @@ footer {
   margin-top: 8px;
   background-color: rgba(0, 0, 0, 0);
   color: #888;
+  outline: none;
 
   &:hover {
     color: #eee;
@@ -292,4 +293,22 @@ footer {
   display: inline-block;
   text-align: center;
   width: calc(100% - 96px);
+}
+
+.search-show-name {
+  height: 40px;
+  line-height: 20px;
+  font-size: 11px;
+  white-space: nowrap;
+
+  strong {
+    font-size: 13px;
+    display: block;
+    overflow-x: hidden;
+  }
+
+  span {
+    overflow-x: hidden;
+    display: block;
+  }
 }

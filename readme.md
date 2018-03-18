@@ -131,6 +131,7 @@ server {
     - 留言内容： min:3|max:1000
     - 留言回复： min:1|max:140
     - 消息内容： min:10|max:500
+    - 搜索关键字：nullable|max:80
 
 - 数据唯一：
     - 用户昵称： unique: users
