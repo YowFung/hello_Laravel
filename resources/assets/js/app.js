@@ -20,3 +20,19 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 const app = new Vue({
     el: '#app'
 });
+
+
+
+$(window).scroll(function() {
+    var sc = $(window).scrollTop();
+    if(sc > 400){
+        $(".back-to-top").css("display","block");
+    }else{
+        $(".back-to-top").css("display","none");
+    }
+});
+
+$(".back-to-top").click(function() {
+    var sc = $(window).scrollTop();
+    $('body, html').animate({scrollTop:0}, 500);
+});

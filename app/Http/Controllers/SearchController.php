@@ -21,6 +21,9 @@ class SearchController extends Controller
         ]);
 
         $keyword = $request->keyword;
+        $data = [
+            'followers' => HomeController::followers(),
+        ];
 
         $currentUser = Auth::check() ? Auth::user()->id : 0;
         $users = User::where('name', 'like', '%' . $keyword . '%')
@@ -30,6 +33,6 @@ class SearchController extends Controller
 
         $users->url(route('search.index', $keyword));
 
-        return view('search', compact('users', 'keyword'));
+        return view('home.search', compact('users', 'keyword', 'data'));
     }
 }

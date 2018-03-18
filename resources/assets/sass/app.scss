@@ -258,3 +258,38 @@ footer {
 .note-content {
   margin-top: 8px;
 }
+
+.comment-div {
+  textarea {
+    resize: none;
+    overflow-y: hidden;
+  }
+
+  button {
+    height: 54px;
+  }
+}
+
+.back-to-top {
+  position: fixed;
+  right: 64px;
+  bottom: 64px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  color: #888;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.search-result-tips {
+  display: inline-block;
+  text-align: center;
+  width: calc(100% - 96px);
+}

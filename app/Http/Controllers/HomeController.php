@@ -32,10 +32,7 @@ class HomeController extends Controller
 
         $notes = $this->paginate($notes, $request, 10);
         $notes->url(route('home'));
-
-        $followers = [];
-        if (Auth::check())
-            $followers = Auth::user()->followers;
+        $followers = $this->followers();
 
         $data = [
             'category' => $category,
@@ -43,7 +40,22 @@ class HomeController extends Controller
             'followers' => $followers,
         ];
 
-        return view('home', compact('data'));
+        return view('home.status', compact('data'));
+    }
+
+
+    /**
+     * 获取首页关注人列表
+     *
+     * @return array
+     */
+    static function followers()
+    {
+        $followers = [];
+        if (Auth::check())
+            $followers = Auth::user()->followers->take(40);
+
+        return $followers;
     }
 
 

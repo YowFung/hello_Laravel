@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/{category?}', 'HomeController@index')->name('home');
-Route::get('/search/{keyword}', 'SearchController@index')->name('search.index');
 
 Route::get('/login', 'SessionsController@create')->name('login');
 Route::post('/login', 'SessionsController@store')->name('login');
@@ -28,5 +26,9 @@ Route::resource('users', 'UsersController', ['except' => ['index']]);
 Route::resource('notes', 'NotesController', ['only' => ['store', 'destroy', 'show']]);
 Route::resource('letters', 'LettersController', ['only' => ['show', 'index']]);
 Route::resource('messages', 'MessagesController', ['only' => ['show', 'update', 'destroy']]);
+Route::resource('comments', 'CommentsController', ['only' => ['store', 'destroy']]);
+Route::resource('search', 'SearchController', ['only' => 'index']);
 
 Route::get('/messages/{user}/{nav_type}', 'MessagesController@index')->name('messages.index');
+
+Route::get('/{category?}', 'HomeController@index')->name('home');

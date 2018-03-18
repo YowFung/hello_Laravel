@@ -22,6 +22,11 @@
     @include('layouts._footer')
     <!-- 页脚结束 -->
 
+    {{--回顶部--}}
+    <span class="back-to-top" style="display: none" title="返回顶部">
+        <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+    </span>
+
     <script type="text/javascript" src="/js/app.js"></script>
 
 </body>
