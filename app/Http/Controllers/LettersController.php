@@ -42,7 +42,7 @@ class LettersController extends Controller
             'content' => 'mix:3|max:500',
         ]);
 
-        MessagesController::create($request->get('user'), $request->get('content'), 'letter');
+        MessagesController::createLetterMessage($request->get('user'), Auth::user()->id, $request->get('content'));
 
         return redirect()->back();
     }

@@ -10,7 +10,30 @@ class NotesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', []);
+        $this->middleware('auth', [
+            'except' => 'show',
+        ]);
+    }
+
+
+    /**
+     * 动态详情页面
+     *
+     * @param Note $note
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(Note $note)
+    {
+        $followers = HomeController::followers();
+        $follower_count = count($followers);
+
+        $data = [
+            'note' => $note,
+            'followers' => $followers,
+            'follower_count' => $follower_count,
+        ];
+
+        return view('home.note', compact('data'));
     }
 
     /**

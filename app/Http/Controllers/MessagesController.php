@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
@@ -105,38 +106,33 @@ class MessagesController extends Controller
 
 
     /**
-     * 创建新消息
-     *
-     * @param $user_id
-     * @param $content
-     * @param string $type
-     * @return bool
-     */
-    public static function create($user_id, $content, $type)
-    {
-        if (!in_array($type, ['notice', 'letter', 'follow', 'comment']))
-            return false;
-
-        $content = htmlspecialchars($content);
-
-        return Message::create([
-            'user_id' => $user_id,
-            'type' => $type,
-            'content' => $content
-        ]);
-    }
-
-
-    /**
      * 创建系统通知消息
      *
      * @param $user_id
-     * @param $content
+     * @param $type
      * @return bool
      */
-    public static function createNoticeMessage($user_id, $content)
+    public static function createNoticeMessage($user_id, $type)
     {
-        return true;
+        if (!in_array($type, ['sign_up', 'change_pwd']))
+            return false;
+
+        if (!User::find($user_id))
+            return false;
+        else
+            $name = User::find($user_id)->name;
+
+        switch ($type) {
+            case 'sign_up' : $content = '亲爱的「' . $name . '」，恭喜您成功注册微博账号，现在请开始您的微博人生吧！'; break;
+            case 'change_pwd' : $content = '亲爱的「' . $name . '」，您的密码已成功修改，请牢记您的新密码，打死都不要告诉别人您的密码哦！'; break;
+            default : return false;
+        }
+
+        return Message::create([
+            'user_id' => $user_id,
+            'type' => 'notice',
+            'content' => $content,
+        ]);
     }
 
 
@@ -150,7 +146,19 @@ class MessagesController extends Controller
      */
     public static function createLetterMessage($user_id, $from_id, $content)
     {
-        return true;
+        if (!User::find($user_id) || !User::find($from_id))
+            return false;
+
+        $name = User::find($from_id)->name;
+        $path = parse_url(route('users.show', $from_id))['path'];
+        $content = htmlspecialchars($content);
+        $content = '<p>用户「<a target="_blank" href="' . $path . '">' . $name . '</a>」查看您的微博主页，并给您留下了一段话：</p><p>' . $content . '</p>';
+
+        return Message::create([
+            'user_id' => $user_id,
+            'type' => 'letter',
+            'content' => $content,
+        ]);
     }
 
 
@@ -159,12 +167,22 @@ class MessagesController extends Controller
      *
      * @param $user_id
      * @param $from_id
-     * @param $content
      * @return bool
      */
-    public static function createFollowMessage($user_id, $from_id, $content)
+    public static function createFollowMessage($user_id, $from_id)
     {
-        return true;
+        if (!User::find($user_id) || !User::find($from_id))
+            return false;
+
+        $name = User::find($from_id)->name;
+        $path = parse_url(route('users.show', $from_id))['path'];
+        $content = '用户「<a target="_blank" href="' . $path . '">' . $name . '</a>」关注了您，现在您又多了一个粉丝啦，赶紧去了解一下TA吧！';
+
+        return Message::create([
+            'user_id' => $user_id,
+            'type' => 'follow',
+            'content' => $content,
+        ]);
     }
 
 
@@ -179,8 +197,19 @@ class MessagesController extends Controller
      */
     public static function createCommentMessage($user_id, $from_id, $note_id, $content )
     {
-        return true;
+        if (!User::find($user_id) || !User::find($from_id) || !Note::find($note_id))
+            return false;
+
+        $name = User::find($from_id)->name;
+        $note_content = htmlspecialchars(Note::find($note_id)->content);
+        $user_path = parse_url(route('users.show', $from_id))['path'];
+        $note_path = parse_url(route('notes.show', $note_id))['path'];
+        $content = '用户「<a target="_blank" href="' . $user_path . '">' . $name . '</a>」评论了您的动态[<a target="_blank" href="' . $note_path . '">' . $note_content . '</a>]，赶紧去看看吧！';
+
+        return Message::create([
+            'user_id' => $user_id,
+            'type' => 'comment',
+            'content' => $content,
+        ]);
     }
-
-
 }

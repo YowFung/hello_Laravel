@@ -51,7 +51,7 @@ class HomeController extends Controller
      *
      * @return array
      */
-    static function followers()
+    public static function followers()
     {
         $followers = [];
         if (Auth::check())
@@ -119,19 +119,7 @@ class HomeController extends Controller
         if (!Auth::check())
             return null;
 
-        $followers = Auth::user()->followers;
-
-        $notes = [];
-        foreach ($followers as $follower) {
-            $perNotes = $follower->notes;
-
-            foreach ($perNotes as $value) {
-                $notes[] = $value;
-            }
-        }
-
-        $notes = new Collection($notes);
-        $notes = $notes->sortByDesc('created_at')->take(80);
+        $notes = Auth::user()->followersNotes()->get()->take(80);
 
         return $notes;
     }

@@ -21,7 +21,7 @@
                 @if (count($errors) > 0)
                     <span class="label label-danger">{{ $errors->first() }}</span>
                 @endif
-                <button type="submit" class="btn btn-md btn-success btn-notes-published">发表动态</button>
+                <button type="submit" class="btn btn-md btn-primary btn-notes-published">发表动态</button>
             </form>
             <br><br><hr>
         @endif

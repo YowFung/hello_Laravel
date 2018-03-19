@@ -27,16 +27,18 @@ class CommentsController extends Controller
     public function store(Note $note, Request $request)
     {
         $this->validate($request, [
-            'passage' => 'required|max:140',
-            'involved_id' => 'nullable',
+            'connent' => 'required|max:140',
         ]);
+
+        $content = $request->get('content');
 
         Comment::create([
             'note_id' => $note->id,
             'from_id' => Auth::user()->id,
-            'involved_id' => $request->involved_id,
-            'content' => $request->passage,
+            'content' => $content,
         ]);
+
+        MessagesController::createCommentMessage($note->user_id, Auth::user()->id, $note->id, $content);
 
         return redirect()->back();
     }

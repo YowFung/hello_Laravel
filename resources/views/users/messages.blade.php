@@ -40,22 +40,14 @@
         @foreach ($messages as $message)
             <div class="message-item">
 
-                @if (!$message->read)
-                    <span class="label label-danger" style="font-weight: normal">new</span>
-                @endif
-
-                <b>{{ $message->title() }}</b>
                 <span class="label label-default label-note-show">{{ $message->created_at->diffForHumans() }}</span>
-                <a href="{{ route('messages.show', $message->id) }}" class="btn btn-xs btn-primary">查看</a>
+                <b>{{ $message->title() }}</b>
 
-                @if (!$message->read)
-                    <form action="{{ route('messages.update', $message->id) }}" method="POST">
-                        {{ csrf_field() }}
-                        {{ method_field('PATCH') }}
+                <p class="message-passage">
+                    {!! $message->content !!}
+                </p>
 
-                        <button type="submit" class="btn btn-xs btn-info">标为已读</button>
-                    </form>
-                @endif
+                <a href="{{ route('messages.show', $message->id) }}" class="btn btn-xs btn-info">查看</a>
 
                 <form action="{{ route('messages.destroy', $message->id) }}" method="POST">
                     {{ csrf_field() }}
@@ -82,9 +74,15 @@
                     </div>
                 </form>
 
-                <p class="message-passage">
-                    {!! $message->content !!}
-                </p>
+                @if (!$message->read)
+                    <form action="{{ route('messages.update', $message->id) }}" method="POST">
+                        {{ csrf_field() }}
+                        {{ method_field('PATCH') }}
+
+                        <button type="submit" class="btn btn-xs btn-info">标为已读</button>
+                    </form>
+                @endif
+
 
                 <hr>
             </div>

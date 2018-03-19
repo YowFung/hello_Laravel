@@ -72,6 +72,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class)->orderByDesc('created_at');
     }
+
+
+    /**
+     * 建立用户-关注人的微博动态关系
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function followersNotes()
+    {
+        return $this->hasManyThrough('App\Models\Note', 'App\Models\Fan', 'master_id', 'user_id', '', 'follow_id');
+    }
     
 
     /**

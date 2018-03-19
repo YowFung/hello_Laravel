@@ -66,9 +66,7 @@ class UsersController extends Controller
         ]);
 
         Auth::login($user);
-
-        $msg_content = '亲爱的「' . $user->name . '」您好！恭喜你成功注册微博账号，您可以通过发表微博动态来分享您的想法，也可以关注其他用户、查看其他人的动态、与其他人互动等。祝您微博生活愉快！';
-        MessagesController::create($user->id, $msg_content);
+        MessagesController::createNoticeMessage(Auth::user()->id, 'sign_up');
 
         return redirect()->route('users.show', [$user]);
     }
@@ -115,8 +113,7 @@ class UsersController extends Controller
 
             $data = ['password' => bcrypt($request->password_new)];
 
-            $msg_content = '亲爱的「' . $user->name . '」！您已成功修改了密码，请牢记您的新密码！';
-            MessagesController::create($user->id, $msg_content);
+            MessagesController::createNoticeMessage(Auth::user()->id, 'change_pwd');
         }
         else {
             $this->validate($request, [
@@ -214,10 +211,7 @@ class UsersController extends Controller
             Auth::user()->followers()->detach([$user->id]);
         } else {
             Auth::user()->followers()->sync([$user->id], false);
-
-            $msg_content = '用户「' . config('app.sign_begin') . Auth::user()->name . config('app.sign_end') . '」关注了您！你可以在「我的粉丝」列表中查看TA的信息。';
-            $msg_parameters = [route('users.show', Auth::user()->id)];
-            MessagesController::create($user->id, $msg_content, 'attach', $msg_parameters);
+            MessagesController::createFollowMessage($user->id, Auth::user()->id);
         }
 
         $backUrl = redirect()->back()->getTargetUrl();
