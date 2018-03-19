@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class LettersController extends Controller
 {
@@ -38,11 +39,14 @@ class LettersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'user' => 'exists:users,id',
-            'content' => 'mix:3|max:500',
+            'content' => 'min:3|max:500',
         ]);
 
-        MessagesController::createLetterMessage($request->get('user'), Auth::user()->id, $request->get('content'));
+        if (!User::find($request->get('user'))) {
+
+        } else {
+            MessagesController::createLetterMessage($request->get('user'), Auth::user()->id, $request->get('content'));
+        }
 
         return redirect()->back();
     }
