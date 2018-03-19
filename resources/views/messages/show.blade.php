@@ -12,7 +12,7 @@
 
     <h5 class="message-item-key">
         <span class="label label-default label-note-show">消息状态：</span>&nbsp;
-        @if ($message->read) 已读 @else 未读 @endif
+        {{ $message->read }}
     </h5>
 
     <h5 class="message-item-key">
@@ -24,7 +24,7 @@
     <div class="panel panel-default message-passage-panel">
         <div class="panel-body">
             <p class="message-passage">
-                {!! $message->content() !!}
+                {!! $message->content !!}
             </p>
         </div>
     </div>

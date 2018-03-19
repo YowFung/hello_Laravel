@@ -4,68 +4,45 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Letter;
 
 class LettersController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth', [
-           'except' => ['index']
+            'except' => ['create'],
         ]);
     }
 
+
     /**
-     * 显示留言列表页面
+     * 创建私信的页面
      *
-     * @param User $user
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(User $user)
+    public function create(Request $request)
     {
-        $letters = $user->letters()->paginate(5);
-        $letters->url(route('letters.index', $user->id));
+        $user = User::findOrFail($request->get('user'));
 
-        return view('letters.index', compact('user', 'letters'));
+        return view('users.letters', compact('user'));
     }
 
 
     /**
-     * 发表留言
+     * 创建私信消息
      *
-     * @param User $user
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(User $user, Request $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
-            'passage' => 'required|min:3|max:1000',
-            'involved_id' => 'nullable',
+            'user' => 'exists:users,id',
+            'content' => 'mix:3|max:500',
         ]);
 
-        Letter::create([
-            'from_id' => Auth::user()->id,
-            'user_id' => $user->id,
-            'involved_id' => $request->involved_id,
-            'content' => $request->passage,
-        ]);
-
-        if ($user->id != Auth::user()->id) {
-            $msg_content = "留言留言留言。。。。。。。";
-            $parameters = "";
-            MessagesController::create($user->id, $msg_content, 'letter', $parameters);
-        }
-
-        session()->flash('success', '发表留言成功！');
-        return redirect()->back();
-    }
-
-
-    public function destroy(Letter $letter)
-    {
-        $this->authorize('letter', $letter);
-        $letter->delete();
+        MessagesController::create($request->get('user'), $request->get('content'), 'letter');
 
         return redirect()->back();
     }

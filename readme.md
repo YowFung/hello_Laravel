@@ -128,9 +128,8 @@ server {
     - 用户资料-籍贯：nullable|max:200
     - 微博动态内容：min:3|max:200
     - 动态评论内容：min:1|max:140
-    - 留言内容： min:3|max:1000
-    - 留言回复： min:1|max:140
-    - 消息内容： min:10|max:500
+    - 私信内容： min:3|max:500
+    - 消息内容： min:10|max:800
     - 搜索关键字：nullable|max:80
 
 - 数据唯一：
@@ -139,7 +138,7 @@ server {
 
 - 数据限制：
     - 用户性别： in: male, female
-    - 消息类别： in: system, attach, letter, letter_reply, comment, comment_reply
+    - 消息类别： in: notice, follow, letter, comment
 
 - 路由设计：
     遵循RESTFul规范

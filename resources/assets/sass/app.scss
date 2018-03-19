@@ -197,17 +197,13 @@ footer {
 
 .message-item {
   form {
-    display: none;
+    display: inline-block;
     height: 20px;
 
     button {
       padding: 0 5px;
       margin-top: 1px;
     }
-  }
-
-  &:hover form {
-    display: inline-block;
   }
 }
 

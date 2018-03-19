@@ -55,7 +55,7 @@
                         {{ $note->content }}
                         <br>
                         <span class="label label-default label-note-show">{{ $note->created_at->diffForHumans() }}</span>
-                        @can('destroy', $note)
+                        @if (Auth::check() && Auth::user()->id == $user->id)
                             <form action="{{ route('notes.destroy', $note->id) }}" method="POST" style="display: inline-block">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
@@ -81,7 +81,7 @@
                                 </div>
 
                             </form>
-                        @endcan
+                        @endif
                     </div>
                 </div>
                 <br>

@@ -20,27 +20,36 @@ class MessagesController extends Controller
     /**
      * 用户消息列表页面
      *
-     * @param User $user
-     * @param string $nav_type
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(User $user, $nav_type = 'new')
+    public function index(Request $request)
     {
-        $this->authorize('user', $user);
+        $category = $request->get('category') ?: 'new';
+        if (!in_array($category, ['new', 'all', 'notice', 'letter', 'follow', 'comment']))
+            return redirect(route('messages.index'));
 
+        $user = Auth::user();
         $messages = $user->messages();
 
-        if ($nav_type == 'new')
+        if ($category == 'new')
             $messages = $messages->where('read', false);
-        elseif ($nav_type == 'system')
-            $messages = $messages->where('type', 'system');
-        else
-            $messages = $messages->where('type','!=', 'system');
+        elseif ($category != 'all')
+            $messages = $messages->where('type', $category);
 
         $messages = $messages->paginate(5);
-        $messages->url(route('messages.index', [$user->id, $nav_type]));
+        $messages->url(route('messages.index'));
 
-        return view('users.messages', compact('user', 'messages', 'nav_type'));
+        $empty_tips = [
+            'new' => '暂无未读的新消息~',
+            'all' => '暂时还未收到过任何消息~',
+            'notice' => '暂无系统通知~',
+            'letter' => '暂无私信消息~',
+            'follow' => '暂无关注消息~',
+            'comment' => '暂无评论消息~',
+        ];
+
+        return view('users.messages', compact('user', 'messages', 'category', 'empty_tips'));
     }
 
 
@@ -57,7 +66,7 @@ class MessagesController extends Controller
         $read = $message->read;
         $message->update(['read' => true]);
         $user = Auth::user();
-        $message->read = $read;
+        $message->read = $read ? '已读' : '未读';
 
         return view('messages.show', compact( 'user', 'message'));
     }
@@ -98,30 +107,80 @@ class MessagesController extends Controller
     /**
      * 创建新消息
      *
-     * @param int $to
-     * @param string $content
+     * @param $user_id
+     * @param $content
      * @param string $type
-     * @param array $parameters
      * @return bool
      */
-    public static function create($to, $content, $type = 'system', $parameters = [])
+    public static function create($user_id, $content, $type)
     {
-        $sign_begin_count = substr_count($content, config('app.sign_begin'));
-        $sign_end_count = substr_count($content, config('app.sign_end'));
-
-        if (count($parameters) != $sign_begin_count || count($parameters) != $sign_end_count)
+        if (!in_array($type, ['notice', 'letter', 'follow', 'comment']))
             return false;
 
-        if (!in_array($type, ['system', 'letter', 'letter_reply', 'attach', 'comment', 'comment_reply']))
-            return false;
-
-        $parameters = implode(config('app.sign_separate'), $parameters);
+        $content = htmlspecialchars($content);
 
         return Message::create([
-            'user_id' => $to,
+            'user_id' => $user_id,
             'type' => $type,
-            'parameters' => $parameters,
             'content' => $content
         ]);
     }
+
+
+    /**
+     * 创建系统通知消息
+     *
+     * @param $user_id
+     * @param $content
+     * @return bool
+     */
+    public static function createNoticeMessage($user_id, $content)
+    {
+        return true;
+    }
+
+
+    /**
+     * 创建私信消息
+     *
+     * @param $user_id
+     * @param $from_id
+     * @param $content
+     * @return bool
+     */
+    public static function createLetterMessage($user_id, $from_id, $content)
+    {
+        return true;
+    }
+
+
+    /**
+     * 创建关注消息
+     *
+     * @param $user_id
+     * @param $from_id
+     * @param $content
+     * @return bool
+     */
+    public static function createFollowMessage($user_id, $from_id, $content)
+    {
+        return true;
+    }
+
+
+    /**
+     * 创建评论消息
+     *
+     * @param $user_id
+     * @param $from_id
+     * @param $note_id
+     * @param $content
+     * @return bool
+     */
+    public static function createCommentMessage($user_id, $from_id, $note_id, $content )
+    {
+        return true;
+    }
+
+
 }

@@ -70,11 +70,11 @@
                             <span class="badge">{{ Auth::user()->newMessagesCount() }}</span>
                         @endif
                     </a>
+                @else
+                    <a href="{{ route('letters.create') . '?user=' . $user->id }}" class="list-group-item  @yield('active_letters', '')">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;给TA私信
+                    </a>
                 @endif
-
-                <a href="{{ route('letters.index', $user->id) }}" class="list-group-item  @yield('active_letters', '')">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;留言板
-                </a>
             </div>
 
             <div class="panel panel-default panel-fans">

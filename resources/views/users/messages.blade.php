@@ -12,17 +12,23 @@
     @endif
 
     <ul class="nav nav-tabs" role="tablist" id="lists">
-        <li role="presentation" @if ($nav_type == 'new') class="active" @endif>
-            <a href="{{ route('messages.index', [Auth::user()->id, 'new']) }}">新消息</a>
+        <li role="presentation" @if ($category == 'new') class="active" @endif>
+            <a href="{{ route('messages.index') . '?category=new' }}">新消息</a>
         </li>
-        <li role="presentation" @if ($nav_type == 'all') class="active" @endif>
-            <a href="{{ route('messages.index', [Auth::user()->id, 'all']) }}">全部</a>
+        <li role="presentation" @if ($category == 'all') class="active" @endif>
+            <a href="{{ route('messages.index') . '?category=all' }}">全部</a>
         </li>
-        <li role="presentation" @if ($nav_type == 'system') class="active" @endif>
-            <a href="{{ route('messages.index', [Auth::user()->id, 'system']) }}">系统消息</a>
+        <li role="presentation" @if ($category == 'notice') class="active" @endif>
+            <a href="{{ route('messages.index') . '?category=notice' }}">通知</a>
         </li>
-        <li role="presentation" @if ($nav_type == 'interaction') class="active" @endif>
-            <a href="{{ route('messages.index', [Auth::user()->id, 'interaction']) }}">互动消息</a>
+        <li role="presentation" @if ($category == 'follow') class="active" @endif>
+            <a href="{{ route('messages.index') . '?category=follow' }}">关注</a>
+        </li>
+        <li role="presentation" @if ($category == 'comment') class="active" @endif>
+            <a href="{{ route('messages.index') . '?category=comment' }}">评论</a>
+        </li>
+        <li role="presentation" @if ($category == 'letter') class="active" @endif>
+            <a href="{{ route('messages.index') . '?category=letter' }}">私信</a>
         </li>
     </ul>
 
@@ -55,11 +61,29 @@
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
 
-                    <button type="submit" class="btn btn-xs btn-warning">删除记录</button>
+                    <button type="button" class="btn btn-xs btn-danger status-delete-btn" data-toggle="modal" data-target="#myModal{{ $message->id }}">删除</button>
+
+                    <div class="modal fade" id="myModal{{ $message->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel{{ $message->id }}">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel{{ $message->id }}">确定要删除这条消息吗？</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {!! $message->content !!}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger">确认</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
 
                 <p class="message-passage">
-                    {!! $message->content() !!}
+                    {!! $message->content !!}
                 </p>
 
                 <hr>
@@ -68,25 +92,12 @@
         @endforeach
     @else
         <p class="tips">
-            @switch ($nav_type)
-                @case ('new')
-                    暂无未读的新消息~
-                @break;
-                @case ('all')
-                    你还未收到过任何消息~
-                @break
-                @case ('system')
-                    无系统消息记录~
-                @break;
-                @case ('interaction')
-                    暂无互动消息~
-                @break
-            @endswitch
+            {{ $empty_tips[$category] }}
         </p>
     @endif
 
     <br><br>
     <nav aria-label="..." class="page-split">
-        {{ $messages->fragment('lists')->render() }}
+        {{ $messages->appends(['category' => $category])->fragment('lists')->render() }}
     </nav>
 @stop

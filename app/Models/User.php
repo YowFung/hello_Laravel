@@ -72,18 +72,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class)->orderByDesc('created_at');
     }
-
-
-    /**
-     * 建立留言接受者用户-留言关系
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function letters()
-    {
-        return $this->hasMany(Letter::class)->orderByDesc('created_at');
-    }
-
+    
 
     /**
      * 获取用户的Gravatar头像
