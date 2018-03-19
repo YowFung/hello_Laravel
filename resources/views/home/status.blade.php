@@ -32,7 +32,7 @@
                         <a href="{{ route('home', 'newest') }}">最新</a>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-right" @if (Auth::check()) action="{{ route('users.notes', Auth::user()->id) }}" method="GET" @endif>
+                <form class="navbar-form navbar-right" @if (Auth::check()) action="{{ route('users.notes', Auth::user()->id) }}" method="GET" @endif style="margin-right: -24px">
                     <button @if (Auth::check()) type="submit" @else type="button" data-toggle="popover" data-content="登录后才可以发微博，快去登录吧！" data-placement="left" data-container="body" @endif class="btn btn-primary">
                         <span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;发微博
                     </button>
@@ -72,7 +72,9 @@
                         <br>
                         {{--动态内容--}}
                         <p class="note-content">
-                            {{ $note->content }}
+                            <a class="home-note-link" href="{{ route('notes.show', $note->id) . '?category=' . $data['category'] }}">
+                                {{ $note->content }}
+                            </a>
                         </p>
 
                         {{--评论框--}}

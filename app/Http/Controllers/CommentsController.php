@@ -20,25 +20,26 @@ class CommentsController extends Controller
     /**
      * 发表评论
      *
-     * @param Note $note
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Note $note, Request $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
-            'connent' => 'required|max:140',
+            'content' => 'required|max:140',
+            'note_id' => 'required|exists:notes',
+            'user_id' => 'required|exists:users',
         ]);
 
         $content = $request->get('content');
 
         Comment::create([
-            'note_id' => $note->id,
+            'note_id' => $request->get('note'),
             'from_id' => Auth::user()->id,
             'content' => $content,
         ]);
 
-        MessagesController::createCommentMessage($note->user_id, Auth::user()->id, $note->id, $content);
+        MessagesController::createCommentMessage($request->get('user_id'), Auth::user()->id, $request->get('note_id'), $content);
 
         return redirect()->back();
     }

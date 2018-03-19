@@ -7,7 +7,7 @@
 
         <div class="col-md-2">
             <section class="photo-img">
-                @include('shared._user_photo', ['users' => $user, 'size' => 144])
+                @include('shared._user_photo', ['user' => $user, 'size' => 144])
             </section>
         </div>
 
@@ -34,7 +34,7 @@
                         @if ($user->isAttached())
                             <button class="btn btn-xs btn-danger" type="submit"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{ count($user->fans) }}&nbsp;&nbsp;已关注</button>
                         @else
-                            <button class="btn btn-xs btn-info" type="submit"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{ count($user->fans) }}&nbsp;&nbsp;关注TA</button>
+                            <button @if (Auth::check()) type="submit" @else type="button" data-toggle="popover" data-content="登录后才可以关注TA哦，快去登录吧！" data-placement="bottom" data-container="body" @endif class="btn btn-xs btn-info" type="submit"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{ count($user->fans) }}&nbsp;&nbsp;关注TA</button>
                         @endif
 
                     </form>

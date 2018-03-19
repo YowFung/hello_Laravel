@@ -15,11 +15,11 @@ class Comment extends Model
     /**
      * 建立评论-发布者用户关系
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
-        return $this->belongsToMany(User::class, 'from_id');
+        return $this->belongsTo(User::class, 'from_id');
     }
 
 

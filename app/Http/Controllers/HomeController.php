@@ -30,6 +30,9 @@ class HomeController extends Controller
             default : $notes = $this->generateRecommendNotes(); break;
         }
 
+        if ($notes === null)
+            return redirect(route('login'));
+
         $notes = $this->paginate($notes, $request, 10);
         $notes->url(route('home'));
         $followers = $this->followers();
@@ -54,8 +57,7 @@ class HomeController extends Controller
     public static function followers()
     {
         $followers = [];
-        if (Auth::check())
-            $followers = Auth::user()->followers->take(40);
+        Auth::check() && $followers = Auth::user()->followers->take(40);
 
         return $followers;
     }
@@ -112,14 +114,15 @@ class HomeController extends Controller
     /**
      * 产生关注动态列表
      *
-     * @return array|Collection|null|static
+     * @return Collection
      */
     protected function generateAttachedNotes()
     {
         if (!Auth::check())
             return null;
 
-        $notes = Auth::user()->followersNotes()->get()->take(80);
+        $notes = Auth::user()->followersNotes()->take(80);
+        $notes = new Collection($notes);
 
         return $notes;
     }

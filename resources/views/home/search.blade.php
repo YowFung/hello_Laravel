@@ -40,7 +40,7 @@
                                                 @elseif ($users[$j]->isAttached())
                                                     <button class="btn btn-danger" type="submit">已关注</button>
                                                 @else
-                                                    <button class="btn btn-info" type="submit">关注TA</button>
+                                                    <button @if (Auth::check()) type="submit" @else type="button" data-toggle="popover" data-content="登录后才可以关注TA哦，快去登录吧！" data-placement="bottom" data-container="body" @endif class="btn btn-info" type="submit">关注TA</button>
                                                 @endif
 
                                                 <a href="{{ route('users.show', $users[$j]->id) }}" class="btn btn-default" role="button">查看</a>

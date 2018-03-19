@@ -39,4 +39,13 @@ $(".back-to-top").click(function() {
 
 $(function () {
     $('[data-toggle="popover"]').popover()
-})
+});
+
+
+$('body').click(function(e) {
+    if(e.target.type != 'button' &&  e.target.id.substr(0, 7) != 'popover') {
+        if ($('.popover').is(':visible')) {
+            $('.popover').hide();
+        }
+    }
+});

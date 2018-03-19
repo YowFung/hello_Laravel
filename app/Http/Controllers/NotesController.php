@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Note;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class NotesController extends Controller
@@ -20,17 +21,26 @@ class NotesController extends Controller
      * 动态详情页面
      *
      * @param Note $note
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Note $note)
+    public function show(Note $note, Request $request)
     {
+        if (!isset($request->category) || !in_array($request->category, ['recommend', 'concerned', 'newest']))
+            $category = 'recommend';
+        else
+            $category = $request->category;
+
         $followers = HomeController::followers();
         $follower_count = count($followers);
+        $user = User::findOrFail($note->user_id);
 
         $data = [
+            'category' => $category,
             'note' => $note,
             'followers' => $followers,
             'follower_count' => $follower_count,
+            'user' => $user,
         ];
 
         return view('home.note', compact('data'));
