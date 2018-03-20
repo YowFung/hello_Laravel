@@ -53,7 +53,7 @@
                     {{--用户头像--}}
                     <div class="media-left">
                         <a href="{{ route('users.show', $note->user->id) }}">
-                            <img class="media-object" src="{{ $note->user->gravatar(48) }}" alt="{{ $note->user->name }}"/>
+                            <img class="media-object" src="{{ $note->user->avatar() }}" alt="{{ $note->user->name }}"/>
                         </a>
                     </div>
                     <div class="media-body">

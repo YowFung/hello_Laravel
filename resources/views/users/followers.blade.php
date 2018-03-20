@@ -22,7 +22,7 @@
                     <div class="media-left">
                         <div class="media-object thumbnail" style="width: 64px; margin-bottom: 6px">
                             <a href="{{ route('users.show', $follower->id) }}">
-                                <img alt="{{ $follower->name }}" src="{{ $follower->gravatar(104) }}">
+                                <img alt="{{ $follower->name }}" src="{{ $follower->avatar() }}">
                             </a>
                         </div>
                         <form action="{{ route('users.attach', $follower->id) }}" method="POST" style="display: inline-block">

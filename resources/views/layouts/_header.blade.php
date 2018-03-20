@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse" id="nav_top">
+<nav class="navbar navbar-default" id="nav_top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -16,7 +16,10 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::check())
                     <li role="presentation">
-                        <a href="{{ route('users.show', Auth::user()->id) }}">
+                        <a href="{{ route('users.show', Auth::user()->id) }}" class="nav-user-name">
+                            <span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px;">
+                                <img src="{{ Auth::user()->avatar() }}" class="img-responsive img-circle" width="30px" height="30px">
+                            </span>
                             {{ Auth::user()->name }}
                             @if (Auth::user()->newMessagesCount())  <span class="badge">{{ Auth::user()->newMessagesCount() }}</span> @endif
                         </a>

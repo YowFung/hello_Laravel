@@ -29,3 +29,4 @@ Route::resource('letters', 'LettersController', ['only' => ['create', 'store']])
 Route::resource('search', 'SearchController', ['only' => 'index']);
 
 Route::get('/{category?}', 'HomeController@index')->name('home');
+Route::post('/back', 'HomeController@back')->name('back');

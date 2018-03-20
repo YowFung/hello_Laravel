@@ -62,6 +62,17 @@ footer {
   width: 100%;
 }
 
+.nav-user-name {
+  .user-avatar {
+    opacity: 0.8;
+  }
+
+  &:hover .user-avatar {
+      opacity: 1;
+      box-shadow: 0 0 1px 1px;
+      border-radius: 50%;
+  }
+}
 
 .user-show-bg {
   background: url("/img/bg/user-info-bg.jpg") no-repeat;
@@ -69,11 +80,57 @@ footer {
   background-position: 15px 15px;
 
   .photo-img {
+    position: relative;
     width: 144px;
     height: 144px;
     border: 2px solid #FFF;
     box-shadow: 0px 0px 5px 0px;
     margin: 56px 16px 50px 40px;
+
+    a {
+      cursor: default;
+    }
+
+    .avatar{
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 40px;
+      display: none;
+      background-color: rgba(0,0,0,0.3);
+      text-align: center;
+      line-height: 40px;
+
+      a {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+      }
+
+      input[type="file"] {
+        display: block;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+
+      &:hover {
+        background-color: rgba(0,0,0,0.4);
+      }
+
+      #avatarSubmit {
+        display: none;
+      }
+    }
+
+    &:hover .avatar {
+      display: inline-block;
+    }
+
   }
 
   .title-name {

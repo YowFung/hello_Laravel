@@ -1011,6 +1011,11 @@ $(function () {
     $('[data-toggle="popover"]').popover();
 });
 
+$('#avatarFile').change(function () {
+    var fileObj = document.getElementById('avatarFile').files[0];
+    if (fileObj) $('#avatarSubmit').click();
+});
+
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {

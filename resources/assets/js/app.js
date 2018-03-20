@@ -40,3 +40,9 @@ $(".back-to-top").click(function() {
 $(function () {
     $('[data-toggle="popover"]').popover()
 });
+
+$('#avatarFile').change(function () {
+    var fileObj = document.getElementById('avatarFile').files[0];
+    if (fileObj)
+        $('#avatarSubmit').click();
+});

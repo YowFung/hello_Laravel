@@ -49,7 +49,7 @@
             @foreach( $notes as $note)
                 <div class="media">
                     <div class="media-left">
-                        <img class="media-object" src="{{ $user->gravatar(48) }}" alt="{{ $user->name }}"/>
+                        <img class="media-object" src="{{ $user->avatar() }}" alt="{{ $user->name }}"/>
                     </div>
                     <div class="media-body">
                         <a href="{{ route('notes.show', $note->id) }}" class="home-note-link">

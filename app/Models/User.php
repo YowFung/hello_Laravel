@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'gender', 'associations', 'college', 'address'
+        'name', 'email', 'password', 'gender', 'associations', 'college', 'address', 'avatar',
     ];
 
     /**
@@ -83,18 +83,19 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough('App\Models\Note', 'App\Models\Fan', 'master_id', 'user_id', '', 'follow_id');
     }
-    
+
 
     /**
-     * 获取用户的Gravatar头像
+     * 获取用户头像
      *
-     * @param string $size
-     * @return string
+     * @return \Illuminate\Config\Repository|mixed
      */
-    public function gravatar($size = '100')
+    public function avatar()
     {
-        $hash = md5(strtolower(trim($this->attributes['email'])));
-        return "http://www.gravatar.com/avatar/$hash?s=$size";
+        if (empty($this->attributes['avatar']))
+            return config('app.default_avatar', '/img/photos/default.jpg');
+
+        return $this->attributes['avatar'];
     }
 
 

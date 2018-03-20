@@ -8,6 +8,19 @@
         <div class="col-md-2">
             <section class="photo-img">
                 @include('shared._user_photo', ['user' => $user, 'size' => 144])
+                @if (Auth::check() && Auth::user()->id == $user->id)
+                    <form class="avatar" action="{{ route('users.update', $user->id) }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        {{ method_field('PATCH') }}
+
+                        <a href="javascript:$('#avatarFile').click()">
+                            <span class="glyphicon glyphicon-level-up" aria-hidden="true"></span>
+                            &nbsp;修改头像
+                        </a>
+                        <button type="submit" id="avatarSubmit">提交</button>
+                        <input type="file" name="avatar" id="avatarFile">
+                    </form>
+                @endif
             </section>
         </div>
 
@@ -101,7 +114,7 @@
                                 @for($j = $i; $j < $i+4 && $j < count($user->fans); $j++)
                                     <div class="col-md-3 fans-list" title="{{ $user->fans[$j]->name }}">
                                         <a href="{{ route('users.show', $user->fans[$j]->id) }}" class="thumbnail">
-                                            <img alt="{{ $user->fans[$j]->name }}" src="{{ $user->fans[$j]->gravatar('64') }}">
+                                            <img alt="{{ $user->fans[$j]->name }}" src="{{ $user->fans[$j]->avatar() }}">
                                         </a>
                                     </div>
                                 @endfor

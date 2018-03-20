@@ -50,6 +50,23 @@ class HomeController extends Controller
 
 
     /**
+     * 返回逻辑
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function back()
+    {
+        if(!empty(session('backUrl')))
+            $backUrl = session('backUrl');
+        else
+            $backUrl = route('home');
+
+        session()->forget('backUrl');
+        return redirect($backUrl);
+    }
+
+
+    /**
      * 获取首页关注人列表
      *
      * @return array

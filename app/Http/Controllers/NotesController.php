@@ -35,6 +35,9 @@ class NotesController extends Controller
         $follower_count = count($followers);
         $user = User::findOrFail($note->user_id);
 
+        if(empty(session('backUrl')))
+            session(['backUrl' => redirect()->back()->getTargetUrl()]);
+
         $data = [
             'category' => $category,
             'note' => $note,

@@ -237,8 +237,6 @@ return [
     |
     */
 
-    'sign_begin' => env('SIGN_BEGIN', '#p-_b#'),
-    'sign_end' => env('SIGN_END', '#p-_e#'),
-    'sign_separate' => env('SIGN_SEPARATE', '#-s_#'),
+    'default_avatar' => env('DEFAULT_AVATAR', '/img/photos/default.jpg'),
 
 ];

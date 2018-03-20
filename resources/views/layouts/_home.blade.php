@@ -44,7 +44,7 @@
                                 @for($j = $i; $j < $i+6 && $j < count($data['followers']) && $j <= 40; $j++)
                                     <div class="col-md-2 fans-list" title="{{ $data['followers'][$j]->name }}">
                                         <a href="{{ route('users.show', $data['followers'][$j]->id) }}" class="thumbnail">
-                                            <img alt="{{ $data['followers'][$j]->name }}" src="{{ $data['followers'][$j]->gravatar('64') }}">
+                                            <img alt="{{ $data['followers'][$j]->name }}" src="{{ $data['followers'][$j]->avatar() }}">
                                         </a>
                                     </div>
                                 @endfor

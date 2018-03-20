@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Message;
+use App\Handlers\ImageUploadHandler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -63,6 +63,7 @@ class UsersController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'avatar' => config('app.default_avatar', '/img/photos/default.jpg'),
         ]);
 
         Auth::login($user);
@@ -91,13 +92,14 @@ class UsersController extends Controller
      *
      * @param User $user
      * @param Request $request
+     * @param ImageUploadHandler $uploader
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(User $user, Request $request)
+    public function update(User $user, Request $request, ImageUploadHandler $uploader)
     {
         $this->authorize('user', $user);
 
-        if (array_key_exists('password_new', $request->all())) {
+        if ($request->get('password_new')) {
             $this->validate($request, [
                 'password_old' => 'required',
                 'password_new' => 'required|confirmed|min:6|max:16',
@@ -114,6 +116,12 @@ class UsersController extends Controller
             $data = ['password' => bcrypt($request->password_new)];
 
             MessagesController::createNoticeMessage(Auth::user()->id, 'change_pwd');
+            session()->flash('success', '修改密码成功！');
+        }
+        elseif ($request->file('avatar')) {
+            $result = $uploader->save($request->file('avatar'), 'photos', $user->id);
+            if ($result)
+                $data['avatar'] = $result['path'];
         }
         else {
             $this->validate($request, [
@@ -135,10 +143,11 @@ class UsersController extends Controller
                 'college' => $request->college,
                 'address' => $request->address,
             ];
+
+            session()->flash('success', '修改资料成功！');
         }
 
         $user->update($data);
-        session()->flash('success', '修改成功！');
 
         return redirect()->route('users.show', $user->id);
     }

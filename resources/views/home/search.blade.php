@@ -10,7 +10,12 @@
 
     {{--搜索结果顶部栏--}}
     <div class="alert alert-info" role="alert">
-        <a class="btn btn-default" href="{{ route('home') }}">返回</a>
+        <form action="{{ route('back') }}" method="POST" style="display: inline-block">
+            {{ csrf_field() }}
+
+            <input type="submit" style="display: none" id="back-btn">
+            <a class="btn btn-default" type="submit" style="margin-top: -4px" href="javascript:$('#back-btn').click()">返回</a>
+        </form>
         <span class="search-result-tips">共找到 {{ $users->total() }} 个与「<strong>{{ $keyword }}</strong>」相关的用户</span>
     </div>
 
@@ -25,7 +30,7 @@
                                 <div class="col-md-3">
                                     <div class="thumbnail">
                                         <a href="{{ route('users.show', $users[$j]->id) }}">
-                                            <img data-src="holder.js/100%x200" alt="{{ $users[$j]->name }}" src="{{ $users[$j]->gravatar('188') }}" data-holder-rendered="true" style="width: 100%; display: block;">
+                                            <img data-src="holder.js/100%x200" alt="{{ $users[$j]->name }}" src="{{ $users[$j]->avatar() }}" data-holder-rendered="true" style="width: 100%; display: block;">
                                         </a>
                                         <div class="caption">
                                             <p class="search-show-name">

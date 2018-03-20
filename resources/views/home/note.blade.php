@@ -12,11 +12,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span class="navbar-brand">
-                    <a href="{{ route('home') }}" class="btn btn-default" style="margin-top: -8px">返回</a>
-                    &nbsp;
-                    动态详情
-                </span>
+                <form action="{{ route('back') }}" method="POST" style="display: inline-block">
+                    {{ csrf_field() }}
+
+                    <input type="submit" style="display: none" id="back-btn">
+                    <span class="navbar-brand">
+                        <a class="btn btn-default" type="submit" style="margin-top: -4px" href="javascript:$('#back-btn').click()">返回</a>
+                        &nbsp;动态详情
+                    </span>
+                </form>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-right" @if (Auth::check()) action="{{ route('users.notes', Auth::user()->id) }}" method="GET" @endif style="margin-right: -32px">
@@ -103,7 +107,7 @@
                                 @foreach( $data['note']->comments as $comment)
                                         <div class="col-sm-1 fans-list" title="{{ $comment->user->name }}">
                                             <a href="{{ route('users.show', $comment->user->id) }}" class="thumbnail">
-                                                <img alt="{{ $comment->user->name }}" src="{{ $comment->user->gravatar('64') }}">
+                                                <img alt="{{ $comment->user->name }}" src="{{ $comment->user->avatar() }}">
                                             </a>
 
                                         </div>
@@ -120,7 +124,6 @@
                             @endif
                         </div>
 
-                        
                         <br><br>
                     </div>
 
