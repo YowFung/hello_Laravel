@@ -27,14 +27,16 @@
                     </span>
 
                 @else
-
                     <form method="POST" action="{{ route('users.attach', $user->id) }}">
                         {{ csrf_field() }}
 
                         @if ($user->isAttached())
-                            <button class="btn btn-xs btn-danger" type="submit"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{ count($user->fans) }}&nbsp;&nbsp;已关注</button>
+                            <button class="btn btn-xs btn-danger" type="submit"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ({{ count($user->fans) }})&nbsp;&nbsp;已关注</button>
                         @else
-                            <button @if (Auth::check()) type="submit" @else type="button" data-toggle="popover" data-content="登录后才可以关注TA哦，快去登录吧！" data-placement="bottom" data-container="body" @endif class="btn btn-xs btn-info" type="submit"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {{ count($user->fans) }}&nbsp;&nbsp;关注TA</button>
+                            <button class="btn btn-xs btn-info" @if (Auth::check()) type="submit" @else
+                                type="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="登录后才可以关注TA哦，快去登录吧！" title="您还没有登录" @endif>
+                                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ({{ count($user->fans) }})&nbsp;&nbsp;关注TA
+                            </button>
                         @endif
 
                     </form>
@@ -64,7 +66,7 @@
                         <span class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;&nbsp;我关注的
                     </a>
                     <a href="{{ route('messages.index', [$user->id, 'new']) }}" class="list-group-item  @yield('active_messages', '')">
-                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp;
+                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;
                         消息中心
                         @if (Auth::user()->newMessagesCount() )
                             <span class="badge">{{ Auth::user()->newMessagesCount() }}</span>

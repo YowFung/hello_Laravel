@@ -57,7 +57,7 @@ class HomeController extends Controller
     public static function followers()
     {
         $followers = [];
-        Auth::check() && $followers = Auth::user()->followers->take(40);
+        Auth::check() && $followers = Auth::user()->followers;
 
         return $followers;
     }
@@ -121,7 +121,7 @@ class HomeController extends Controller
         if (!Auth::check())
             return null;
 
-        $notes = Auth::user()->followersNotes()->take(80);
+        $notes = Auth::user()->followersNotes->take(80);
         $notes = new Collection($notes);
 
         return $notes;

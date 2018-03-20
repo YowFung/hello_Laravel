@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class Comment extends Model
 {
     protected $fillable = [
-        'note_id', 'from_id', 'involved_id', 'content', 'created_at'
+        'note_id', 'from_id', 'content', 'created_at',
     ];
 
 

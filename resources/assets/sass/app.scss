@@ -89,6 +89,7 @@ footer {
 
   .title-attach {
     padding: 2px;
+    margin-top: 8px;
 
     .title-count {
       color: #666;
@@ -121,14 +122,11 @@ footer {
 
 .user-panel {
   padding: 40px;
+  min-height: 294px;
 }
 
 .user-show-btn {
   text-align: center;
-}
-
-.btn-notes-published {
-  float: right;
 }
 
 .input-notes-content {
@@ -329,4 +327,18 @@ footer {
 .note-comment-panel {
   padding: 32px 40px;
   min-height: 710px;
+}
+
+.follower-info {
+  line-height: 20px;
+  margin-top: -4px;
+
+  strong {
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  p {
+    line-height: 24px;
+  }
 }

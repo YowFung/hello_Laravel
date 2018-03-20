@@ -23,6 +23,7 @@ class SearchController extends Controller
         $keyword = $request->keyword;
         $data = [
             'followers' => HomeController::followers(),
+            'follower_count' => count(HomeController::followers()),
         ];
 
         $currentUser = Auth::check() ? Auth::user()->id : 0;

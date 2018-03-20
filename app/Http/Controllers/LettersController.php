@@ -48,6 +48,8 @@ class LettersController extends Controller
             MessagesController::createLetterMessage($request->get('user'), Auth::user()->id, $request->get('content'));
         }
 
+        session()->flash('success', '已成功给对方发送私信！');
+
         return redirect()->back();
     }
 }

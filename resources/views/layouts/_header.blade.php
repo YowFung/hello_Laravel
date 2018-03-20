@@ -22,18 +22,18 @@
                         </a>
                     </li>
                     <li role="presentation">
-                        <form action="{{ route('logout') }}" method="POST" style="display: inline-block">
+                        <form action="{{ route('logout') }}" method="POST" style="display: none">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button class="btn btn-block btn-logout" type="submit" name="button">
-                                退出
-                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                            </button>
+                            <button type="submit" id="link-logout"></button>
                         </form>
+                        <a href="javascript:$('#link-logout').click()">
+                            退出
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                        </a>
                     </li>
                 @else
                     <li><a href="{{ route('login') }}">登录</a></li>
-
                     <li><a href="{{ route('users.create') }}">注册</a></li>
                 @endif
             </ul>

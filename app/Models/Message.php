@@ -10,10 +10,6 @@ class Message extends Model
         'user_id', 'type', 'content', 'read'
     ];
 
-    protected $hidden = [
-        'content', 'parameters'
-    ];
-
 
     /**
      * 获取当前消息的标题
@@ -41,7 +37,7 @@ class Message extends Model
         switch ($this->attributes['type']) {
             case 'notice' : return '通知';
             case 'letter' : return '私信';
-            case 'follow' : return '互动';
+            case 'follow' : return '关注';
             case 'comment' : return '评论';
         }
     }

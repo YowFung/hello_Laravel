@@ -127,7 +127,7 @@ server {
     - 用户资料-院系：nullable|max:200
     - 用户资料-籍贯：nullable|max:200
     - 微博动态内容：min:3|max:200
-    - 动态评论内容：min:1|max:140
+    - 动态评论内容：min:3|max:140
     - 私信内容： min:3|max:500
     - 消息内容： min:10|max:800
     - 搜索关键字：nullable|max:80

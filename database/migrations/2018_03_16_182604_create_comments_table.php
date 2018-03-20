@@ -18,7 +18,7 @@ class CreateCommentsTable extends Migration
             $table->integer('note_id')->index();
             $table->integer('from_id')->index();
             $table->text('content');
-            $table->timestamp('created_at')->default(\Carbon\Carbon::now());
+            $table->timestamps();
         });
     }
 

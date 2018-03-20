@@ -6,18 +6,18 @@
 
 @section('panel_content')
     <h5 class="message-item-key">
-        <span class="label label-default label-note-show">消息类型：</span>&nbsp;
-        {{ $message->category() }}
+        类型：
+        <strong>{{ $message->category() }}</strong>
     </h5>
 
     <h5 class="message-item-key">
-        <span class="label label-default label-note-show">消息状态：</span>&nbsp;
-        {{ $message->read }}
+        状态：
+        <strong>{{ $message->read }}</strong>
     </h5>
 
     <h5 class="message-item-key">
-        <span class="label label-default label-note-show">创建时间：</span>&nbsp;
-        {{ $message->created_at }}
+        时间：
+        <strong>{{ $message->created_at }}</strong>
     </h5>
     <br>
 
@@ -32,11 +32,30 @@
 
     <hr>
     <a  href="{{ redirect()->back()->getTargetUrl() }}" class="btn btn-md btn-default">返回</a>&nbsp;
+
     <form action="{{ route('messages.destroy', $message->id) }}" method="POST" style="display: inline-block">
         {{ csrf_field() }}
         {{ method_field('DELETE') }}
 
-        <button class="btn btn-md btn-danger" type="submit">删除消息</button>
+        <button type="button" class="btn btn-md btn-danger status-delete-btn" data-toggle="modal" data-target="#myModal{{ $message->id }}">删除消息</button>
+
+        <div class="modal fade" id="myModal{{ $message->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel{{ $message->id }}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel{{ $message->id }}">确定要删除这条消息吗？</h4>
+                    </div>
+                    <div class="modal-body">
+                        {!! $message->content !!}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-md btn-danger">确认</button>
+                        <button type="button" class="btn btn-md btn-default" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 
     <nav aria-label="..." class="message-nav">

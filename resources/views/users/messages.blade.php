@@ -66,8 +66,8 @@
                                     {!! $message->content !!}
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-danger">确认</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="submit" class="btn btn-lg btn-danger">确认</button>
+                                    <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">取消</button>
                                 </div>
                             </div>
                         </div>

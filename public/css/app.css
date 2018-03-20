@@ -8440,6 +8440,7 @@ footer {
 
 .user-show-bg .title-attach {
   padding: 2px;
+  margin-top: 8px;
 }
 
 .user-show-bg .title-attach .title-count {
@@ -8469,6 +8470,7 @@ footer {
 
 .user-panel {
   padding: 40px;
+  min-height: 294px;
 }
 
 .user-show-btn {
@@ -8668,5 +8670,19 @@ footer {
 .note-comment-panel {
   padding: 32px 40px;
   min-height: 710px;
+}
+
+.follower-info {
+  line-height: 20px;
+  margin-top: -4px;
+}
+
+.follower-info strong {
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+.follower-info p {
+  line-height: 24px;
 }
 
