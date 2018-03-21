@@ -8,7 +8,7 @@
 
 - 开发框架： Laravel 5.5/BootStrap v3
 
-- 当前版本： 1.1.0
+- 当前版本： 1.2.0
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
