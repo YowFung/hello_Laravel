@@ -10,7 +10,6 @@
 
     {{--搜索结果顶部栏--}}
     <div class="alert alert-info" role="alert">
-        <a class="btn btn-default" href="{{ route('home') }}">返回</a>
         <span class="search-result-tips">共找到 {{ $users->total() }} 个与「<strong>{{ $keyword }}</strong>」相关的用户</span>
     </div>
 
@@ -25,7 +24,7 @@
                                 <div class="col-md-3">
                                     <div class="thumbnail">
                                         <a href="{{ route('users.show', $users[$j]->id) }}">
-                                            <img data-src="holder.js/100%x200" alt="{{ $users[$j]->name }}" src="{{ $users[$j]->gravatar('188') }}" data-holder-rendered="true" style="width: 100%; display: block;">
+                                            <img data-src="holder.js/100%x200" alt="{{ $users[$j]->name }}" src="{{ $users[$j]->avatar() }}" data-holder-rendered="true" style="width: 100%; display: block;">
                                         </a>
                                         <div class="caption">
                                             <p class="search-show-name">
@@ -40,7 +39,7 @@
                                                 @elseif ($users[$j]->isAttached())
                                                     <button class="btn btn-danger" type="submit">已关注</button>
                                                 @else
-                                                    <button class="btn btn-info" type="submit">关注TA</button>
+                                                    <button @if (Auth::check()) type="submit" @else type="button" data-toggle="popover" data-content="登录后才可以关注TA哦，快去登录吧！" data-placement="bottom" data-container="body" @endif class="btn btn-info" type="submit">关注TA</button>
                                                 @endif
 
                                                 <a href="{{ route('users.show', $users[$j]->id) }}" class="btn btn-default" role="button">查看</a>

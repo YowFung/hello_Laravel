@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\Message;
+use App\Http\Controllers\MessagesController;
 
 class UsersTableSeeder extends Seeder
 {
@@ -13,20 +13,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(User::class)->times(20)->make();
-        User::insert($users->makeVisible(['password', 'remember_token'])->toArray());
+        $users = factory(User::class)->times(10)->make();
+        $users = $users->makeVisible(['password', 'remember_token'])->toArray();
+        User::insert($users);
 
         $user = User::find(1);
         $user->name = 'yowfung';
         $user->email = 'yowfung@outlook.com';
+        $user->avatar = config('app.default_avatar');
         $user->save();
-
-        foreach (User::all() as $user) {
-            Message::create([
-                'user_id' => $user->id,
-                'type' => 'system',
-                'content' => '亲爱的「' . $user->name . '」您好！感谢您注册我们的微博账户，祝您微博生活愉快！',
-            ]);
-        }
     }
 }

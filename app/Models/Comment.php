@@ -8,18 +8,18 @@ use Illuminate\Support\Facades\Auth;
 class Comment extends Model
 {
     protected $fillable = [
-        'note_id', 'from_id', 'involved_id', 'content', 'created_at'
+        'note_id', 'from_id', 'content', 'created_at',
     ];
 
 
     /**
      * 建立评论-发布者用户关系
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
-        return $this->belongsToMany(User::class, 'from_id');
+        return $this->belongsTo(User::class, 'from_id');
     }
 
 

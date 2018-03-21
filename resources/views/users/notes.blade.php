@@ -19,11 +19,11 @@
 
                 <textarea name="notes_content" cols="30" rows="4" class="form-control input-notes-content" placeholder="此刻你在想什么呢？" autofocus>{{ old('notes_content') }}</textarea>
                 @if (count($errors) > 0)
-                    <span class="label label-danger">{{ $errors->first() }}</span>
+                    <span class="label label-warning" style="float: right">{{ $errors->first() }}</span>
                 @endif
-                <button type="submit" class="btn btn-md btn-success btn-notes-published">发表动态</button>
+                <button type="submit" class="btn btn-md btn-primary">发表动态</button>
             </form>
-            <br><br><hr>
+            <br><hr>
         @endif
 
         @if (session()->has('success'))
@@ -34,60 +34,69 @@
 
             @if (Auth::check() && Auth::user()->id == $user->id)
                 @if ($notes->total())
-                    <h3><span class="label label-info" style="padding: 8px">我发表过的微博动态（{{ $notes->total() }}）</span></h3><br>
+                    <h3><h4>我发表过的微博动态({{ $notes->total() }})</h4></h3><br>
                 @else
                     <p class="tips">你还没发表过任何微博动态哦~</p>
                 @endif
             @else
                 @if ($notes->total())
-                    <h3><span class="label label-info" style="padding: 8px">TA发表过的微博动态（{{ $notes->total() }}）</span></h3><br>
+                    <h3><h4>TA发表过的微博动态({{ $notes->total() }})</h4></h3><br>
                 @else
                     <p class="tips">TA还没发表过任何微博动态哦~</p>
                 @endif
             @endif
 
+            <br>
             @foreach( $notes as $note)
-                <div class="media">
-                    <div class="media-left">
-                        <img class="media-object" src="{{ $user->gravatar(48) }}" alt="{{ $user->name }}"/>
-                    </div>
-                    <div class="media-body">
-                        {{ $note->content }}
-                        <br>
-                        <span class="label label-default label-note-show">{{ $note->created_at->diffForHumans() }}</span>
-                        @can('destroy', $note)
-                            <form action="{{ route('notes.destroy', $note->id) }}" method="POST" style="display: inline-block">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
+                <div class="row" style="padding: 8px 24px">
+                    <a href="{{ route('notes.show', $note->id) }}" class="home-note-link">
+                        <p>{{ $note->content }}</p>
+                    </a>
 
-                                <button type="button" class="btn btn-xs btn-danger status-delete-btn" data-toggle="modal" data-target="#myModal">删除</button>
+                    <span class="label label-default label-note-show" title="评论数">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        ({{ $note->commentsCount() }})
+                    </span>
+                    &nbsp;
+                    <span class="label label-default label-note-show" title="发表时间">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                        {{ $note->created_at->diffForHumans() }}
+                    </span>
+                    &nbsp;
+                    <a href="{{ route('notes.show', $note->id) }}" class="btn btn-xs btn-info">
+                        查看
+                    </a>
+                    @if (Auth::check() && Auth::user()->id == $user->id)
+                        <form action="{{ route('notes.destroy', $note->id) }}" method="POST" style="display: inline-block">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
 
-                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">确定要删除该条动态吗？</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                {{ $note->content }}
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-danger">确认</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                            </div>
+                            <button type="button" class="btn btn-xs btn-danger status-delete-btn" data-toggle="modal" data-target="#myModal">删除</button>
+
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">确定要删除该条动态吗？</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ $note->content }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger">确认</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                            </form>
-                        @endcan
-                    </div>
+                        </form>
+                    @endif
                 </div>
-                <br>
+                <hr>
             @endforeach
 
-            <br><br>
             <nav aria-label="..." class="page-split">
                 {{ $notes->fragment('lists')->render() }}
             </nav>

@@ -30,6 +30,9 @@ class HomeController extends Controller
             default : $notes = $this->generateRecommendNotes(); break;
         }
 
+        if ($notes === null)
+            return redirect(route('login'));
+
         $notes = $this->paginate($notes, $request, 10);
         $notes->url(route('home'));
         $followers = $this->followers();
@@ -47,15 +50,31 @@ class HomeController extends Controller
 
 
     /**
+     * 返回逻辑
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function back()
+    {
+        if(!empty(session('backUrl')))
+            $backUrl = session('backUrl');
+        else
+            $backUrl = route('home');
+
+        session()->forget('backUrl');
+        return redirect($backUrl);
+    }
+
+
+    /**
      * 获取首页关注人列表
      *
      * @return array
      */
-    static function followers()
+    public static function followers()
     {
         $followers = [];
-        if (Auth::check())
-            $followers = Auth::user()->followers->take(40);
+        Auth::check() && $followers = Auth::user()->followers;
 
         return $followers;
     }
@@ -112,26 +131,22 @@ class HomeController extends Controller
     /**
      * 产生关注动态列表
      *
-     * @return array|Collection|null|static
+     * @return Collection
      */
     protected function generateAttachedNotes()
     {
         if (!Auth::check())
             return null;
 
-        $followers = Auth::user()->followers;
-
-        $notes = [];
-        foreach ($followers as $follower) {
-            $perNotes = $follower->notes;
-
-            foreach ($perNotes as $value) {
-                $notes[] = $value;
-            }
-        }
-
+        $notes = Auth::user()->followersNotes;
         $notes = new Collection($notes);
         $notes = $notes->sortByDesc('created_at')->take(80);
+
+        $new = [];
+        foreach ($notes as $key => $val) {
+            $new[] = $val;
+        }
+        $notes = new Collection($new);
 
         return $notes;
     }

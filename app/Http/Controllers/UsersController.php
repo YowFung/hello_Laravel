@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Message;
+use App\Http\Requests\ImageRequest;
+use App\Handlers\ImageUploadHandler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -54,8 +55,8 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:users|min:3|max:50',
-            'email' => 'required|email|unique:users|max:255',
+            'name' => 'required|unique:users,name|min:3|max:50',
+            'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|confirmed|min:6|max:16'
         ]);
 
@@ -63,12 +64,11 @@ class UsersController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'avatar' => config('app.default_avatar', '/img/photos/default.jpg'),
         ]);
 
         Auth::login($user);
-
-        $msg_content = '亲爱的「' . $user->name . '」您好！恭喜你成功注册微博账号，您可以通过发表微博动态来分享您的想法，也可以关注其他用户、查看其他人的动态、与其他人互动等。祝您微博生活愉快！';
-        MessagesController::create($user->id, $msg_content);
+        MessagesController::createNoticeMessage(Auth::user()->id, 'sign_up');
 
         return redirect()->route('users.show', [$user]);
     }
@@ -99,7 +99,7 @@ class UsersController extends Controller
     {
         $this->authorize('user', $user);
 
-        if (array_key_exists('password_new', $request->all())) {
+        if ($request->get('password_new')) {
             $this->validate($request, [
                 'password_old' => 'required',
                 'password_new' => 'required|confirmed|min:6|max:16',
@@ -115,8 +115,8 @@ class UsersController extends Controller
 
             $data = ['password' => bcrypt($request->password_new)];
 
-            $msg_content = '亲爱的「' . $user->name . '」！您已成功修改了密码，请牢记您的新密码！';
-            MessagesController::create($user->id, $msg_content);
+            MessagesController::createNoticeMessage(Auth::user()->id, 'change_pwd');
+            session()->flash('success', '修改密码成功！');
         }
         else {
             $this->validate($request, [
@@ -138,11 +138,39 @@ class UsersController extends Controller
                 'college' => $request->college,
                 'address' => $request->address,
             ];
+
+            session()->flash('success', '修改资料成功！');
         }
 
         $user->update($data);
-        session()->flash('success', '修改成功！');
 
+        return redirect()->route('users.show', $user->id);
+    }
+
+
+    /**
+     * 用户头像更新
+     *
+     * @param User $user
+     * @param ImageRequest $request
+     * @param ImageUploadHandler $uploader
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateAvatar(User $user, ImageRequest $request, ImageUploadHandler $uploader)
+    {
+        $this->authorize('user', $user);
+
+        $result = $uploader->save($request->file('avatar'), 'photos', $user->id);
+        if ($result) {
+            $data['avatar'] = $result['path'];
+            $old_avatar_file = $user->avatar;
+            if ($old_avatar_file != config('app.default_avatar'))
+                unlink(public_path() . $old_avatar_file);
+        }
+
+        session()->flash('avatar', '修改头像成功！');
+
+        $user->update($data);
         return redirect()->route('users.show', $user->id);
     }
 
@@ -212,17 +240,16 @@ class UsersController extends Controller
 
         if ($user->isAttached()) {
             Auth::user()->followers()->detach([$user->id]);
+            $tips = '已成功取消关注「' . $user->name . '」';
         } else {
             Auth::user()->followers()->sync([$user->id], false);
-
-            $msg_content = '用户「' . config('app.sign_begin') . Auth::user()->name . config('app.sign_end') . '」关注了您！你可以在「我的粉丝」列表中查看TA的信息。';
-            $msg_parameters = [route('users.show', Auth::user()->id)];
-            MessagesController::create($user->id, $msg_content, 'attach', $msg_parameters);
+            MessagesController::createFollowMessage($user->id, Auth::user()->id);
+            $tips = '已成功关注「' . $user->name . '」';
         }
 
         $backUrl = redirect()->back()->getTargetUrl();
         if ($backUrl != route('users.show', $user->id) && $backUrl != route('users.notes', $user->id))
-            session()->flash('success', '已成功取消关注「' . $user->name . '」');
+            session()->flash('success', $tips);
 
         return redirect()->back();
     }

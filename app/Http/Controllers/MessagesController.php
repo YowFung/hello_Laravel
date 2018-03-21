@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Message;
@@ -20,27 +21,36 @@ class MessagesController extends Controller
     /**
      * 用户消息列表页面
      *
-     * @param User $user
-     * @param string $nav_type
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(User $user, $nav_type = 'new')
+    public function index(Request $request)
     {
-        $this->authorize('user', $user);
+        $category = $request->get('category') ?: 'new';
+        if (!in_array($category, ['new', 'all', 'notice', 'letter', 'follow', 'comment']))
+            return redirect(route('messages.index'));
 
+        $user = Auth::user();
         $messages = $user->messages();
 
-        if ($nav_type == 'new')
+        if ($category == 'new')
             $messages = $messages->where('read', false);
-        elseif ($nav_type == 'system')
-            $messages = $messages->where('type', 'system');
-        else
-            $messages = $messages->where('type','!=', 'system');
+        elseif ($category != 'all')
+            $messages = $messages->where('type', $category);
 
         $messages = $messages->paginate(5);
-        $messages->url(route('messages.index', [$user->id, $nav_type]));
+        $messages->url(route('messages.index'));
 
-        return view('users.messages', compact('user', 'messages', 'nav_type'));
+        $empty_tips = [
+            'new' => '暂无未读的新消息~',
+            'all' => '暂时还未收到过任何消息~',
+            'notice' => '暂无系统通知~',
+            'letter' => '暂无私信消息~',
+            'follow' => '暂无关注消息~',
+            'comment' => '暂无评论消息~',
+        ];
+
+        return view('users.messages', compact('user', 'messages', 'category', 'empty_tips'));
     }
 
 
@@ -57,7 +67,7 @@ class MessagesController extends Controller
         $read = $message->read;
         $message->update(['read' => true]);
         $user = Auth::user();
-        $message->read = $read;
+        $message->read = $read ? '已读' : '未读';
 
         return view('messages.show', compact( 'user', 'message'));
     }
@@ -96,32 +106,110 @@ class MessagesController extends Controller
 
 
     /**
-     * 创建新消息
+     * 创建系统通知消息
      *
-     * @param int $to
-     * @param string $content
-     * @param string $type
-     * @param array $parameters
+     * @param $user_id
+     * @param $type
      * @return bool
      */
-    public static function create($to, $content, $type = 'system', $parameters = [])
+    public static function createNoticeMessage($user_id, $type)
     {
-        $sign_begin_count = substr_count($content, config('app.sign_begin'));
-        $sign_end_count = substr_count($content, config('app.sign_end'));
-
-        if (count($parameters) != $sign_begin_count || count($parameters) != $sign_end_count)
+        if (!in_array($type, ['sign_up', 'change_pwd']))
             return false;
 
-        if (!in_array($type, ['system', 'letter', 'letter_reply', 'attach', 'comment', 'comment_reply']))
+        if (!User::find($user_id))
             return false;
+        else
+            $name = User::find($user_id)->name;
 
-        $parameters = implode(config('app.sign_separate'), $parameters);
+        switch ($type) {
+            case 'sign_up' : $content = '亲爱的「' . $name . '」，恭喜您成功注册微博账号，现在请开始您的微博人生吧！'; break;
+            case 'change_pwd' : $content = '亲爱的「' . $name . '」，您的密码已成功修改，请牢记您的新密码，打死都不要告诉别人您的密码哦！'; break;
+            default : return false;
+        }
 
         return Message::create([
-            'user_id' => $to,
-            'type' => $type,
-            'parameters' => $parameters,
-            'content' => $content
+            'user_id' => $user_id,
+            'type' => 'notice',
+            'content' => $content,
+        ]);
+    }
+
+
+    /**
+     * 创建私信消息
+     *
+     * @param $user_id
+     * @param $from_id
+     * @param $content
+     * @return bool
+     */
+    public static function createLetterMessage($user_id, $from_id, $content)
+    {
+        if (!User::find($user_id) || !User::find($from_id))
+            return false;
+
+        $name = User::find($from_id)->name;
+        $path = parse_url(route('users.show', $from_id))['path'];
+        $content = htmlspecialchars($content);
+        $content = '<p>用户「<a target="_blank" href="' . $path . '">' . $name . '</a>」查看您的微博主页，并给您留下了一段话：</p><p>' . $content . '</p>';
+
+        return Message::create([
+            'user_id' => $user_id,
+            'type' => 'letter',
+            'content' => $content,
+        ]);
+    }
+
+
+    /**
+     * 创建关注消息
+     *
+     * @param $user_id
+     * @param $from_id
+     * @return bool
+     */
+    public static function createFollowMessage($user_id, $from_id)
+    {
+        if (!User::find($user_id) || !User::find($from_id))
+            return false;
+
+        $name = User::find($from_id)->name;
+        $path = parse_url(route('users.show', $from_id))['path'];
+        $content = '用户「<a target="_blank" href="' . $path . '">' . $name . '</a>」关注了您，现在您又多了一个粉丝啦，赶紧去了解一下TA吧！';
+
+        return Message::create([
+            'user_id' => $user_id,
+            'type' => 'follow',
+            'content' => $content,
+        ]);
+    }
+
+
+    /**
+     * 创建评论消息
+     *
+     * @param $user_id
+     * @param $from_id
+     * @param $note_id
+     * @param $content
+     * @return bool
+     */
+    public static function createCommentMessage($user_id, $from_id, $note_id, $content )
+    {
+        if (!User::find($user_id) || !User::find($from_id) || !Note::find($note_id))
+            return false;
+
+        $name = User::find($from_id)->name;
+        $note_content = htmlspecialchars(Note::find($note_id)->content);
+        $user_path = parse_url(route('users.show', $from_id))['path'];
+        $note_path = parse_url(route('notes.show', $note_id))['path'];
+        $content = '用户「<a target="_blank" href="' . $user_path . '">' . $name . '</a>」评论了您的动态[<a target="_blank" href="' . $note_path . '">' . $note_content . '</a>]，赶紧去看看吧！';
+
+        return Message::create([
+            'user_id' => $user_id,
+            'type' => 'comment',
+            'content' => $content,
         ]);
     }
 }

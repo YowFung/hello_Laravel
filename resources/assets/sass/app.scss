@@ -60,8 +60,25 @@ footer {
 
 .gravatar {
   width: 100%;
+  height: 100%;
 }
 
+.nav-user-name {
+  .user-avatar {
+    opacity: 0.8;
+  }
+
+  &:hover .user-avatar {
+      opacity: 1;
+  }
+
+  img{
+    display: block;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+  }
+}
 
 .user-show-bg {
   background: url("/img/bg/user-info-bg.jpg") no-repeat;
@@ -69,11 +86,62 @@ footer {
   background-position: 15px 15px;
 
   .photo-img {
+    position: relative;
     width: 144px;
     height: 144px;
     border: 2px solid #FFF;
     box-shadow: 0px 0px 5px 0px;
     margin: 56px 16px 50px 40px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    a {
+      cursor: default;
+    }
+
+    .avatar{
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 40px;
+      display: none;
+      background-color: rgba(0,0,0,0.3);
+      text-align: center;
+      line-height: 40px;
+
+      a {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        text-decoration: none;
+        color: white;
+      }
+
+      input[type="file"] {
+        display: block;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+
+      &:hover {
+        background-color: rgba(0,0,0,0.4);
+      }
+
+      #avatarSubmit {
+        display: none;
+      }
+    }
+
+    &:hover .avatar {
+      display: inline-block;
+    }
+
   }
 
   .title-name {
@@ -89,6 +157,7 @@ footer {
 
   .title-attach {
     padding: 2px;
+    margin-top: 8px;
 
     .title-count {
       color: #666;
@@ -121,14 +190,11 @@ footer {
 
 .user-panel {
   padding: 40px;
+  min-height: 294px;
 }
 
 .user-show-btn {
   text-align: center;
-}
-
-.btn-notes-published {
-  float: right;
 }
 
 .input-notes-content {
@@ -197,17 +263,13 @@ footer {
 
 .message-item {
   form {
-    display: none;
+    display: inline-block;
     height: 20px;
 
     button {
       padding: 0 5px;
       margin-top: 1px;
     }
-  }
-
-  &:hover form {
-    display: inline-block;
   }
 }
 
@@ -216,7 +278,7 @@ footer {
 }
 
 .message-passage {
-  text-indent: 2em;
+  //text-indent: 2em;
 }
 
 .message-nav {
@@ -311,4 +373,75 @@ footer {
     overflow-x: hidden;
     display: block;
   }
+}
+
+.home-note-link {
+  text-decoration: none;
+  color: #444;
+
+  &:hover {
+    text-decoration: none;
+    color: #4a4a4a;
+  }
+}
+
+.comment-time{
+  font-size: 11px;
+  color: #888;
+  background-color: #e4e4e4;
+  padding: 2px 6px;
+}
+
+.note-comment-panel {
+  padding: 32px 40px;
+  min-height: 710px;
+}
+
+.follower-info {
+  line-height: 20px;
+  margin-top: -4px;
+
+  strong {
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+
+  p {
+    line-height: 24px;
+  }
+}
+
+.status-avatar{
+
+  img {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+
+.presentation {
+
+
+  &:hover {
+    background-color: #e4e4e4;
+  }
+}
+
+.messages-count {
+  background-color: #c44;
+  padding: 6px;
+  border-radius: 45%;
+  color: white;
+  font-size: 10px;
+  width: 32px;
+  height: 20px;
+  display: block;
+  text-align: center;
+  line-height: 10px;
+}
+
+.thumbnail-status{
+  display: inline-block;
+  float: right;
 }

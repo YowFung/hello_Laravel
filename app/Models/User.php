@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'gender', 'associations', 'college', 'address'
+        'name', 'email', 'password', 'gender', 'associations', 'college', 'address', 'avatar',
     ];
 
     /**
@@ -75,26 +75,27 @@ class User extends Authenticatable
 
 
     /**
-     * 建立留言接受者用户-留言关系
+     * 建立用户-关注人的微博动态关系
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function letters()
+    public function followersNotes()
     {
-        return $this->hasMany(Letter::class)->orderByDesc('created_at');
+        return $this->hasManyThrough('App\Models\Note', 'App\Models\Fan', 'follow_id', 'user_id', 'id', 'master_id');
     }
 
 
     /**
-     * 获取用户的Gravatar头像
+     * 获取用户头像
      *
-     * @param string $size
-     * @return string
+     * @return \Illuminate\Config\Repository|mixed
      */
-    public function gravatar($size = '100')
+    public function avatar()
     {
-        $hash = md5(strtolower(trim($this->attributes['email'])));
-        return "http://www.gravatar.com/avatar/$hash?s=$size";
+        if (empty($this->attributes['avatar']))
+            return config('app.default_avatar', '/img/photos/default.jpg');
+
+        return $this->attributes['avatar'];
     }
 
 

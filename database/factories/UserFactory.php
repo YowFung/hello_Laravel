@@ -20,6 +20,8 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     } while (mb_strlen($name) > 20);
 
     static $password;
+    static $i;
+    $i++;
 
     return [
         'name' => $name,
@@ -28,5 +30,6 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'password' => $password ?: $password = bcrypt('123456'),
         'created_at' => $date_time,
         'updated_at' => $date_time,
+        'avatar' => '/img/photos/test/' . $i . '.jpg',
     ];
 });

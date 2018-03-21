@@ -1,4 +1,4 @@
 <hr />
 <footer>
-    <p>© 2018 韶关学院 毕业设计  粤ICP备000000号</p>
+    <p>© Copyright by yowfung 2018 </p>
 </footer>

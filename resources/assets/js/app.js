@@ -39,4 +39,25 @@ $(".back-to-top").click(function() {
 
 $(function () {
     $('[data-toggle="popover"]').popover()
-})
+});
+
+$('#avatarFile').change(function () {
+    var fileObj = document.getElementById('avatarFile').files[0];
+    if (fileObj) {
+        var type = fileObj.name.substr(fileObj.name.lastIndexOf('.'));
+
+        var theImage = new Image();
+        theImage.src = fileObj;
+        var imageWidth = theImage.width;
+        var imageHeight = theImage.height;
+
+        if (type != '.jpg' && type != '.jpeg' && type != '.png')
+            alert ('只支持 JPG/JPEG/PNG 图片格式');
+        else if (fileObj.size > 2*1024*1024)
+            alert('文件大小不能超过2M');
+        else if (imageWidth < 200 || imageHeight < 200)
+            alert('图片宽高必须 200px 以上');
+        else
+            $('#avatarSubmit').click();
+    }
+});

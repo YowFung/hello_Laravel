@@ -148,5 +148,7 @@ return [
         'time' => '时间',
         'available' => '可用的',
         'size' => '大小',
+        'note_id' => '该条动态',
+        'user_id' => '该条动态发布者'
     ],
 ];

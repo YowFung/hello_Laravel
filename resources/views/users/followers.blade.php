@@ -22,7 +22,7 @@
                     <div class="media-left">
                         <div class="media-object thumbnail" style="width: 64px; margin-bottom: 6px">
                             <a href="{{ route('users.show', $follower->id) }}">
-                                <img alt="{{ $follower->name }}" src="{{ $follower->gravatar(104) }}">
+                                <img alt="{{ $follower->name }}" src="{{ $follower->avatar() }}">
                             </a>
                         </div>
                         <form action="{{ route('users.attach', $follower->id) }}" method="POST" style="display: inline-block">
@@ -31,16 +31,20 @@
                             <button type="submit" class="btn btn-xs btn-danger" style="margin-left: 2px">取消关注</button>
                         </form>
                     </div>
-                    <div class="media-body">
+                    <div class="media-body follower-info">
                         <a href="{{ route('users.show', $follower->id) }}"><h4>{{ $follower->name }}</h4></a>
-                            @if (empty($follower->newNote()))
-                                <p class="tips" style="text-align: left">该用户未发表过微博动态~</p>
-                            @else
-                                <p>
-                                    <span class="label label-default label-note-show">最新动态：</span>
-                                    {{ $follower->newNote() }}
-                                </p>
-                            @endif
+                        <strong>
+                            <span class="label label-default label-note-show">邮箱地址：</span>
+                            {{ $follower->email }}
+                        </strong>
+                        @if (empty($follower->newNote()))
+                            <p class="tips" style="text-align: left">该用户未发表过微博动态~</p>
+                        @else
+                            <p>
+                                <span class="label label-default label-note-show">最新动态：</span>
+                                {{ $follower->newNote() }}
+                            </p>
+                        @endif
                     </div>
                 </div>
                 <br>

@@ -20,23 +20,28 @@ class CommentsController extends Controller
     /**
      * 发表评论
      *
-     * @param Note $note
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Note $note, Request $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
-            'passage' => 'required|max:140',
-            'involved_id' => 'nullable',
+            'content' => 'required|min:3|max:140',
+            'note_id' => 'required|exists:notes,id',
+            'user_id' => 'required|exists:users,id',
         ]);
 
+        $content = $request->get('content');
+
         Comment::create([
-            'note_id' => $note->id,
+            'note_id' => $request->get('note_id'),
             'from_id' => Auth::user()->id,
-            'involved_id' => $request->involved_id,
-            'content' => $request->passage,
+            'content' => $content,
         ]);
+
+        MessagesController::createCommentMessage($request->get('user_id'), Auth::user()->id, $request->get('note_id'), $content);
+
+        session()->flash('success', '发表评论成功！');
 
         return redirect()->back();
     }

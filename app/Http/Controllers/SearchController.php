@@ -23,7 +23,11 @@ class SearchController extends Controller
         $keyword = $request->keyword;
         $data = [
             'followers' => HomeController::followers(),
+            'follower_count' => count(HomeController::followers()),
         ];
+
+        if(empty(session('backUrl')))
+            session(['backUrl' => redirect()->back()->getTargetUrl()]);
 
         $currentUser = Auth::check() ? Auth::user()->id : 0;
         $users = User::where('name', 'like', '%' . $keyword . '%')
