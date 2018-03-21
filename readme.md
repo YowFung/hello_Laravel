@@ -13,7 +13,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-​	yowfung/microBlog 是一个简洁的微博应用网站，使用 Laravel 5.5 后端框架及 BootStrap v3 前端框架编写而成。该项目为本人(yowfung)学习 Laravel 开发框架的第一个实战项目。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**yowfung/microBlog** 是一个简洁的微博应用网站，使用 Laravel 5.5 后端框架及 BootStrap v3 前端框架编写而成。该项目为本人(yowfung)学习 Laravel 开发框架的第一个实战项目。
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -114,10 +114,6 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-
-
-&nbsp;
-
 ## 权限与安全
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为保证网站系统及用户数据安全，应对用户访问权限进行限制，即：
@@ -145,10 +141,11 @@
 3. 通过Laravel 的授权策略（Policy）来验证权限；
 
 
+&nbsp;
 
 ## 项目测试
 
-####测试环境要求  
+#### 测试环境要求  
 
 > Ubuntu 16.04 LTS +
 >
@@ -160,13 +157,13 @@
 
 
 
-####克隆源代码
+#### 克隆源代码
 
 ```shell
     git clone git@github.com:YowFung/microBlog.git
 ```
 
-####安装及配置
+#### 安装及配置
 
 1. Composer 安装：
 
@@ -217,7 +214,7 @@
     php artisan migrate --seed
 ```
 
-####测试运行
+#### 测试运行
 
 1. 运行服务：
 
@@ -232,7 +229,7 @@ php artisan serve
 
 &nbsp;&nbsp;&nbsp;&nbsp;
 
-##项目上线
+## 项目上线
 
 - 基本环境部署步骤与测试环境部署一致，但需要将 `.env` 的 `APP_URL` 及`DB_*` 设置成实际上线的域名和数据库配置，并一定要将 `APP_DEBUG` 设置成 `false` 。
 - 需要自己配置Nginx域名绑定。
