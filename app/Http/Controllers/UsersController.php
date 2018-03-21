@@ -55,8 +55,8 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:users|min:3|max:50',
-            'email' => 'required|email|unique:users|max:255',
+            'name' => 'required|unique:users,name|min:3|max:50',
+            'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|confirmed|min:6|max:16'
         ]);
 
@@ -240,14 +240,16 @@ class UsersController extends Controller
 
         if ($user->isAttached()) {
             Auth::user()->followers()->detach([$user->id]);
+            $tips = '已成功取消关注「' . $user->name . '」';
         } else {
             Auth::user()->followers()->sync([$user->id], false);
             MessagesController::createFollowMessage($user->id, Auth::user()->id);
+            $tips = '已成功关注「' . $user->name . '」';
         }
 
         $backUrl = redirect()->back()->getTargetUrl();
         if ($backUrl != route('users.show', $user->id) && $backUrl != route('users.notes', $user->id))
-            session()->flash('success', '已成功取消关注「' . $user->name . '」');
+            session()->flash('success', $tips);
 
         return redirect()->back();
     }

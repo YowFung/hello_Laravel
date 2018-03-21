@@ -138,8 +138,15 @@ class HomeController extends Controller
         if (!Auth::check())
             return null;
 
-        $notes = Auth::user()->followersNotes->take(80);
+        $notes = Auth::user()->followersNotes;
         $notes = new Collection($notes);
+        $notes = $notes->sortByDesc('created_at')->take(80);
+
+        $new = [];
+        foreach ($notes as $key => $val) {
+            $new[] = $val;
+        }
+        $notes = new Collection($new);
 
         return $notes;
     }

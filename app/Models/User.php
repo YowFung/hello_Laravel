@@ -81,7 +81,7 @@ class User extends Authenticatable
      */
     public function followersNotes()
     {
-        return $this->hasManyThrough('App\Models\Note', 'App\Models\Fan', 'master_id', 'user_id', '', 'follow_id');
+        return $this->hasManyThrough('App\Models\Note', 'App\Models\Fan', 'follow_id', 'user_id', 'id', 'master_id');
     }
 
 

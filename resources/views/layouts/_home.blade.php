@@ -73,7 +73,7 @@
                     <h3 class="panel-title">关于本站</h3>
                 </div>
                 <div class="panel-body  about-panel-body">
-                    <p>本站是「Han'」的毕业设计项目，采用 PHP Laravel 5.5 后端框架和 BootStrap v3 前端框架开发，含表单验证、路由过滤、授权策略、响应式布局等，开发架构遵循RESTFul和PSR规范。</p>
+                    <p>本站使用 Laravel 5.5 及 BootStrap v3 框架开发。是作者 yowfung 学习 Laravel 框架的第一个实战项目。</p>
                     <img src="/img/sign/QRCode.png">
                     <p>扫二维码访问移动端测试站点</p>
                 </div>
