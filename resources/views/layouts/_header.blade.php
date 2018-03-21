@@ -15,16 +15,22 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::check())
-                    <li role="presentation">
+                    <li role="presentation" class="presentation">
                         <a href="{{ route('users.show', Auth::user()->id) }}" class="nav-user-name">
-                            <span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px;">
-                                <img src="{{ Auth::user()->avatar() }}" class="img-responsive img-circle" width="30px" height="30px">
+                            <span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px; width: 32px; height: 32px">
+                                <img src="{{ Auth::user()->avatar() }}">
                             </span>
                             {{ Auth::user()->name }}
-                            @if (Auth::user()->newMessagesCount())  <span class="badge">{{ Auth::user()->newMessagesCount() }}</span> @endif
                         </a>
                     </li>
-                    <li role="presentation">
+                    @if (Auth::user()->newMessagesCount())
+                        <li role="presentation" class="presentation">
+                            <a href="{{ route('messages.index') }}">
+                                <span class="messages-count">{{ Auth::user()->newMessagesCount() }}</span>
+                            </a>
+                        </li>
+                    @endif
+                    <li role="presentation" class="presentation">
                         <form action="{{ route('logout') }}" method="POST" style="display: none">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}

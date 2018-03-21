@@ -46,57 +46,53 @@
                 @endif
             @endif
 
+            <br>
             @foreach( $notes as $note)
-                <div class="media">
-                    <div class="media-left">
-                        <img class="media-object" src="{{ $user->avatar() }}" alt="{{ $user->name }}"/>
-                    </div>
-                    <div class="media-body">
-                        <a href="{{ route('notes.show', $note->id) }}" class="home-note-link">
-                            <p>{{ $note->content }}</p>
-                        </a>
+                <div class="row" style="padding: 8px 24px">
+                    <a href="{{ route('notes.show', $note->id) }}" class="home-note-link">
+                        <p>{{ $note->content }}</p>
+                    </a>
 
-                        <span class="label label-default label-note-show" title="评论数">
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            ({{ $note->commentsCount() }})
-                        </span>
-                        &nbsp;
-                        <span class="label label-default label-note-show" title="发表时间">
-                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                            {{ $note->created_at->diffForHumans() }}
-                        </span>
-                        &nbsp;
-                        <a href="{{ route('notes.show', $note->id) }}" class="btn btn-xs btn-info">
-                            查看
-                        </a>
-                        @if (Auth::check() && Auth::user()->id == $user->id)
-                            <form action="{{ route('notes.destroy', $note->id) }}" method="POST" style="display: inline-block">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
+                    <span class="label label-default label-note-show" title="评论数">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        ({{ $note->commentsCount() }})
+                    </span>
+                    &nbsp;
+                    <span class="label label-default label-note-show" title="发表时间">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                        {{ $note->created_at->diffForHumans() }}
+                    </span>
+                    &nbsp;
+                    <a href="{{ route('notes.show', $note->id) }}" class="btn btn-xs btn-info">
+                        查看
+                    </a>
+                    @if (Auth::check() && Auth::user()->id == $user->id)
+                        <form action="{{ route('notes.destroy', $note->id) }}" method="POST" style="display: inline-block">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
 
-                                <button type="button" class="btn btn-xs btn-danger status-delete-btn" data-toggle="modal" data-target="#myModal">删除</button>
+                            <button type="button" class="btn btn-xs btn-danger status-delete-btn" data-toggle="modal" data-target="#myModal">删除</button>
 
-                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">确定要删除该条动态吗？</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                {{ $note->content }}
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-danger">确认</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                            </div>
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">确定要删除该条动态吗？</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ $note->content }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-danger">确认</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                            </form>
-                        @endif
-                    </div>
+                        </form>
+                    @endif
                 </div>
                 <hr>
             @endforeach

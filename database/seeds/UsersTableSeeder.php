@@ -13,12 +13,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(User::class)->times(20)->make();
-        User::insert($users->makeVisible(['password', 'remember_token'])->toArray());
+        $users = factory(User::class)->times(10)->make();
+        $users = $users->makeVisible(['password', 'remember_token'])->toArray();
+        User::insert($users);
 
         $user = User::find(1);
         $user->name = 'yowfung';
         $user->email = 'yowfung@outlook.com';
+        $user->avatar = config('app.default_avatar');
         $user->save();
     }
 }

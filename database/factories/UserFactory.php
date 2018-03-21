@@ -20,14 +20,16 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     } while (mb_strlen($name) > 20);
 
     static $password;
+    static $i;
+    $i++;
 
     return [
         'name' => $name,
         'email' => $faker->unique()->safeEmail,
         'remember_token' => str_random(10),
         'password' => $password ?: $password = bcrypt('123456'),
-        'avatar' => config('app.default_avatar'),
         'created_at' => $date_time,
         'updated_at' => $date_time,
+        'avatar' => '/img/photos/test/' . $i . '.jpg',
     ];
 });

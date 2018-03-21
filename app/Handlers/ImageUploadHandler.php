@@ -2,6 +2,8 @@
 
 namespace App\Handlers;
 
+use Intervention\Image\Facades\Image;
+
 class ImageUploadHandler
 {
     protected $allowed_ext = ["png", "jpg", 'jpeg'];
@@ -26,6 +28,10 @@ class ImageUploadHandler
         }
 
         $file->move($path, $filename);
+
+        $image = Image::make($path . '/' . $filename);
+        $image->resizeCanvas(200, 200);
+        $image->save();
 
         return [
             'path' => $folder_name . $filename

@@ -15,12 +15,12 @@ class FansTableSeeder extends Seeder
     {
         $faker = app(Faker\Generator::class);
 
-        for ($master_id = 1; $master_id < 20; $master_id++) {
+        for ($master_id = 1; $master_id < 10; $master_id++) {
             $times = rand(0, 7);
             $except_ids = [$master_id];
             for ($i = 1; $i <= $times; $i++) {
                 do {
-                    $follow_id = rand(1, 20);
+                    $follow_id = rand(1, 10);
                 } while (in_array($follow_id, $except_ids));
 
                 $datetime = $faker->date . ' ' . $faker->time;

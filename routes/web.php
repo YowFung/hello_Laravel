@@ -20,6 +20,7 @@ Route::get('/users/{user}/safety', 'UsersController@safety')->name('users.safety
 Route::get('/users/{user}/notes', 'UsersController@notes')->name('users.notes');
 Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.followers');
 Route::post('/users/{user}/attach', 'UsersController@attachOrDetach')->name('users.attach');
+Route::patch('/users/{user}/updateAvatar', 'UsersController@updateAvatar')->name('users.updateAvatar');
 
 Route::resource('users', 'UsersController', ['except' => ['index']]);
 Route::resource('notes', 'NotesController', ['only' => ['store', 'destroy', 'show']]);

@@ -57,12 +57,4 @@
             </div>
         </div>
     </form>
-
-    <nav aria-label="..." class="message-nav">
-        <ul class="pager">
-            <li><a href="#">上一条</a></li>
-            <li><a href="#">下一条</a></li>
-        </ul>
-    </nav>
-
 @stop

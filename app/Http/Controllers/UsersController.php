@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\ImageRequest;
 use App\Handlers\ImageUploadHandler;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -92,10 +93,9 @@ class UsersController extends Controller
      *
      * @param User $user
      * @param Request $request
-     * @param ImageUploadHandler $uploader
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(User $user, Request $request, ImageUploadHandler $uploader)
+    public function update(User $user, Request $request)
     {
         $this->authorize('user', $user);
 
@@ -117,11 +117,6 @@ class UsersController extends Controller
 
             MessagesController::createNoticeMessage(Auth::user()->id, 'change_pwd');
             session()->flash('success', '修改密码成功！');
-        }
-        elseif ($request->file('avatar')) {
-            $result = $uploader->save($request->file('avatar'), 'photos', $user->id);
-            if ($result)
-                $data['avatar'] = $result['path'];
         }
         else {
             $this->validate($request, [
@@ -149,6 +144,33 @@ class UsersController extends Controller
 
         $user->update($data);
 
+        return redirect()->route('users.show', $user->id);
+    }
+
+
+    /**
+     * 用户头像更新
+     *
+     * @param User $user
+     * @param ImageRequest $request
+     * @param ImageUploadHandler $uploader
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateAvatar(User $user, ImageRequest $request, ImageUploadHandler $uploader)
+    {
+        $this->authorize('user', $user);
+
+        $result = $uploader->save($request->file('avatar'), 'photos', $user->id);
+        if ($result) {
+            $data['avatar'] = $result['path'];
+            $old_avatar_file = $user->avatar;
+            if ($old_avatar_file != config('app.default_avatar'))
+                unlink(public_path() . $old_avatar_file);
+        }
+
+        session()->flash('avatar', '修改头像成功！');
+
+        $user->update($data);
         return redirect()->route('users.show', $user->id);
     }
 

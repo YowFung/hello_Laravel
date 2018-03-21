@@ -60,6 +60,7 @@ footer {
 
 .gravatar {
   width: 100%;
+  height: 100%;
 }
 
 .nav-user-name {
@@ -69,8 +70,13 @@ footer {
 
   &:hover .user-avatar {
       opacity: 1;
-      box-shadow: 0 0 1px 1px;
-      border-radius: 50%;
+  }
+
+  img{
+    display: block;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -86,6 +92,11 @@ footer {
     border: 2px solid #FFF;
     box-shadow: 0px 0px 5px 0px;
     margin: 56px 16px 50px 40px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
 
     a {
       cursor: default;
@@ -398,4 +409,39 @@ footer {
   p {
     line-height: 24px;
   }
+}
+
+.status-avatar{
+
+  img {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+
+.presentation {
+
+
+  &:hover {
+    background-color: #e4e4e4;
+  }
+}
+
+.messages-count {
+  background-color: #c44;
+  padding: 6px;
+  border-radius: 45%;
+  color: white;
+  font-size: 10px;
+  width: 32px;
+  height: 20px;
+  display: block;
+  text-align: center;
+  line-height: 10px;
+}
+
+.thumbnail-status{
+  display: inline-block;
+  float: right;
 }

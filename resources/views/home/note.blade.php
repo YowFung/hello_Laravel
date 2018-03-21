@@ -1,45 +1,13 @@
 @extends('layouts._home')
 
 @section('col-left')
-
-    {{--导航栏--}}
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <form action="{{ route('back') }}" method="POST" style="display: inline-block">
-                    {{ csrf_field() }}
-
-                    <input type="submit" style="display: none" id="back-btn">
-                    <span class="navbar-brand">
-                        <a class="btn btn-default" type="submit" style="margin-top: -4px" href="javascript:$('#back-btn').click()">返回</a>
-                        &nbsp;动态详情
-                    </span>
-                </form>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-right" @if (Auth::check()) action="{{ route('users.notes', Auth::user()->id) }}" method="GET" @endif style="margin-right: -32px">
-                    <button class="btn btn-primary" @if (Auth::check()) type="submit" @else
-                        type="button" data-trigger="focus" data-placement="left" data-toggle="popover" data-content="登录后才可以发微博哦，快去登录吧！" title="您还没有登录" @endif>
-                        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;发微博
-                    </button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
     {{--动态详情--}}
     <div class="panel panel-default">
         <div class="panel-body note-comment-panel">
             <div class="row">
                 <div class="col-md-2">
                     <section class="photo-img thumbnail">
-                        @include('shared._user_photo', ['user' => $data['user'], 'size' => 144])
+                        @include('shared._user_photo', ['user' => $data['user']])
                     </section>
 
                     <form method="POST" action="{{ route('users.attach', $data['note']->user->id) }}" style="margin-top: -8px">

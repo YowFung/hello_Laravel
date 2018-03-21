@@ -47,16 +47,16 @@
     <!-- 动态列表 -->
     <div class="panel panel-default">
         <div class="panel-body">
-
+            <br><br>
             @foreach( $data['notes'] as $note)
-                <div class="media" id="note{{ $note->id }}">
-                    {{--用户头像--}}
-                    <div class="media-left">
-                        <a href="{{ route('users.show', $note->user->id) }}">
+                <div class="row">
+                    <div class="col-md-2">
+                        {{--用户头像--}}
+                        <a href="{{ route('users.show', $note->user->id) }}" class="status-avatar thumbnail thumbnail-status">
                             <img class="media-object" src="{{ $note->user->avatar() }}" alt="{{ $note->user->name }}"/>
                         </a>
                     </div>
-                    <div class="media-body">
+                    <div class="col-md-10">
                         {{--用户名--}}
                         <strong>
                             <a href="{{ route('users.show', $note->user->id) }}">{{ $note->user->name }}</a>
@@ -80,7 +80,6 @@
                                 {{ $note->content }}
                             </a>
                         </p>
-
                     </div>
                 </div>
                 <hr>

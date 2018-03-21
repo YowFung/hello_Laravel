@@ -7,9 +7,9 @@
 
         <div class="col-md-2">
             <section class="photo-img">
-                @include('shared._user_photo', ['user' => $user, 'size' => 144])
+                @include('shared._user_photo', ['user' => $user])
                 @if (Auth::check() && Auth::user()->id == $user->id)
-                    <form class="avatar" action="{{ route('users.update', $user->id) }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+                    <form class="avatar" action="{{ route('users.updateAvatar', $user->id) }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('PATCH') }}
 
@@ -22,6 +22,33 @@
                     </form>
                 @endif
             </section>
+        </div>
+
+        @if (redirect()->back()->getTargetUrl() == route('users.updateAvatar', $user->id) && (count($errors) || session()->has('avatar')))
+            <script>
+                document.getElementById('alertTips').click();
+            </script>
+        @endif
+        <button type="button" data-toggle="modal" data-target="#myAvatarModal" style="display: none" id="alertTips">提示</button>
+        <div class="modal fade" id="myAvatarModal" tabindex="-1" role="dialog" aria-labelledby="myAvatarModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myAvatarModalLabel">提示</h4>
+                    </div>
+                    <div class="modal-body">
+                        @if (count($errors))
+                            {{ $errors->first() }}
+                        @elseif (session()->has('avatar'))
+                            {{ session()->get('avatar') }}
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="col-md-4">

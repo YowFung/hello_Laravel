@@ -10,12 +10,6 @@
 
     {{--搜索结果顶部栏--}}
     <div class="alert alert-info" role="alert">
-        <form action="{{ route('back') }}" method="POST" style="display: inline-block">
-            {{ csrf_field() }}
-
-            <input type="submit" style="display: none" id="back-btn">
-            <a class="btn btn-default" type="submit" style="margin-top: -4px" href="javascript:$('#back-btn').click()">返回</a>
-        </form>
         <span class="search-result-tips">共找到 {{ $users->total() }} 个与「<strong>{{ $keyword }}</strong>」相关的用户</span>
     </div>
 
