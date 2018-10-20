@@ -12,7 +12,7 @@ class Message extends Model
 
 
     /**
-     * 获取当前消息的标题
+     * 当前消息的标题
      *
      * @return string
      */
@@ -28,7 +28,7 @@ class Message extends Model
 
 
     /**
-     * 获取当前消息的类别
+     * 当前消息的类别
      *
      * @return string
      */
@@ -44,7 +44,7 @@ class Message extends Model
 
 
     /**
-     * 建立消息-接收用户关系
+     * 消息-接收用户关联模型
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

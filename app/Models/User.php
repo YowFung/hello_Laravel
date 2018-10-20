@@ -31,7 +31,7 @@ class User extends Authenticatable
 
 
     /**
-     * 建立用户-粉丝关系
+     * 用户-粉丝关联模型
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -42,7 +42,7 @@ class User extends Authenticatable
 
 
     /**
-     * 建立用户-关注人关系
+     * 用户-关注人关联模型
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -53,7 +53,7 @@ class User extends Authenticatable
 
 
     /**
-     * 建立用户-微博动态关系
+     * 用户-微博动态关联模型
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -64,7 +64,7 @@ class User extends Authenticatable
 
 
     /**
-     * 建立用户-消息关系
+     * 用户-消息关联模型
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -75,7 +75,7 @@ class User extends Authenticatable
 
 
     /**
-     * 建立用户-关注人的微博动态关系
+     * 用户-关注人的微博动态关联模型
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
@@ -86,7 +86,7 @@ class User extends Authenticatable
 
 
     /**
-     * 获取用户头像
+     * 用户头像
      *
      * @return \Illuminate\Config\Repository|mixed
      */
@@ -100,7 +100,7 @@ class User extends Authenticatable
 
 
     /**
-     * 获取该用户最新发布的微博动态
+     * 该用户最新发布的微博动态
      *
      * @return mixed
      */
@@ -112,7 +112,7 @@ class User extends Authenticatable
 
 
     /**
-     * 获取该用户的新消息数量
+     * 该用户的新消息数量
      *
      * @return int
      */

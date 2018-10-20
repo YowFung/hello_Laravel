@@ -17,7 +17,7 @@ class SessionsController extends Controller
     /**
      * 显示登录页面
      */
-    public function create()
+    public function create(Request $res)
     {
         return view('users.login');
     }

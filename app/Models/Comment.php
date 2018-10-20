@@ -13,7 +13,7 @@ class Comment extends Model
 
 
     /**
-     * 建立评论-发布者用户关系
+     * 评论-发布者用户关联模型
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

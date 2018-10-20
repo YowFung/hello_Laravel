@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Http\Controllers\MessagesController;
 
 class UsersTableSeeder extends Seeder
 {

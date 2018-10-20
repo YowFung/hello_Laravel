@@ -11,7 +11,7 @@ class Note extends Model
     ];
 
     /**
-     * 建立微博动态-所属用户关系
+     * 微博动态-所属用户关联模型
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -22,7 +22,7 @@ class Note extends Model
 
 
     /**
-     * 建立微博动态-评论关系
+     * 微博动态-评论关联模型
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -33,7 +33,7 @@ class Note extends Model
 
 
     /**
-     * 获取该动态的评论条数
+     * 该动态的评论条数
      *
      * @return int
      */
