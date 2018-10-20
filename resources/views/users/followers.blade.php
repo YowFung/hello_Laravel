@@ -34,14 +34,14 @@
                     <div class="media-body follower-info">
                         <a href="{{ route('users.show', $follower->id) }}"><h4>{{ $follower->name }}</h4></a>
                         <strong>
-                            <span class="label label-default label-note-show">邮箱地址：</span>
+                            <span class="label label-default label-note-show">邮箱：</span>
                             {{ $follower->email }}
                         </strong>
                         @if (empty($follower->newNote()))
-                            <p class="tips" style="text-align: left">该用户未发表过微博动态~</p>
+                            <p class="tips" style="text-align: left">该瓜友未发表过任何动态~</p>
                         @else
                             <p>
-                                <span class="label label-default label-note-show">最新动态：</span>
+                                <span class="label label-default label-note-show">动态：</span>
                                 {{ $follower->newNote() }}
                             </p>
                         @endif
@@ -56,7 +56,7 @@
             </nav>
 
         @else
-            <p class="tips">你未关注过任何人~</p>
+            <p class="tips">你未关注过任何瓜友~</p>
         @endif
     </div>
 

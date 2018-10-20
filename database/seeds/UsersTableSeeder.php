@@ -17,8 +17,8 @@ class UsersTableSeeder extends Seeder
         User::insert($users);
 
         $user = User::find(1);
-        $user->name = 'yowfung';
-        $user->email = 'yowfung@outlook.com';
+        $user->name = '小峰峰';
+        $user->email = '343101406@qq.com';
         $user->avatar = config('app.default_avatar');
         $user->save();
     }

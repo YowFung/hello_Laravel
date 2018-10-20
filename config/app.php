@@ -238,5 +238,6 @@ return [
     */
 
     'default_avatar' => env('DEFAULT_AVATAR', '/img/photos/default.jpg'),
+    'faker_locale' => 'zh_CN',
 
 ];

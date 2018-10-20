@@ -1,6 +1,6 @@
 @extends('layouts._user')
 
-@section('panel_title', '消息中心')
+@section('panel_title', '瓜瓜信箱')
 
 @section('active_messages', 'active')
 

@@ -4,7 +4,7 @@
 
 @stop
 
-@section('title', '用户注册')
+@section('title', '注册')
 
 @section('content')
 
@@ -19,20 +19,20 @@
 
                 <div class="text-center mb-4">
                     <img class="mb-4" src="/img/sign/login.jpg" alt="" width="72" height="72">
-                    <h1 class="h3 mb-3 font-weight-normal">用户注册</h1>
+                    <h1 class="h3 mb-3 font-weight-normal">瓜瓜注册</h1>
                     <br/>
                 </div>
 
                 <hr/><br/>
 
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon1">昵称</span>
+                    <span class="input-group-addon" id="basic-addon1">瓜瓜昵称</span>
                     <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Name" aria-describedby="basic-addon1" autofocus>
                 </div>
                 <br/>
 
                 <div class="input-group">
-                    <span class="input-group-addon" id="basic-addon2">邮箱</span>
+                    <span class="input-group-addon" id="basic-addon2">登录邮箱</span>
                     <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="E-mail" aria-describedby="basic-addon2">
                 </div>
                 <br/>
@@ -52,8 +52,8 @@
                 @include('shared._msgs', ['show_all' => false, 'title' => '注册失败', 'msg_type' => 'danger'])
 
                 <br/>
-                <p>已有账号？现在去<a href="{{ route('login') }}">登录</a>！</p>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">立即注册</button>
+                <p>已有瓜瓜号？现在去<a href="{{ route('login') }}">登录</a>！</p>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">注册成为瓜友</button>
 
             </div>
         </div>

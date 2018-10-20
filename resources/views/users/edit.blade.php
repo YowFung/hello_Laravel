@@ -35,8 +35,8 @@
             <br/>
 
             <div class="form-label-group">
-                <label for="inputAssociations">社团</label>
-                <input type="text" id="inputAssociations" name="associations" value="{{ $user->associations }}" class="form-control control-edit" placeholder="Associations">
+                <label for="inputAssociations">部门</label>
+                <input type="text" id="inputAssociations" name="associations" value="{{ $user->associations }}" class="form-control control-edit" placeholder="Department">
             </div>
             <br/>
 

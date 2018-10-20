@@ -74,7 +74,7 @@
                             <button class="btn btn-xs btn-danger" type="submit"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ({{ count($user->fans) }})&nbsp;&nbsp;已关注</button>
                         @else
                             <button class="btn btn-xs btn-info" @if (Auth::check()) type="submit" @else
-                                type="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="登录后才可以关注TA哦，快去登录吧！" title="您还没有登录" @endif>
+                                type="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="登录后才可以关注这位瓜友哦，快去登录吧！" title="您还没有登录" @endif>
                                 <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ({{ count($user->fans) }})&nbsp;&nbsp;关注TA
                             </button>
                         @endif
@@ -98,7 +98,7 @@
                     <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;&nbsp;个人资料
                 </a>
                 <a href="{{ route('users.notes', $user->id) }}" class="list-group-item  @yield('active_notes', '')">
-                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;微博动态
+                    <span class="glyphicon glyphicon-send" aria-hidden="true"></span>&nbsp;&nbsp;瓜瓜动态
                 </a>
 
                 @if(Auth::check() && Auth::user()->id == $user->id)
@@ -107,14 +107,14 @@
                     </a>
                     <a href="{{ route('messages.index', [$user->id, 'new']) }}" class="list-group-item  @yield('active_messages', '')">
                         <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;
-                        消息中心
+                        瓜瓜信箱
                         @if (Auth::user()->newMessagesCount() )
                             <span class="badge">{{ Auth::user()->newMessagesCount() }}</span>
                         @endif
                     </a>
                 @else
                     <a href="{{ route('letters.create') . '?user=' . $user->id }}" class="list-group-item  @yield('active_letters', '')">
-                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;给TA私信
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;&nbsp;留下私信
                     </a>
                 @endif
             </div>
@@ -125,15 +125,15 @@
                     @if (Auth::check() && Auth::user()->id == $user->id)
                         我的粉丝
                     @else
-                        TA的粉丝
+                        瓜友粉丝
                     @endif
                 </div>
                 <div class="panel-body fans-panel-body">
                     @if (!count($user->fans))
                         @if (Auth::check() && Auth::user()->id == $user->id)
-                            <p class="tips">暂时还没有人关注你哦~</p>
+                            <p class="tips">暂时还没有瓜友关注你哦~</p>
                         @else
-                            <p class="tips">TA暂时还没有粉丝呢~</p>
+                            <p class="tips">该瓜友暂时还没有粉丝呢~</p>
                         @endif
                     @else
                         @for($i = 0; $i < count($user->fans); $i += 4)

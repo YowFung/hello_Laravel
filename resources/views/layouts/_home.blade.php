@@ -20,7 +20,7 @@
                 <div class="input-group">
                     <input name="keyword" @if (isset($keyword)) value="{{ $keyword }}" @endif type="text" class="form-control" placeholder="昵称/邮箱">
                     <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">搜索用户</button>
+                    <button class="btn btn-default" type="submit">搜索瓜友</button>
                 </span>
                 </div>
                 <br>
@@ -29,7 +29,7 @@
             <!-- 关注人列表 -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">关注用户</h3>
+                    <h3 class="panel-title">关注的瓜友</h3>
                 </div>
                 <div class="panel-body fans-panel-body">
                     @if (!Auth::check())
@@ -37,7 +37,7 @@
                             <a href="{{ route('login') }}">登录</a> 后才能显示关注人列表哦~
                         </p>
                     @elseif (!count($data['followers']))
-                        <p class="tips">你还没有关注过任何人哦~</p>
+                        <p class="tips">你还没有关注过任何瓜友哦~</p>
                     @else
                         @for($i = 0; $i < count($data['followers']) && $i <= 40; $i += 6)
                             {{--<div class="row">--}}
@@ -73,9 +73,9 @@
                     <h3 class="panel-title">关于本站</h3>
                 </div>
                 <div class="panel-body  about-panel-body">
-                    <p>本站使用 Laravel 5.5 及 BootStrap v3 框架开发。是作者 yowfung 学习 Laravel 框架的第一个实战项目。</p>
+                    <p>这是一个面向所有网园瓜友的社交网站。欢迎广大瓜友发表自己的吃瓜心得</p>
                     <img src="/img/sign/QRCode.png">
-                    <p>扫二维码访问移动端测试站点</p>
+                    <p>扫二维码下载移动端APP看吃瓜直播</p>
                 </div>
             </div>
 

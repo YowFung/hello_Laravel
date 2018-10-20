@@ -10,7 +10,7 @@
 
     {{--搜索结果顶部栏--}}
     <div class="alert alert-info" role="alert">
-        <span class="search-result-tips">共找到 {{ $users->total() }} 个与「<strong>{{ $keyword }}</strong>」相关的用户</span>
+        <span class="search-result-tips">共找到 {{ $users->total() }} 个与「<strong>{{ $keyword }}</strong>」相关的瓜友</span>
     </div>
 
     @if ($users->total())
@@ -39,7 +39,7 @@
                                                 @elseif ($users[$j]->isAttached())
                                                     <button class="btn btn-danger" type="submit">已关注</button>
                                                 @else
-                                                    <button @if (Auth::check()) type="submit" @else type="button" data-toggle="popover" data-content="登录后才可以关注TA哦，快去登录吧！" data-placement="bottom" data-container="body" @endif class="btn btn-info" type="submit">关注TA</button>
+                                                    <button @if (Auth::check()) type="submit" @else type="button" data-toggle="popover" data-content="登录后才可以关注这位瓜友哦，快去登录吧！" data-placement="bottom" data-container="body" @endif class="btn btn-info" type="submit">关注</button>
                                                 @endif
 
                                                 <a href="{{ route('users.show', $users[$j]->id) }}" class="btn btn-default" role="button">查看</a>

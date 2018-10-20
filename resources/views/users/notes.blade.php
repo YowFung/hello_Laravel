@@ -1,6 +1,6 @@
 @extends('layouts._user')
 
-@section('panel_title', '微博动态')
+@section('panel_title', '瓜瓜动态')
 
 @section('active_notes', 'active')
 
@@ -34,15 +34,15 @@
 
             @if (Auth::check() && Auth::user()->id == $user->id)
                 @if ($notes->total())
-                    <h3><h4>我发表过的微博动态({{ $notes->total() }})</h4></h3><br>
+                    <h3><h4>我发表过的动态({{ $notes->total() }})</h4></h3><br>
                 @else
-                    <p class="tips">你还没发表过任何微博动态哦~</p>
+                    <p class="tips">你还没发表过任何动态哦~</p>
                 @endif
             @else
                 @if ($notes->total())
-                    <h3><h4>TA发表过的微博动态({{ $notes->total() }})</h4></h3><br>
+                    <h3><h4>该瓜友发表过的动态({{ $notes->total() }})</h4></h3><br>
                 @else
-                    <p class="tips">TA还没发表过任何微博动态哦~</p>
+                    <p class="tips">该瓜友还没发表过任何动态哦~</p>
                 @endif
             @endif
 

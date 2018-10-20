@@ -1,4 +1,4 @@
 <hr />
 <footer>
-    <p>© Copyright by yowfung 2018 </p>
+    <p>©网园资讯工作室-编程部 2018 </p>
 </footer>

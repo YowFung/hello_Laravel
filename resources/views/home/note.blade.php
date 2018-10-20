@@ -21,8 +21,8 @@
                             <button class="btn btn-danger form-control" type="submit">已关注</button>
                         @else
                             <button class="btn btn-info form-control" @if (Auth::check()) type="submit" @else
-                                type="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="登录后才可以关注TA哦，快去登录吧！" title="您还没有登录" @endif>
-                                关注TA
+                                type="button" data-trigger="focus" data-placement="bottom" data-toggle="popover" data-content="登录后才可以关注这位瓜友哦，快去登录吧！" title="您还没有登录" @endif>
+                                关注该瓜友
                             </button>
                         @endif
                     </form>
